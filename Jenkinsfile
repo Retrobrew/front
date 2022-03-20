@@ -12,7 +12,7 @@ pipeline{
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'npm install -g yarn'
                     sh 'yarn install'
-                    sh 'yarn add sonar-scanner'
+                    sh 'yarn add -D sonar-scanner'
                 }
             }
         }
