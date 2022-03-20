@@ -44,9 +44,7 @@ pipeline{
             steps{
                 withCredentials([usernamePassword(credentialsId: 'MOLERO_HEROKU_PASSWORD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
                     nodejs(nodeJSInstallationName: 'nodejs') {
-                        sh('git remote add heroku https://heroku:${PASSWORD}@git.heroku.com/retrobrew-dev-front.git')
-                        sh('git fetch --all --unshallow')
-                        sh('git push heroku HEAD:main -f')
+                        sh('git push https://${USERNAME}:${PASSWORD}@git.heroku.com/retrobrew-dev-front.git HEAD:refs/heads/main')
                     }
                 }
             }
