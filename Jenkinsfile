@@ -11,8 +11,8 @@ pipeline{
             steps{
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'npm install -g yarn'
+                    sh 'npm install -g sonar-scanner'
                     sh 'yarn install'
-                    sh 'yarn add -D sonar-scanner'
                 }
             }
         }
