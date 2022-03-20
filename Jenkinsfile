@@ -24,16 +24,15 @@ pipeline{
             }
         }
         stage('SonarQube Analysis') {
-            environment {
-                SONAR_TOKEN = credentials('MOLERO_SONAR')
-            }
             when {
                 branch 'dev/master'
             }
             steps {
                 script {
-                    nodejs(nodeJSInstallationName: 'nodejs') {
-                        sh 'sonar-scanner -Dsonar.branch.name=${env.BRANCH_NAME} -Dsonar.login=${SONAR_TOKEN} -Dsonar.host.url=http://192.168.1.3:9000'
+                    withCredentials([sonarToken(SONAR_TOKEN: 'MOLERO_SONAR')]){
+                        nodejs(nodeJSInstallationName: 'nodejs') {
+                            sh 'sonar-scanner -Dsonar.branch.name=${env.BRANCH_NAME} -Dsonar.login=${SONAR_TOKEN} -Dsonar.host.url=http://192.168.1.3:9000'
+                        }
                     }
                 }
             }
