@@ -32,7 +32,7 @@ pipeline{
             steps {
                 script {
                     nodejs(nodeJSInstallationName: 'nodejs') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                        sh 'sonar-scanner'
                     }
                 }
             }
