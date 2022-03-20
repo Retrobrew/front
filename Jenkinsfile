@@ -29,9 +29,9 @@ pipeline{
             }
             steps {
                 script {
-                    withCredentials([withEnv(SONAR_TOKEN: 'MOLERO_SONAR')]){
+                    withCredentials([withSonarQubeEnv(credentialsId: 'MOLERO_SONAR')]){
                         nodejs(nodeJSInstallationName: 'nodejs') {
-                            sh 'sonar-scanner -Dsonar.branch.name=${env.BRANCH_NAME} -Dsonar.login=${SONAR_TOKEN} -Dsonar.host.url=http://192.168.1.3:9000'
+                            sh 'sonar-scanner -Dsonar.branch.name=${env.BRANCH_NAME} -Dsonar.login=${credentialsId} -Dsonar.host.url=http://192.168.1.3:9000'
                         }
                     }
                 }
