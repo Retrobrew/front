@@ -12,7 +12,7 @@ pipeline{
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'npm install -g yarn'
                     sh 'yarn install'
-                    sh 'yarn add -D sonar-scanner'
+                    sh 'yarn add sonar-scanner'
                 }
             }
         }
@@ -28,9 +28,11 @@ pipeline{
                 branch 'dev/master'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'MOLERO_SONAR_PASSWORD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-                    nodejs(nodeJSInstallationName: 'nodejs') {
-                        sh('sonar-scanner -Dsonar.branch.name=${env.BRANCH_NAME} -Dsonar.login=${PASSWORD} -Dsonar.host.url=http://192.168.1.3:9000')
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'MOLERO_SONAR_PASSWORD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+                        nodejs(nodeJSInstallationName: 'nodejs') {
+                            sh "sonar-scanner -Dsonar.branch.name=${env.BRANCH_NAME} -Dsonar.login=${PASSWORD} -Dsonar.host.url=http://192.168.1.3:9000"
+                        }
                     }
                 }
             }
