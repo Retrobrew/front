@@ -7,7 +7,7 @@
     <RegisterCountrySelectorView :list="countries"/>
     <RegisterCountrySelectorView :list="sexes"/>
     <RegisterInputView @input-value="(value) => this.picture = value" :input-place-holder="picturePlaceHolder"/>
-    <RegisterButtonView :label="this.registerButtonLabel" />
+    <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
 </template>
 
@@ -37,6 +37,21 @@ const sexes = [
 export default {
   name: "RegisterFields",
   components: {RegisterCountrySelectorView, RegisterButtonView, RegisterInputView},
+  methods: {
+    async register() {
+      await fetch(`http://localhost:3000/users`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: this.mail,
+          username: this.username,
+          password: this.password
+        }),
+        headers: { "Content-type": "application/json" }
+      })
+      .then(response => response.json())
+      .then(json => console.log(json));
+    }
+  },
   data() {
     return {
       registerButtonLabel: "Register",

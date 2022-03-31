@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-primary user-register-fields-button" @click="register()">
+  <button class="btn btn-primary user-register-fields-button" @click="action">
     {{label}}
   </button>
 </template>
@@ -9,11 +9,7 @@ export default {
   name: "RegisterButtonView",
   props: {
     label: String,
-  },
-  methods: {
-    register() {
-      alert('API call not implemented yet')
-    }
+    action: Function,
   }
 }
 </script>

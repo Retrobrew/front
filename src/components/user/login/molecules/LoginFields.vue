@@ -2,7 +2,7 @@
   <div class="user-login-fields">
     <LoginInputView @input-value="(value) => this.username = value" :input-place-holder="usernamePlaceHolder" />
     <LoginInputView @input-value="(value) => this.password = value" :input-place-holder="passwordPlaceHolder" />
-    <LoginButtonView :label="connectButtonLabel" />
+    <LoginButtonView :label="connectButtonLabel" :action="connect" />
   </div>
 </template>
 
@@ -12,6 +12,11 @@ import LoginButtonView from "@/components/user/login/atoms/LoginButtonView";
 export default {
   name: "LoginFields",
   components: {LoginButtonView, LoginInputView},
+  methods: {
+    connect() {
+      alert(`Sorry ${this.username} API call not implemented yet`)
+    }
+  },
   data() {
     return {
       connectButtonLabel: "Connect",

@@ -1,5 +1,5 @@
 <template>
-  <input class="form-control user-login-fields-input" @change='$emit("inputValue", $emit.target.value)' :placeholder="inputPlaceHolder">
+  <input class="form-control user-login-fields-input" @change='$emit("inputValue", $event.target.value)' :placeholder="inputPlaceHolder">
 </template>
 
 <script>
