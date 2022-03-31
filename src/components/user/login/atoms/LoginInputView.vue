@@ -1,5 +1,5 @@
 <template>
-  <input class="user-login-fields-input" @change='$emit("inputValue", $emit.target.value)' :placeholder="inputPlaceHolder">
+  <input class="form-control user-login-fields-input" @change='$emit("inputValue", $emit.target.value)' :placeholder="inputPlaceHolder">
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
 
 <style scoped>
 .user-login-fields-input {
-  margin: 12px;
+  margin: 12px auto;
   width: 90%;
 }
 </style>

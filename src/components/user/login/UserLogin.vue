@@ -2,16 +2,16 @@
   <div class="user-login">
     <h1>Login</h1>
     <LoginFields />
-    <LoginResgisterRedirection />
+    <LoginRegisterRedirection />
   </div>
 </template>
 
 <script>
 import LoginFields from "@/components/user/login/molecules/LoginFields";
-import LoginResgisterRedirection from "@/components/user/login/atoms/LoginResgisterRedirection";
+import LoginRegisterRedirection from "@/components/user/login/atoms/LoginRegisterRedirection";
 export default {
   name: "UserLogin",
-  components: {LoginResgisterRedirection, LoginFields}
+  components: {LoginRegisterRedirection, LoginFields}
 }
 </script>
 

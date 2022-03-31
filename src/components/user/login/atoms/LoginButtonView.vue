@@ -1,5 +1,5 @@
 <template>
-  <button class="user-login-fields-button" @click="connect()">
+  <button class="btn btn-primary user-login-fields-button" @click="connect()">
     {{label}}
   </button>
 </template>
