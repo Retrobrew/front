@@ -26,9 +26,7 @@ pipeline{
         stage('SonarQube Analysis') {
             when {
                 anyOf {
-                    branch 'dev/master'
-                    branch 'feat/*'
-                    branch 'fix/*'
+                    branch 'dev/master'; branch 'feat/*'; branch 'fix/*'
                 }
             }
             steps {
