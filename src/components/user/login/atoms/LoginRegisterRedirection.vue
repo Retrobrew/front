@@ -1,5 +1,5 @@
 <template>
-  <p>Already have an account ? <a href="/register">Click here to register</a></p>
+  <p>No account yet ? <a href="/register">Click here to register</a></p>
 </template>
 
 <script>
