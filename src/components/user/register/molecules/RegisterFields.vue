@@ -49,7 +49,30 @@ export default {
         headers: { "Content-type": "application/json" }
       })
       .then(response => response.json())
-      .then(json => console.log(json));
+      .then(json => {
+        console.log(json);
+        this.connect();
+      });
+    },
+    async connect() {
+      await fetch(`http://localhost:3000/auth/login`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: this.mail,
+          password: this.password
+        }),
+        headers: { "Content-type": "application/json" }
+      })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            if (json.statusCode === 401) {
+              alert("Connexion failed");
+            } else {
+              sessionStorage.setItem('access_token', json.access_token);
+              window.location.pathname = '/';
+            }
+          });
     }
   },
   data() {
