@@ -39,7 +39,7 @@ export default {
   components: {RegisterCountrySelectorView, RegisterButtonView, RegisterInputView},
   methods: {
     async register() {
-      await fetch(`http://localhost:3000/users`, {
+      await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
         method: "POST",
         body: JSON.stringify({
           email: this.mail,
@@ -55,7 +55,7 @@ export default {
       });
     },
     async connect() {
-      await fetch(`http://localhost:3000/auth/login`, {
+      await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
         method: "POST",
         body: JSON.stringify({
           email: this.mail,

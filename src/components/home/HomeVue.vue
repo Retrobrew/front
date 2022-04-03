@@ -11,11 +11,12 @@ export default {
     }
   },
   beforeMount() {
+    console.log(process.env)
     const token = sessionStorage.getItem('access_token');
     if (token === undefined) {
       this.isLoginValid = false;
     } else {
-      fetch('http://localhost:3000/profile', {
+      fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
         headers: { Authorization: "Bearer " + token }
       })
       .then(response => console.log(response));

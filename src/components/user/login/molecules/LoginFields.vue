@@ -14,7 +14,7 @@ export default {
   components: {LoginButtonView, LoginInputView},
   methods: {
     async connect() {
-      await fetch(`http://localhost:3000/auth/login`, {
+      await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
         method: "POST",
         body: JSON.stringify({
           email: this.mail,
