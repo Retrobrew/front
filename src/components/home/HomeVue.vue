@@ -1,10 +1,26 @@
 <template>
-  <h1>Welcome to the best social media ever where you can (hopefully soon) run code :D</h1>
+  <h1>Welcome to Retrobrew !</h1>
 </template>
 
 <script>
 export default {
-  name: "HomeVue"
+  name: "HomeVue",
+  data() {
+    return {
+      isLoginValid: Boolean
+    }
+  },
+  beforeMount() {
+    const token = sessionStorage.getItem('access_token');
+    if (token === undefined) {
+      this.isLoginValid = false;
+    } else {
+      fetch('http://localhost:3000/users', {
+        headers: { Authorization: "Bearer " + token}
+      })
+      .then(response => console.log(response));
+    }
+  }
 }
 </script>
 
