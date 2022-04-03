@@ -15,8 +15,8 @@ export default {
     if (token === undefined) {
       this.isLoginValid = false;
     } else {
-      fetch('http://localhost:3000/users', {
-        headers: { Authorization: "Bearer " + token}
+      fetch('http://localhost:3000/profile', {
+        headers: { Authorization: "Bearer " + token }
       })
       .then(response => console.log(response));
     }
