@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import {defineProps} from "vue";
+
+const props = defineProps(['list']);
+</script>
+
 <template>
   <select class="form-select user-register-fields-input">
     <option v-for="(item, index) in props.list" v-bind:key="index">
@@ -7,14 +13,9 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component/dist/vue-class-component";
-import {defineProps} from "vue";
+import {Vue} from "vue-class-component";
 
 export default class RegisterSelectorView extends Vue {
-
-  private props = defineProps({
-    list: Array,
-  });
 }
 </script>
 

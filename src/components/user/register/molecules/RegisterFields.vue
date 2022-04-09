@@ -4,17 +4,27 @@
     <RegisterInputView @input-value="(value) => this.password = value" :input-place-holder="this.passwordPlaceHolder"/>
     <RegisterInputView @input-value="(value) => this.mail = value" :input-place-holder="this.mailPlaceHolder"/>
     <RegisterInputView @input-value="(value) => this.birthdate = value" :input-place-holder="this.birthdatePlaceHolder" type="date"/>
-    <RegisterCountrySelectorView :list="this.countries"/>
-    <RegisterCountrySelectorView :list="this.sexes"/>
+    <RegisterSelectorView :list="this.countries"/>
+    <RegisterSelectorView :list="this.sexes"/>
     <RegisterInputView @input-value="(value) => this.picture = value" :input-place-holder="this.picturePlaceHolder"/>
     <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component/dist/vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import RegisterInputView from "@/components/user/register/atoms/RegisterInputView.vue";
+import RegisterSelectorView from "@/components/user/register/atoms/RegisterSelectorView.vue";
+import RegisterButtonView from "@/components/user/register/atoms/RegisterButtonView.vue";
 
-
+@Options({
+  name: "RegisterFields",
+  components: {
+    RegisterInputView,
+    RegisterSelectorView,
+    RegisterButtonView
+  }
+})
 export default class RegisterFields extends Vue {
   private countries = [
     "Belgium",

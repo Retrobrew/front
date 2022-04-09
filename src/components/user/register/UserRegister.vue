@@ -7,8 +7,17 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import RegisterFields from "@/components/user/register/molecules/RegisterFields.vue";
+import RegisterLoginRedirection from "@/components/user/register/atoms/RegisterLoginRedirection.vue";
 
+@Options({
+  name: "UserRegister",
+  components: {
+    RegisterFields,
+    RegisterLoginRedirection
+  }
+})
 export default class UserRegister extends Vue {
 }
 </script>

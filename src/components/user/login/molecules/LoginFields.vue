@@ -7,8 +7,17 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import LoginInputView from "@/components/user/login/atoms/LoginInputView.vue";
+import LoginButtonView from "@/components/user/login/atoms/LoginButtonView.vue";
 
+@Options({
+  name: "LoginFields",
+  components: {
+    LoginInputView,
+    LoginButtonView
+  }
+})
 export default class LoginFields extends Vue {
   private connectButtonLabel = "Connect";
   private mailPlaceHolder = "Email";

@@ -1,18 +1,18 @@
+<script setup lang="ts">
+import {defineEmits, defineProps} from "vue";
+
+const props = defineProps(['inputPlaceHolder']);
+const emits = defineEmits(['inputValue']);
+</script>
+
 <template>
   <input class="form-control user-register-fields-input" @change='emits("inputValue", $event.target.value)' :placeholder="props.inputPlaceHolder">
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component/dist/vue-class-component";
-import {defineEmits, defineProps} from "vue";
+import {Vue} from "vue-class-component";
 
 export default class RegisterInputView extends Vue {
-
-  private props = defineProps({
-    inputPlaceHolder: String
-  });
-
-  private emits = defineEmits(['inputValue']);
 }
 </script>
 
