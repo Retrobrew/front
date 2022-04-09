@@ -1,16 +1,18 @@
 <template>
-  <button class="btn btn-primary user-register-fields-button" @click="action">
-    {{label}}
+  <button class="btn btn-primary user-register-fields-button" @click="props.action">
+    {{props.label}}
   </button>
 </template>
 
-<script>
-export default {
-  name: "RegisterButtonView",
-  props: {
+<script lang="ts">
+import {Vue} from "vue-class-component/dist/vue-class-component";
+import {defineProps} from "vue";
+
+export default class RegisterButtonView extends Vue {
+  private props = defineProps({
     label: String,
     action: Function,
-  }
+  });
 }
 </script>
 

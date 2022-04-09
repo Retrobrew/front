@@ -1,16 +1,19 @@
 <template>
-  <button class="btn btn-primary user-login-fields-button" @click="action">
-    {{label}}
+  <button class="btn btn-primary user-login-fields-button" @click="props.action">
+    {{props.label}}
   </button>
 </template>
 
-<script>
-export default {
-  name: "LoginButtonView",
-  props: {
+<script lang="ts">
+import {Vue} from "vue-class-component";
+import {defineProps} from "vue";
+
+export default class LoginButtonView extends Vue {
+
+  private props = defineProps({
     label: String,
-    action: Function,
-  }
+    action: Function
+  });
 }
 </script>
 

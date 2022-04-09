@@ -6,42 +6,37 @@
   </div>
 </template>
 
-<script>
-import LoginInputView from "@/components/user/login/atoms/LoginInputView";
-import LoginButtonView from "@/components/user/login/atoms/LoginButtonView";
-export default {
-  name: "LoginFields",
-  components: {LoginButtonView, LoginInputView},
-  methods: {
-    async connect() {
-      await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: this.mail,
-          password: this.password
-        }),
-        headers: { "Content-type": "application/json" }
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        if (json.statusCode === 401) {
-          alert("Connexion failed");
-        } else {
-          sessionStorage.setItem('access_token', json.access_token);
-          window.location.pathname = '/';
-        }
-      });
-    }
-  },
-  data() {
-    return {
-      connectButtonLabel: "Connect",
-      mail: "",
-      mailPlaceHolder: "Email",
-      password: "",
-      passwordPlaceHolder: "Password",
-    }
+<script lang="ts">
+import {Vue} from "vue-class-component";
+
+export default class LoginFields extends Vue {
+  private connectButtonLabel = "Connect";
+  private mailPlaceHolder = "Email";
+  private passwordPlaceHolder = "Password";
+
+  private mail = "";
+  private password = "";
+
+
+  private async connect(){
+    await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({
+        email: this.mail,
+        password: this.password
+      }),
+      headers: { "Content-type": "application/json" }
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log(json);
+      if (json.statusCode === 401) {
+        alert("Connexion failed");
+      } else {
+        sessionStorage.setItem('access_token', json.access_token);
+        window.location.pathname = '/';
+      }
+    });
   }
 }
 </script>
