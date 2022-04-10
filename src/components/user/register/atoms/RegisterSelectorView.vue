@@ -1,17 +1,21 @@
+<script setup lang="ts">
+import {defineProps} from "vue";
+
+const props = defineProps(['list']);
+</script>
+
 <template>
   <select class="form-select user-register-fields-input">
-    <option v-for="(item, index) in this.list" v-bind:key="index">
+    <option v-for="(item, index) in props.list" v-bind:key="index">
       {{item}}
     </option>
   </select>
 </template>
 
-<script>
-export default {
-  name: "RegisterSelectorView",
-  props: {
-    list: Array,
-  }
+<script lang="ts">
+import {Vue} from "vue-class-component";
+
+export default class RegisterSelectorView extends Vue {
 }
 </script>
 

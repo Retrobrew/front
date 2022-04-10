@@ -2,9 +2,10 @@
   <p>Already have an account ? <a href="/login">Click here to login</a></p>
 </template>
 
-<script>
-export default {
-  name: "RegisterLoginRedirection"
+<script lang="ts">
+import {Vue} from "vue-class-component";
+
+export default class RegisterLoginRedirection extends Vue {
 }
 </script>
 

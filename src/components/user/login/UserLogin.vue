@@ -6,12 +6,20 @@
   </div>
 </template>
 
-<script>
-import LoginFields from "@/components/user/login/molecules/LoginFields";
-import LoginRegisterRedirection from "@/components/user/login/atoms/LoginRegisterRedirection";
-export default {
+<script lang="ts">
+import {Options, Vue} from "vue-class-component";
+import LoginFields from "@/components/user/login/molecules/LoginFields.vue";
+import LoginRegisterRedirection from "@/components/user/login/atoms/LoginRegisterRedirection.vue";
+
+@Options ({
   name: "UserLogin",
-  components: {LoginRegisterRedirection, LoginFields}
+  components: {
+    LoginFields,
+    LoginRegisterRedirection
+  }
+})
+export default class UserLogin extends Vue {
+
 }
 </script>
 

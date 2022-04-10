@@ -1,14 +1,18 @@
+<script setup lang="ts">
+import {defineEmits, defineProps} from "vue";
+
+const props = defineProps(['inputPlaceHolder']);
+const emits = defineEmits(['inputValue']);
+</script>
+
 <template>
-  <input class="form-control user-login-fields-input" @change='$emit("inputValue", $event.target.value)' :placeholder="inputPlaceHolder">
+  <input class="form-control user-login-fields-input" @change='emits("inputValue", $event.target.value)' :placeholder="props.inputPlaceHolder">
 </template>
 
-<script>
-export default {
-  name: "LoginInputView",
-  props: {
-    inputPlaceHolder: String,
-  },
-  emits: ['inputValue']
+<script lang="ts">
+import {Vue} from "vue-class-component";
+
+export default class LoginInputView extends Vue {
 }
 </script>
 
