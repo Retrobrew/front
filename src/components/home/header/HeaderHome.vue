@@ -28,6 +28,6 @@ export default class HeaderHome extends Vue {
   min-height: 48px;
   height: 8vh;
   max-height: 96px;
-  width: 100vw;
+  width: 100%;
 }
 </style>

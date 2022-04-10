@@ -1,15 +1,18 @@
 <template>
   <HeaderHome />
   <h1>Welcome to Retrobrew !</h1>
+  <FeedVue />
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import HeaderHome from "@/components/home/header/HeaderHome.vue";
+import FeedVue from "@/components/feed/FeedVue.vue";
 
   @Options({
     name: "Home",
     components: {
+      FeedVue,
       HeaderHome
     }
   })
