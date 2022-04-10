@@ -1,10 +1,18 @@
 <template>
+  <HeaderHome />
   <h1>Welcome to Retrobrew !</h1>
 </template>
 
 <script lang="ts">
-  import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import HeaderHome from "@/components/home/header/HeaderHome.vue";
 
+  @Options({
+    name: "Home",
+    components: {
+      HeaderHome
+    }
+  })
   export default class Home extends Vue {
     private isLoginValid: boolean = false;
 
