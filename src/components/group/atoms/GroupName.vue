@@ -1,16 +1,15 @@
-<script setup lang="ts">
-import {defineProps} from "vue";
-
-const props = defineProps(['name']);
-</script>
-
 <template>
-  <p>{{props.name}}</p>
+  <p>{{name}}</p>
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
 
+@Options({
+  props: {
+    name: String
+  }
+})
 export default class GroupName extends Vue {
 }
 </script>

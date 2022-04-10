@@ -14,11 +14,17 @@ import GroupFollow from "@/components/group/atoms/GroupFollow.vue";
 
 @Options({
   name: "GroupHead",
-  components: {GroupFollow, GroupName, GroupIcon}
+  components: {
+    GroupFollow,
+    GroupName,
+    GroupIcon
+  },
+  props: {
+    groupIcon: String,
+    groupName: String
+  }
 })
 export default class GroupHead extends Vue {
-  private groupIcon = "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fgetdrawings.com%2Ffree-icon%2Fpokemon-emerald-icon-63.png&f=1&nofb=1"
-  private groupName = "Pokemon emerald"
 }
 </script>
 

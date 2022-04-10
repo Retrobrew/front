@@ -1,18 +1,17 @@
-<script setup lang="ts">
-import {defineProps} from "vue";
-
-const props = defineProps(['link']);
-</script>
-
 <template>
   <div class="group-icon-box">
-    <img :src="props.link">
+    <img :src="link">
   </div>
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
 
+@Options({
+  props: {
+    link: String
+  }
+})
 export default class GroupIcon extends Vue {
 }
 </script>
