@@ -1,19 +1,18 @@
 <template>
-  <HeaderHome />
-  <h1>Welcome to Retrobrew !</h1>
+  <HeaderVue />
   <FeedVue />
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import HeaderHome from "@/components/home/header/HeaderHome.vue";
+import HeaderVue from "@/components/header/HeaderVue.vue";
 import FeedVue from "@/components/feed/FeedVue.vue";
 
   @Options({
     name: "Home",
     components: {
       FeedVue,
-      HeaderHome
+      HeaderVue
     }
   })
   export default class Home extends Vue {

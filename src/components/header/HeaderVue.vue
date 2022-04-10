@@ -7,17 +7,17 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import HeaderLogo from "@/components/home/header/atoms/HeaderLogo.vue";
-import HeaderProfile from "@/components/home/header/atoms/HeaderProfile.vue";
+import HeaderLogo from "@/components/header/atoms/HeaderLogo.vue";
+import HeaderProfile from "@/components/header/atoms/HeaderProfile.vue";
 
 @Options({
-  name: "HeaderHome",
+  name: "HeaderVue",
   components: {
     HeaderProfile,
     HeaderLogo
   }
 })
-export default class HeaderHome extends Vue {
+export default class HeaderVue extends Vue {
 }
 </script>
 
