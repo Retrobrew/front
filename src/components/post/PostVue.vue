@@ -1,15 +1,8 @@
 <template>
   <div class="post">
-    <div class="post-head">
-      <PostLabel :label="postLabel" />
-      <PostTitle :title="postTitle" />
-      <PostUsername :username="postUser" />
-    </div>
+    <PostHead :post-label="postLabel" :post-title="postTitle" :post-user="postUser" />
     <PostContent :content="postContent" />
-    <div class="post-foot">
-      <PostReaction :like="19" :dislike="2" />
-      <PostComment :number="1" />
-    </div>
+    <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="postComments" />
   </div>
 </template>
 
@@ -21,16 +14,21 @@ import PostUsername from "@/components/post/atoms/PostUsername.vue";
 import PostContent from "@/components/post/atoms/PostContent.vue";
 import PostComment from "@/components/post/atoms/PostComment.vue";
 import PostReaction from "@/components/post/atoms/PostReaction.vue";
+import PostHead from "@/components/post/molecules/PostHead.vue";
+import PostFoot from "@/components/post/molecules/PostFoot.vue";
 
 @Options({
   name: "PostVue",
-  components: {PostReaction, PostComment, PostContent, PostUsername, PostTitle, PostLabel},
+  components: {PostFoot, PostHead, PostReaction, PostComment, PostContent, PostUsername, PostTitle, PostLabel},
 })
 export default class PostVue extends Vue {
   private postLabel = "Pokemon";
   private postTitle = "First post !?";
-  private postUser = "@Quentin🇫🇷"
+  private postUser = "@Quentin🇫🇷";
   private postContent = "This is the first post :D ! (well technically it isn't because it's hardcoded :,< )";
+  private postLikes = 19;
+  private postDislike = 2;
+  private postComments = 3;
 }
 </script>
 
@@ -38,15 +36,5 @@ export default class PostVue extends Vue {
 .post {
   background: #F0F0F0;
   border-radius: 8px;
-}
-.post-head {
-  display: flex;
-  margin: 8px;
-  justify-content: space-between;
-}
-.post-foot {
-  display: flex;
-  justify-content: space-between;
-  margin: auto 16px;
 }
 </style>
