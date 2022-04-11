@@ -1,11 +1,9 @@
 <template>
   <HeaderVue />
-  <GroupBanner
-      :link="groupBanner"
+  <GroupBanner :link="groupBanner" />
+  <GroupHead
       v-bind:groupName="groupName"
-      v-bind:groupIcon="groupIcon"
-  />
-  <GroupHead />
+      v-bind:groupIcon="groupIcon" />
   <FeedVue />
 </template>
 
