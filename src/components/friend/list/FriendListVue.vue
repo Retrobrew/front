@@ -25,5 +25,7 @@ export default class FriendListVue extends Vue {
 #friend-list {
   box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
   border-radius: 8px;
+  max-width: 580px;
+  margin: 20px;
 }
 </style>

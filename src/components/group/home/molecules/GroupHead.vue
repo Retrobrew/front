@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import GroupIcon from "@/components/group/atoms/GroupIcon.vue";
-import GroupName from "@/components/group/atoms/GroupName.vue";
-import GroupFollow from "@/components/group/atoms/GroupFollow.vue";
+import GroupIcon from "@/components/group/home/atoms/GroupIcon.vue";
+import GroupName from "@/components/group/home/atoms/GroupName.vue";
+import GroupFollow from "@/components/group/home/atoms/GroupFollow.vue";
 
 @Options({
   name: "GroupHead",

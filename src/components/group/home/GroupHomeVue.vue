@@ -10,9 +10,9 @@
 <script lang="ts">
 import HeaderVue from "@/components/header/HeaderVue.vue";
 import {Options, Vue} from "vue-class-component";
-import GroupBanner from "@/components/group/atoms/GroupBanner.vue";
+import GroupBanner from "@/components/group/home/atoms/GroupBanner.vue";
 import FeedVue from "@/components/feed/FeedVue.vue";
-import GroupHead from "@/components/group/molecules/GroupHead.vue";
+import GroupHead from "@/components/group/home/molecules/GroupHead.vue";
 
 @Options({
   name: "GroupHomeVue",
