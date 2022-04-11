@@ -8,12 +8,14 @@ import UserLogin from "@/components/user/login/UserLogin";
 import UserRegister from "@/components/user/register/UserRegister";
 import GroupHomeVue from "@/components/group/GroupHomeVue";
 import Error404 from "@/components/error/Error404";
+import UserHomeVue from "@/components/user/profile/UserHomeVue";
 
 const routes = {
   '/': HomeVue,
   '/login': UserLogin,
   '/register': UserRegister,
   '/group': GroupHomeVue,
+  '/user': UserHomeVue,
 }
 
 export default {
