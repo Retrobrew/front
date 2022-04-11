@@ -44,4 +44,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.main-vue {
+  margin: auto;
+  min-width: 200px;
+  width: 80vw;
+  max-width: 1200px;
+}
 </style>

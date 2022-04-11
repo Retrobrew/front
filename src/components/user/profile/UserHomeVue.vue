@@ -1,9 +1,10 @@
 <template>
   <HeaderVue />
-  <div id="user-profile">
+  <div id="user-profile" class="main-vue">
     <UserProfileHead :user-name="userName" :description="userDescription"/>
     <UserProfileBody :user-picture="userPicture" :password-name="passwordName" :password-value="passwordValue" :password-confirm-name="passwordConfirmName" :mail-name="mailName" :mail-value="mailValue" :countries-name="countriesName" :countries="countries" :country-value="countryValue"/>
   </div>
+  <FriendListVue />
 </template>
 
 <script lang="ts">
@@ -11,10 +12,12 @@ import {Options, Vue} from "vue-class-component";
 import HeaderVue from "@/components/header/HeaderVue.vue";
 import UserProfileHead from "@/components/user/profile/molecules/UserProfileHead.vue";
 import UserProfileBody from "@/components/user/profile/molecules/UserProfileBody.vue";
+import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 
 @Options({
   name: "UserHomeVue",
   components: {
+    FriendListVue,
     UserProfileBody,
     UserProfileHead,
     HeaderVue,
@@ -51,9 +54,5 @@ export default class UserHomeVue extends Vue {
   box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
   border-radius: 8px;
   margin: 24px auto;
-  min-width: 200px;
-  width: 80vw;
-  max-width: 1200px;
-  padding: 16px;
 }
 </style>

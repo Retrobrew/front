@@ -1,5 +1,5 @@
 <template>
-  <div id="feed">
+  <div class="main-vue">
     <PostVue />
   </div>
 </template>
@@ -19,13 +19,6 @@ export default class FeedVue extends Vue {
 </script>
 
 <style scoped>
-#feed {
-  margin: auto;
-  min-width: 200px;
-  width: 80vw;
-  max-width: 1200px;
-}
-
 #feed div {
   margin: 12px 0;
 }

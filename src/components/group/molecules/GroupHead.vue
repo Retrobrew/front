@@ -1,5 +1,5 @@
 <template>
-  <div class="group-head">
+  <div class="main-vue group-head">
     <GroupIcon :link="groupIcon" />
     <GroupName :name="groupName" />
     <GroupFollow />
@@ -31,10 +31,6 @@ export default class GroupHead extends Vue {
 <style scoped>
 .group-head {
   background-color: #FFFFFF;
-  margin: auto;
-  min-width: 200px;
-  width: 80vw;
-  max-width: 1200px;
   display: flex;
   justify-content: space-between;
 }
