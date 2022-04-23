@@ -9,6 +9,7 @@ import UserRegister from "@/components/user/register/UserRegister";
 import GroupHomeVue from "@/components/group/home/GroupHomeVue";
 import Error404 from "@/components/error/Error404";
 import UserProfileHomeVue from "@/components/user/profile/UserProfileHomeVue";
+import UserHomeVue from "@/components/user/user/UserHomeVue";
 
 const routes = {
   '/': HomeVue,
@@ -16,6 +17,7 @@ const routes = {
   '/register': UserRegister,
   '/group': GroupHomeVue,
   '/profile': UserProfileHomeVue,
+  '/user': UserHomeVue,
 }
 
 export default {

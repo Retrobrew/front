@@ -13,10 +13,10 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import UserProfilePicture from "@/components/user/profile/atoms/UserProfilePicture.vue";
+import UserProfilePicture from "@/components/user/common/atoms/UserProfilePicture.vue";
 import UserProfileField from "@/components/user/profile/atoms/UserProfileField.vue";
 import UserProfileSelector from "@/components/user/profile/atoms/UserProfileSelector.vue";
-import UserProfileButton from "@/components/user/profile/atoms/UserProfileButton.vue";
+import UserProfileButton from "@/components/user/common/atoms/UserProfileButton.vue";
 import UserProfileChangePicture from "@/components/user/profile/molecules/UserProfileChangePicture.vue";
 
 @Options({

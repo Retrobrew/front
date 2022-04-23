@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import UserProfileName from "@/components/user/profile/atoms/UserProfileName.vue";
-import UserProfileDescription from "@/components/user/profile/atoms/UserProfileDescription.vue";
+import UserProfileName from "@/components/user/common/atoms/UserProfileName.vue";
+import UserProfileDescription from "@/components/user/common/atoms/UserProfileDescription.vue";
 
 @Options({
   name: "UserProfileHead",

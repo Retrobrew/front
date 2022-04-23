@@ -1,7 +1,7 @@
 <template>
-  <div class="user-profile-change-picture">
-    <UserProfilePicture :link="link" />
-    <UserProfileButton :label="uploadButton" />
+  <div class="user-profile-body">
+    <UserProfilePicture :link="userPicture" />
+    <UserProfileButton :label="addFriendButton" />
   </div>
 </template>
 
@@ -11,22 +11,22 @@ import UserProfilePicture from "@/components/user/common/atoms/UserProfilePictur
 import UserProfileButton from "@/components/user/common/atoms/UserProfileButton.vue";
 
 @Options({
-  name: "UserProfileChangePicture",
-  components: {
-    UserProfilePicture,
-    UserProfileButton,
-  },
+  name: "UserBody",
+  components: {UserProfileButton, UserProfilePicture},
   props: {
-    link: String
+    userPicture: String
   }
 })
-export default class UserProfileChangePicture extends Vue {
-  private uploadButton = "Upload";
+export default class UserBody extends Vue {
+  private addFriendButton = "Add friend";
 }
 </script>
 
 <style scoped>
-.user-profile-change-picture {
+.user-profile-body {
+  justify-content: space-between;
+}
+.user-profile-body img {
   display: flex;
   flex-direction: column;
   min-height: 40px;

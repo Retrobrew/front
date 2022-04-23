@@ -13,7 +13,7 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import HeaderVue from "@/components/header/HeaderVue.vue";
-import UserProfileHead from "@/components/user/profile/molecules/UserProfileHead.vue";
+import UserProfileHead from "@/components/user/common/molecules/UserProfileHead.vue";
 import UserProfileBody from "@/components/user/profile/molecules/UserProfileBody.vue";
 import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 import GroupListVue from "@/components/group/list/GroupListVue.vue";
