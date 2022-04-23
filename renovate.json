@@ -1,6 +1,6 @@
 {
   "extends": [
     "config:base",
-    "baseBranches": ["dev/master"]
-  ]
+  ],
+  "baseBranches": ["dev/master"]
 }
