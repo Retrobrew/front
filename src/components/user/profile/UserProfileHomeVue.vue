@@ -19,7 +19,7 @@ import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 import GroupListVue from "@/components/group/list/GroupListVue.vue";
 
 @Options({
-  name: "UserHomeVue",
+  name: "UserProfileHomeVue",
   components: {
     GroupListVue,
     FriendListVue,
@@ -28,7 +28,7 @@ import GroupListVue from "@/components/group/list/GroupListVue.vue";
     HeaderVue,
   }
 })
-export default class UserHomeVue extends Vue {
+export default class UserProfileHomeVue extends Vue {
   private userName = "@Quentin🇫🇷";
   private userDescription = "Male - 22";
   private userPicture = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.qrSjHA3rS0ZIDbUcTzRONQHaHa%26pid%3DApi&f=1";
