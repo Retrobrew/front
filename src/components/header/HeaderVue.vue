@@ -1,33 +1,25 @@
 <template>
   <MDBNavbar expand="lg" dark bg="light" container>
     <MDBNavbarBrand href="#">
-      <img
-          src="../../assets/placeholder_logo.png"
-          alt=""
-          loading="lazy"
-      />
+      <img src="../../assets/placeholder_logo.png" alt="" loading="lazy" />
     </MDBNavbarBrand>
-    <MDBNavbarToggler
-    target="#navbarLeftAlignExample"
-    @click="collapse4 = !collapse4"
-    ></MDBNavbarToggler>
+    <MDBNavbarToggler target="#navbarLeftAlignExample" @click="collapse4 = !collapse4" />
     <MDBCollapse v-model="collapse4" id="navbarLeftAlignExample">
       <MDBNavbarNav center>
         <!-- Left links -->
         <form class="d-flex input-group w-50">
-          <input
-              type="search"
-              class="form-control"
-              placeholder="Search a game..."
-              aria-label="Search"
-          />
+          <input type="search" class="form-control" placeholder="Search a game..." aria-label="Search" />
         </form>
         <!-- Left links -->
       </MDBNavbarNav>
 
       <MDBNavbarNav right class="w-25 justify-content-end">
-        <MDBBtn color="success" class="me-2"> Login </MDBBtn>
-        <MDBBtn color="danger"> Register </MDBBtn>
+        <a href="/login">
+          <MDBBtn color="success" class="me-2">Login</MDBBtn>
+        </a>
+        <a href="/register">
+          <MDBBtn color="danger">Register</MDBBtn>
+        </a>
       </MDBNavbarNav>
     </MDBCollapse>
   </MDBNavbar>
