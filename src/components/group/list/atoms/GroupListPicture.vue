@@ -6,17 +6,17 @@
 import {Options, Vue} from "vue-class-component";
 
 @Options({
-  name: "FriendListPicture",
+  name: "GroupListPicture",
   props: {
-    link: String
+    link: String,
   }
 })
-export default class FriendListPicture extends Vue {
+export default class GroupListCard extends Vue {
 }
 </script>
 
 <style scoped>
-.friend-list-card img {
+.group-list-card img {
   min-height: 24px;
   height: 10%;
   max-height: 72px;

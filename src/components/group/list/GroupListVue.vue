@@ -1,16 +1,18 @@
 <template>
   <div id="group-list" class="main-vue">
     <GroupListTitle />
+    <GroupListCard />
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import GroupListTitle from "@/components/group/list/atoms/GroupListTitle.vue";
+import GroupListCard from "@/components/group/list/molecules/GroupListCard.vue";
 
 @Options({
   name: "GroupListVue",
-  components: {GroupListTitle}
+  components: {GroupListCard, GroupListTitle}
 })
 export default class GroupListVue extends Vue {
 }
