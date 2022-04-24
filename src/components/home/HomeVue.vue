@@ -7,29 +7,24 @@
 import {Options, Vue} from "vue-class-component";
 import HeaderVue from "@/components/header/HeaderVue.vue";
 import FeedVue from "@/components/feed/FeedVue.vue";
+import {inject} from "vue";
 
-  @Options({
-    name: "Home",
-    components: {
-      FeedVue,
-      HeaderVue
-    }
-  })
-  export default class Home extends Vue {
-    private isLoginValid: boolean = false;
-
-    beforeMount() {
-      console.log(process.env)
-      const token = sessionStorage.getItem('access_token');
-      if (token === undefined) {
-        this.isLoginValid = false;
-      } else {
-        fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
-          headers: { Authorization: "Bearer " + token }
-        })
-            .then(response => console.log(response));
-      }
-    }
-
+@Options({
+  name: "Home",
+  components: {
+    FeedVue,
+    HeaderVue
   }
+})
+export default class Home extends Vue {
+  private user = inject('user');
+  mounted() {
+    console.log(this.user);
+    this.showUserLate();
+  }
+
+  showUserLate() {
+    setTimeout(() => console.log(inject('user')), 15000);
+  }
+}
 </script>

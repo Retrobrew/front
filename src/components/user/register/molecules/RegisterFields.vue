@@ -68,10 +68,18 @@ export default class RegisterFields extends Vue {
         }),
         headers: { "Content-type": "application/json" }
       })
-      .then(response => response.json())
+      .then(response => {
+        if (response.status !== 201) {
+          throw new Error("Registration failed")
+        }
+        return response.json()
+      })
       .then(json => {
         console.log(json);
         this.connect();
+      })
+      .catch(err => {
+        alert(err);
       });
     }
     private async connect() {
@@ -83,16 +91,20 @@ export default class RegisterFields extends Vue {
         }),
         headers: { "Content-type": "application/json" }
       })
-          .then(response => response.json())
-          .then(json => {
-            console.log(json);
-            if (json.statusCode === 401) {
-              alert("Connexion failed");
-            } else {
-              sessionStorage.setItem('access_token', json.access_token);
-              window.location.pathname = '/';
-            }
-          });
+      .then(response => {
+        if (response.status !== 201) {
+          throw new Error("Connexion failed");
+        }
+        return response.json();
+      })
+      .then(json => {
+        sessionStorage.setItem('access_token', json.access_token);
+        window.location.pathname = '/';
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Connexion failed");
+      });
     }
 }
 </script>

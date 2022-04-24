@@ -1,6 +1,6 @@
 <template>
   <MDBNavbar expand="lg" dark bg="light" container>
-    <MDBNavbarBrand href="#">
+    <MDBNavbarBrand href="/">
       <img src="../../assets/placeholder_logo.png" alt="" loading="lazy" />
     </MDBNavbarBrand>
     <MDBNavbarToggler target="#navbarLeftAlignExample" @click="collapse4 = !collapse4" />
@@ -25,7 +25,7 @@
   </MDBNavbar>
 </template>
 
-<script>
+<script lang="ts">
 import {
   MDBBtn,
   MDBNavbar,
@@ -39,8 +39,11 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem
 } from 'mdb-vue-ui-kit';
-import { ref } from 'vue';
-export default {
+import {Options, Vue} from "vue-class-component";
+import {inject, provide} from "vue";
+import {User} from "@/object/User";
+
+@Options({
   components: {
     MDBBtn,
     MDBNavbar,
@@ -54,15 +57,41 @@ export default {
     MDBDropdownMenu,
     MDBDropdownItem
   },
-  setup() {
-    const collapse4 = ref(false);
-    const dropdown7 = ref(false);
-    return {
-      collapse4,
-      dropdown7
+})
+export default class HeaderVue extends Vue {
+  private collapse4 = false;
+  private isLoginValid: boolean = false;
+  private user = inject('user');
+
+  mounted() {
+    const token = sessionStorage.getItem('access_token');
+    if (token === undefined) {
+      this.isLoginValid = false;
+    } else {
+      fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
+        headers: { Authorization: "Bearer " + token }
+      })
+      .then(response => {
+        if (response.status !== 200) {
+          throw new Error("Connexion expired");
+        }
+        return response.json();
+      })
+      .then(json => {
+        fetch(`${process.env.VUE_APP_AUTH_API_URL}/users/${json.userId}`, {
+          headers: { Authorization: "Bearer " + token }
+        })
+        .then(response => response.json())
+        .then(json => {
+          this.user = new User(json.email, json.username, new Date(), "", "", "")
+          provide('user', this.user);
+          console.log(this.user)
+        })
+      })
+      .catch(err => console.error(err));
     }
   }
-};
+}
 </script>
 
 <style scoped>
