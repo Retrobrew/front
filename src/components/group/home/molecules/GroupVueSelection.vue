@@ -32,5 +32,6 @@ export default class GroupVueSelection extends Vue {
 .group-vue-selector {
   background-color: #FFFFFF;
   text-align: center;
+  margin: 12px auto;
 }
 </style>

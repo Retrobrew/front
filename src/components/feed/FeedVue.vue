@@ -1,6 +1,7 @@
 <template>
   <div class="main-vue">
     <PostVue />
+    <PostVue />
   </div>
 </template>
 
