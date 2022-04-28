@@ -68,7 +68,7 @@ pipeline{
             steps{
                 withCredentials([usernamePassword(credentialsId: 'RETROBREW_FRONT_PROD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
                     nodejs(nodeJSInstallationName: 'nodejs'){
-                        sh('sshpass -p ${PASSWORD} scp -P 2000 file ${USERNAME}@retrobrew.fr:/tmp')
+                        sh('sshpass -p ${PASSWORD} scp -P 2000 dist/* ${USERNAME}@retrobrew.fr:/home/prod/www/.')
                     }
                 }
             }
