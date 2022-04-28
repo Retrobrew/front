@@ -39,7 +39,17 @@ pipeline{
                 }
             }
         }
-        stage("Deploy"){
+        stage("Build"){
+            when {
+                branch 'master'
+            }
+            steps {
+                nodejs(nodeJSInstallationName: 'nodejs') {
+                    sh 'yarn build'
+                }
+            }
+        }
+        stage("Deploy to dev environment"){
             when {
                 branch 'dev/master'
             }
@@ -47,6 +57,18 @@ pipeline{
                 withCredentials([usernamePassword(credentialsId: 'MOLERO_HEROKU_PASSWORD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
                     nodejs(nodeJSInstallationName: 'nodejs') {
                         sh('git push https://${USERNAME}:${PASSWORD}@git.heroku.com/retrobrew-dev-front.git HEAD:refs/heads/main')
+                    }
+                }
+            }
+        }
+        stage("Deploy to prod environment"){
+            when {
+                branch 'master'
+            }
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'RETROBREW_FRONT_PROD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+                    nodejs(nodeJSInstallationName: 'nodejs'){
+                        sh('sshpass -p ${PASSWORD} scp -P 2000 file ${USERNAME}@retrobrew.fr:/tmp')
                     }
                 }
             }
