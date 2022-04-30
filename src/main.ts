@@ -1,7 +1,12 @@
-import "bootstrap/dist/css/bootstrap.min.css"
+import 'mdb-vue-ui-kit/css/mdb.min.css'
 import { createApp } from 'vue'
 import App from './App.vue'
+import {User} from "@/object/User";
 
-createApp(App).mount('#app')
+const user: User | undefined = undefined;
 
-import "bootstrap/dist/js/bootstrap.js"
+const app = createApp(App)
+
+app.provide('user', user);
+
+app.mount("#app")
