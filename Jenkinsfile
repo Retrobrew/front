@@ -68,7 +68,7 @@ pipeline{
             steps{
                 withCredentials([usernamePassword(credentialsId: 'RETROBREW_FRONT_PROD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
                     nodejs(nodeJSInstallationName: 'nodejs'){
-                        sh('sshpass -p ${PASSWORD} scp -P 2000 dist/* ${USERNAME}@192.168.1.20:/home/prod/www/.')
+                        sh('sshpass -p ${PASSWORD} scp -P 22 dist/* ${USERNAME}@192.168.1.20:/home/prod/www/.')
                     }
                 }
             }
