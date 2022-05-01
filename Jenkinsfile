@@ -26,7 +26,7 @@ pipeline{
         stage('SonarQube Analysis') {
             when {
                 anyOf {
-                    branch 'dev/master'; branch 'feat/**'; branch 'fix/**'
+                    branch 'dev/master'; branch 'feat/**'; branch 'fix/**'; branch 'master'
                 }
             }
             steps {
@@ -68,7 +68,7 @@ pipeline{
             steps{
                 withCredentials([usernamePassword(credentialsId: 'RETROBREW_FRONT_PROD', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
                     nodejs(nodeJSInstallationName: 'nodejs'){
-                        sh('sshpass -p ${PASSWORD} scp -P 2000 file ${USERNAME}@retrobrew.fr:/tmp')
+                        sh('sshpass -p ${PASSWORD} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 22 -r dist/* ${USERNAME}@192.168.1.20:/home/prod/www/.')
                     }
                 }
             }
