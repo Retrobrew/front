@@ -10,6 +10,7 @@ import GroupHomeVue from "@/components/group/home/GroupHomeVue";
 import Error404 from "@/components/error/Error404";
 import UserProfileHomeVue from "@/components/user/profile/UserProfileHomeVue";
 import UserHomeVue from "@/components/user/user/UserHomeVue";
+import IDEVue from "@/components/ide/IDEVue";
 
 const routes = {
   '/': HomeVue,
@@ -18,6 +19,7 @@ const routes = {
   '/group': GroupHomeVue,
   '/profile': UserProfileHomeVue,
   '/user': UserHomeVue,
+  '/ide': IDEVue,
 }
 
 export default {
