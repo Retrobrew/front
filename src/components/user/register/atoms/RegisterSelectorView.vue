@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {defineProps} from "vue";
+import {defineEmits, defineProps} from "vue";
 
 const props = defineProps(['list']);
+const emits = defineEmits(['inputValue']);
 </script>
 
 <template>
-  <select class="form-select user-register-fields-input">
+  <select class="form-select user-register-fields-input" @change='emits("inputValue", $event.target.value)'>
     <option v-for="(item, index) in props.list" v-bind:key="index">
       {{item}}
     </option>
