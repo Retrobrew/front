@@ -20,11 +20,6 @@ export default class Home extends Vue {
   private user = inject('user');
   mounted() {
     console.log(this.user);
-    this.showUserLate();
-  }
-
-  showUserLate() {
-    setTimeout(() => console.log(inject('user')), 15000);
   }
 }
 </script>

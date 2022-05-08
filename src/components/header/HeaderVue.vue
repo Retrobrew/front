@@ -14,12 +14,19 @@
       </MDBNavbarNav>
 
       <MDBNavbarNav right class="w-25 justify-content-end">
-        <a href="/login">
-          <MDBBtn color="success" class="me-2">Login</MDBBtn>
-        </a>
-        <a href="/register">
-          <MDBBtn color="danger">Register</MDBBtn>
-        </a>
+        <div v-if="checkConnexion()">
+          <a href="/login">
+            <MDBBtn color="success" class="me-2">Login</MDBBtn>
+          </a>
+          <a href="/register">
+            <MDBBtn color="danger">Register</MDBBtn>
+          </a>
+        </div>
+        <div v-else>
+          <a href="/profile">
+            <MDBBtn color="success" class="me-2">Profile</MDBBtn>
+          </a>
+        </div>
       </MDBNavbarNav>
     </MDBCollapse>
   </MDBNavbar>
@@ -42,6 +49,7 @@ import {
 import {Options, Vue} from "vue-class-component";
 import {inject, provide} from "vue";
 import {User} from "@/object/User";
+import APIController from "@/controller/APIController";
 
 @Options({
   components: {
@@ -60,36 +68,10 @@ import {User} from "@/object/User";
 })
 export default class HeaderVue extends Vue {
   private collapse4 = false;
-  private isLoginValid: boolean = false;
-  private user = inject('user');
+  private isLoggedIn = false;
 
-  mounted() {
-    const token = sessionStorage.getItem('access_token');
-    if (token === undefined) {
-      this.isLoginValid = false;
-    } else {
-      fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
-        headers: { Authorization: "Bearer " + token }
-      })
-      .then(response => {
-        if (response.status !== 200) {
-          throw new Error("Connexion expired");
-        }
-        return response.json();
-      })
-      .then(json => {
-        fetch(`${process.env.VUE_APP_AUTH_API_URL}/users/${json.userId}`, {
-          headers: { Authorization: "Bearer " + token }
-        })
-        .then(response => response.json())
-        .then(json => {
-          this.user = new User(json.email, json.username, new Date(), "", "", "")
-          provide('user', this.user);
-          console.log(this.user)
-        })
-      })
-      .catch(err => console.error(err));
-    }
+  async checkConnexion(): Promise<boolean> {
+    return await APIController.isLogged();
   }
 }
 </script>
