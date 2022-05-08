@@ -30,6 +30,31 @@ class APIController {
                 alert(err);
             });
     }
+
+    static login = async (email: String, password: String) => {
+        await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
+            method: "POST",
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+            headers: { "Content-type": "application/json" }
+        })
+            .then(response => {
+                if (response.status !== 201) {
+                    throw new Error("Connexion failed");
+                }
+                return response.json();
+            })
+            .then(json => {
+                sessionStorage.setItem('access_token', json.access_token);
+                window.location.pathname = '/';
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Connexion failed");
+            });
+    }
 }
 
 export default APIController;
