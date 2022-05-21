@@ -14,7 +14,7 @@
       </MDBNavbarNav>
 
       <MDBNavbarNav right class="w-25 justify-content-end">
-        <div v-if="checkConnexion()">
+        <div v-if="isLoggedIn">
           <a href="/login">
             <MDBBtn color="success" class="me-2">Login</MDBBtn>
           </a>
@@ -70,8 +70,13 @@ export default class HeaderVue extends Vue {
   private collapse4 = false;
   private isLoggedIn = false;
 
-  async checkConnexion(): Promise<boolean> {
-    return await APIController.isLogged();
+  created() {
+    this.checkConnexion();
+  }
+  checkConnexion(): void {
+    APIController.isLogged().then((res) => {
+      this.isLoggedIn = res;
+    });
   }
 }
 </script>
