@@ -1,6 +1,3 @@
-import {User} from "@/object/User";
-import {inject, provide} from "vue";
-
 class APIController {
     constructor() {
     }
@@ -59,38 +56,22 @@ class APIController {
             });
     }
 
-    static isLogged = async (): Promise<boolean> => {
-        let isLoginValid = false;
-        let user = inject('user');
+    static isLogged(): boolean {
+        return !!sessionStorage.getItem('access_token');
+    }
 
+    static getUser(): Promise<any> {
         const token = sessionStorage.getItem('access_token');
-        if (token === undefined) {
-            return isLoginValid;
-        } else {
-            fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
-                headers: { Authorization: "Bearer " + token }
+        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
+            headers: { Authorization: "Bearer " + token }
+        })
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error("Connexion expired");
+                }
+                return response.json();
             })
-                .then(response => {
-                    if (response.status !== 200) {
-                        throw new Error("Connexion expired");
-                    }
-                    return response.json();
-                })
-                .then(json => {
-                    fetch(`${process.env.VUE_APP_AUTH_API_URL}/users/${json.userId}`, {
-                        headers: { Authorization: "Bearer " + token }
-                    })
-                        .then(response => response.json())
-                        .then(json => {
-                            user = new User(json.email, json.username, new Date(), "", "", "")
-                            provide('user', user);
-                            isLoginValid = true;
-                            console.log(user)
-                        })
-                })
-                .catch(err => console.error(err));
-        }
-        return isLoginValid;
+            .catch(err => console.error(err));
     }
 }
 

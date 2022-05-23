@@ -8,6 +8,7 @@ import {Options, Vue} from "vue-class-component";
 import HeaderVue from "@/components/header/HeaderVue.vue";
 import FeedVue from "@/components/feed/FeedVue.vue";
 import {inject} from "vue";
+import {User} from "@/object/User";
 
 @Options({
   name: "Home",
@@ -17,9 +18,6 @@ import {inject} from "vue";
   }
 })
 export default class Home extends Vue {
-  private user = inject('user');
-  mounted() {
-    console.log(this.user);
-  }
+  private user: User | undefined = inject('user');
 }
 </script>

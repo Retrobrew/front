@@ -14,7 +14,7 @@
       </MDBNavbarNav>
 
       <MDBNavbarNav right class="w-25 justify-content-end">
-        <div v-if="isLoggedIn">
+        <div v-if="!user">
           <a href="/login">
             <MDBBtn color="success" class="me-2">Login</MDBBtn>
           </a>
@@ -47,9 +47,8 @@ import {
   MDBDropdownItem
 } from 'mdb-vue-ui-kit';
 import {Options, Vue} from "vue-class-component";
-import {inject, provide} from "vue";
+import {inject} from "vue";
 import {User} from "@/object/User";
-import APIController from "@/controller/APIController";
 
 @Options({
   components: {
@@ -68,16 +67,8 @@ import APIController from "@/controller/APIController";
 })
 export default class HeaderVue extends Vue {
   private collapse4 = false;
-  private isLoggedIn = false;
+  private user: User | undefined = inject('user');
 
-  created() {
-    this.checkConnexion();
-  }
-  checkConnexion(): void {
-    APIController.isLogged().then((res) => {
-      this.isLoggedIn = res;
-    });
-  }
 }
 </script>
 
