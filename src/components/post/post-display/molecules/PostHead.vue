@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import PostLabel from "@/components/post/atoms/PostLabel.vue";
-import PostTitle from "@/components/post/atoms/PostTitle.vue";
-import PostUsername from "@/components/post/atoms/PostUsername.vue";
+import PostLabel from "@/components/post/post-display/atoms/PostLabel.vue";
+import PostTitle from "@/components/post/post-display/atoms/PostTitle.vue";
+import PostUsername from "@/components/post/post-display/atoms/PostUsername.vue";
 
 @Options({
   name: "PostHead",

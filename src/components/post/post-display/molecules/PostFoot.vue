@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import PostReaction from "@/components/post/atoms/PostReaction.vue";
-import PostComment from "@/components/post/atoms/PostComment.vue";
+import PostReaction from "@/components/post/post-display/atoms/PostReaction.vue";
+import PostComment from "@/components/post/post-display/atoms/PostComment.vue";
 
 @Options({
   name: "PostFoot",
