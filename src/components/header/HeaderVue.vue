@@ -74,7 +74,7 @@ export default class HeaderVue extends Vue {
 
 <style scoped>
 .navbar {
-  background-color: #2e3154!important;
+  background-color: #333553!important;
   color: white!important;
 }
 </style>
