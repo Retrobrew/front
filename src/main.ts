@@ -16,7 +16,7 @@ if(APIController.isLogged()){
                 new Date(json.dateOfBirth),
                 json.country,
                 json.sexe,
-                ""
+                json.picture
             )
 
             app.provide('user', user);

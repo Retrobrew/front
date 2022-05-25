@@ -30,7 +30,7 @@ export default class FeedVue extends Vue {
   private posts: Array<Post> = [];
 
   mounted() {
-    APIController.getPosts()
+    APIController.getMyFeed()
         .then((posts) => {
           this.posts = posts;
         })

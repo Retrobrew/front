@@ -1,7 +1,12 @@
 <template>
   <div id="friend-list" class="main-vue">
     <FriendListTitle />
-    <FriendListCard />
+    <div v-for="friend in friends" v-bind:key="friend.uuid">
+      <FriendListCard
+          v-bind:friend="friend"
+          v-on:delete-friend="deleteFriend($event)"
+      />
+    </div>
   </div>
 </template>
 
@@ -9,6 +14,8 @@
 import {Options, Vue} from "vue-class-component";
 import FriendListTitle from "@/components/friend/list/atoms/FriendListTitle.vue";
 import FriendListCard from "@/components/friend/list/molecules/FriendListCard.vue";
+import APIController from "@/controller/APIController";
+import {Friend} from "@/object/Friend";
 
 @Options({
   name: "FriendListVue",
@@ -18,6 +25,25 @@ import FriendListCard from "@/components/friend/list/molecules/FriendListCard.vu
   }
 })
 export default class FriendListVue extends Vue {
+  private friends: Array<Friend> = [];
+
+  mounted() {
+    APIController.getMyFriends()
+      .then((friends) => {
+        this.friends = friends;
+      })
+      .catch((reason) => {
+        //TODO afficher un message d'erreur;
+        console.error(reason);
+      });
+  }
+
+  deleteFriend(friendUuid: string){
+    const friend = this.friends.find(friend => friend.uuid === friendUuid);
+    if(friend){
+      this.friends.splice(this.friends.indexOf(friend), 1)
+    }
+  }
 }
 </script>
 

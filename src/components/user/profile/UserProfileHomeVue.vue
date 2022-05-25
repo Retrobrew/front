@@ -1,8 +1,18 @@
 <template>
   <HeaderVue />
   <div id="user-profile" class="main-vue">
-    <UserProfileHead :user-name="userName" :description="userDescription"/>
-    <UserProfileBody :user-picture="userPicture" :password-name="passwordName" :password-value="passwordValue" :password-confirm-name="passwordConfirmName" :mail-name="mailName" :mail-value="mailValue" :countries-name="countriesName" :countries="countries" :country-value="countryValue"/>
+    <UserProfileHead :user-name="user.name" :description="user.sex + ' - 78'"/>
+    <UserProfileBody
+        :user-picture="user.picture"
+        :password-name="passwordName"
+        :password-value="passwordValue"
+        :password-confirm-name="passwordConfirmName"
+        :mail-name="mailName"
+        :mail-value="user.mail"
+        :countries-name="countriesName"
+        :countries="countries"
+        :country-value="countryValue"
+    />
   </div>
   <div class="user-list">
     <FriendListVue />
@@ -17,6 +27,8 @@ import UserProfileHead from "@/components/user/common/molecules/UserProfileHead.
 import UserProfileBody from "@/components/user/profile/molecules/UserProfileBody.vue";
 import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 import GroupListVue from "@/components/group/list/GroupListVue.vue";
+import {User} from "@/object/User";
+import {inject} from "vue";
 
 @Options({
   name: "UserProfileHomeVue",
@@ -29,14 +41,11 @@ import GroupListVue from "@/components/group/list/GroupListVue.vue";
   }
 })
 export default class UserProfileHomeVue extends Vue {
-  private userName = "@Quentin🇫🇷";
-  private userDescription = "Male - 22";
-  private userPicture = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.qrSjHA3rS0ZIDbUcTzRONQHaHa%26pid%3DApi&f=1";
+  private user: User | undefined = inject('user');
   private passwordName = "Password";
   private passwordConfirmName = "Confirm Password";
   private passwordValue = "P4$$w0rd";
   private mailName = "Email address";
-  private mailValue = "qmolero@myges.fr";
   private countriesName = "Country";
   private countryValue = "France";
   private countries = [
@@ -52,6 +61,7 @@ export default class UserProfileHomeVue extends Vue {
     "United Kingdom"
   ];
 }
+
 </script>
 
 <style scoped>
