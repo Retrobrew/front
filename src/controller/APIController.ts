@@ -1,5 +1,6 @@
 import {Post} from "@/object/Post";
 import {Friend} from "@/object/Friend";
+import {provide} from "vue";
 
 class APIController {
     constructor() {
@@ -11,7 +12,7 @@ class APIController {
         birthdate: String,
         sexe: String,
         country: String,
-        password: String, 
+        password: String,
         picture: String
     ) => {
         await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
@@ -33,7 +34,6 @@ class APIController {
                 return response.json()
             })
             .then(json => {
-                console.log(json);
                 sessionStorage.setItem('access_token', json.access_token);
                 window.location.pathname = '/';
             })
@@ -65,6 +65,12 @@ class APIController {
                 console.error(err);
                 alert("Connexion failed");
             });
+    }
+
+    static logout(): void {
+        sessionStorage.removeItem('access_token');
+        provide('user', undefined);
+        window.location.reload();
     }
 
     static isLogged(): boolean {
@@ -108,6 +114,36 @@ class APIController {
                         item.content,
                         item.media,
                         [],
+                        item.createdAt,
+                        item.lastUpdatedAt
+                    )
+                    posts.push(post);
+                })
+
+                return posts;
+            })
+    }
+
+    static getHomeFeed(): Promise<Array<Post>> {
+        const posts: Array<Post> = [];
+
+        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/feeds/home`)
+            .then(response => {
+                if(response.status !== 200) {
+                    throw new Error("Error while trying to fetch posts");
+                }
+
+                return response.json();
+            })
+            .then(json => {
+                json.forEach((item: any) => {
+                    const post = new Post(
+                        item.uuid,
+                        item.title,
+                        item.author,
+                        item.content,
+                        item.media,
+                        item.comments,
                         item.createdAt,
                         item.lastUpdatedAt
                     )

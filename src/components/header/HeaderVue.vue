@@ -19,12 +19,15 @@
             <MDBBtn color="success" class="me-2">Login</MDBBtn>
           </a>
           <a href="/register">
-            <MDBBtn color="danger">Register</MDBBtn>
+            <MDBBtn color="primary">Register</MDBBtn>
           </a>
         </div>
         <div v-else>
           <a href="/profile">
             <MDBBtn color="success" class="me-2">Profile</MDBBtn>
+          </a>
+          <a v-on:click="logout">
+            <MDBBtn color="danger" class="me-2">Logout</MDBBtn>
           </a>
         </div>
       </MDBNavbarNav>
@@ -49,6 +52,7 @@ import {
 import {Options, Vue} from "vue-class-component";
 import {inject} from "vue";
 import {User} from "@/object/User";
+import APIController from "@/controller/APIController";
 
 @Options({
   components: {
@@ -68,6 +72,10 @@ import {User} from "@/object/User";
 export default class HeaderVue extends Vue {
   private collapse4 = false;
   private user: User | undefined = inject('user');
+
+  logout(){
+    APIController.logout()
+  }
 
 }
 </script>

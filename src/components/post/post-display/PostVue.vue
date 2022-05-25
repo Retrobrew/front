@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <PostHead :post-label="postLabel" :post-title="post.title" :post-user="post.author.name" />
+    <PostHead :post-label="postLabel" :post-title="post.title" :post-user="post.author.username" />
     <PostContent :content="post.content" />
     <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="post.comments.length" />
   </div>

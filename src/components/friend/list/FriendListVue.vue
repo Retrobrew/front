@@ -1,12 +1,18 @@
 <template>
   <div id="friend-list" class="main-vue">
     <FriendListTitle />
-    <div v-for="friend in friends" v-bind:key="friend.uuid">
-      <FriendListCard
-          v-bind:friend="friend"
-          v-on:delete-friend="deleteFriend($event)"
-      />
+    <div v-if="friends.length > 0">
+      <div v-for="friend in friends" v-bind:key="friend.uuid">
+        <FriendListCard
+            v-bind:friend="friend"
+            v-on:delete-friend="deleteFriend($event)"
+        />
+      </div>
     </div>
+    <div v-else>
+      <p class="text-center">Vous n'avez pas encore d'ami :/</p>
+    </div>
+
   </div>
 </template>
 
