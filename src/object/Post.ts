@@ -4,7 +4,7 @@ export class Post {
     public author: string;
     public content: string;
     public media: string = "";
-    public comments: Array<Post> = [];
+    public comments: number;
     public createdAt: Date;
     public lastUpdatedAt: Date;
 
@@ -15,7 +15,7 @@ export class Post {
         author: string,
         content: string,
         media: string,
-        comments: Array<Post>,
+        comments: number,
         createdAt: Date,
         lastUpdatedAt: Date
     ) {

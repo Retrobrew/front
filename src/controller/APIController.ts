@@ -113,7 +113,7 @@ class APIController {
                         item.author,
                         item.content,
                         item.media,
-                        [],
+                        0,
                         item.createdAt,
                         item.lastUpdatedAt
                     )
@@ -143,7 +143,7 @@ class APIController {
                         item.author,
                         item.content,
                         item.media,
-                        item.comments,
+                        item.commentsNb,
                         item.createdAt,
                         item.lastUpdatedAt
                     )
