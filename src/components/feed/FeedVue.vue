@@ -44,7 +44,6 @@ export default class FeedVue extends Vue {
           });
       return
     }
-    console.log("user")
     APIController.getMyFeed()
         .then((posts) => {
           this.posts = posts;
