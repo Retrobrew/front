@@ -70,7 +70,7 @@ class APIController {
     static logout(): void {
         sessionStorage.removeItem('access_token');
         provide('user', undefined);
-        window.location.reload();
+        window.location.pathname = "/";
     }
 
     static isLogged(): boolean {
