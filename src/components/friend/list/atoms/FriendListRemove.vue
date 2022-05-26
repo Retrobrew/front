@@ -1,5 +1,5 @@
 <template>
-  <a v-on:click="unfriend" class="btn-close btn-rounded btn-sm btn"></a>
+  <a v-on:click="unfriend(friendUuid)" class="btn-close btn-rounded btn-sm btn"></a>
 </template>
 
 <script lang="ts">
@@ -13,12 +13,12 @@ import APIController from "@/controller/APIController";
   }
 })
 export default class FriendListRemove extends Vue {
-  unfriend(): void {
+  unfriend(friendUuid: string): void {
     APIController
-        .unfriend(this.friendUuid)
+        .unfriend(friendUuid)
         .then(res => {
           if(res.status === 200) {
-            this.$parent.$emit("delete-friend", this.friendUuid);
+            // this.$parent.$emit("delete-friend", friendUuid);
           }
       })
 

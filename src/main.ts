@@ -8,7 +8,7 @@ const app = createApp(App)
 app.provide('user', undefined);
 
 if(APIController.isLogged()){
-    APIController.getUser()
+    APIController.getCurrentUser()
         .then(json => {
             const user = new User(
                 json.email,
