@@ -10,6 +10,7 @@
 import {Options, Vue} from "vue-class-component";
 import LoginInputView from "@/components/user/login/atoms/LoginInputView.vue";
 import LoginButtonView from "@/components/user/login/atoms/LoginButtonView.vue";
+import APIController from "@/controller/APIController";
 
 @Options({
   name: "LoginFields",
@@ -27,28 +28,7 @@ export default class LoginFields extends Vue {
   private password = "";
 
   private async connect() {
-    await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        email: this.mail,
-        password: this.password
-      }),
-      headers: { "Content-type": "application/json" }
-    })
-    .then(response => {
-      if (response.status !== 201) {
-        throw new Error("Connexion failed");
-      }
-      return response.json();
-    })
-    .then(json => {
-      sessionStorage.setItem('access_token', json.access_token);
-      window.location.pathname = '/';
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Connexion failed");
-    });
+    await APIController.login(this.mail, this.password);
   }
 }
 </script>

@@ -6,7 +6,14 @@ export class User {
     public sex: String;
     public picture: String;
 
-    constructor(mail: String, name: String, birthday: Date, country: String, sex: String, picture: String) {
+    constructor(
+        mail: String,
+        name: String,
+        birthday: Date,
+        country: String,
+        sex: String,
+        picture: String
+    ) {
         this.mail = mail;
         this.name = name;
         this.birthday = birthday;

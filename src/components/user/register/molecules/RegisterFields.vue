@@ -4,8 +4,8 @@
     <RegisterInputView @input-value="(value) => this.password = value" :input-place-holder="this.passwordPlaceHolder"/>
     <RegisterInputView @input-value="(value) => this.mail = value" :input-place-holder="this.mailPlaceHolder"/>
     <RegisterInputView @input-value="(value) => this.birthdate = value" :input-place-holder="this.birthdatePlaceHolder" type="date"/>
-    <RegisterSelectorView :list="this.countries"/>
-    <RegisterSelectorView :list="this.sexes"/>
+    <RegisterSelectorView @input-value="(value) => this.country = value" :list="this.countries"/>
+    <RegisterSelectorView @input-value="(value) => this.sexe = value" :list="this.sexes"/>
     <RegisterInputView @input-value="(value) => this.picture = value" :input-place-holder="this.picturePlaceHolder"/>
     <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
@@ -16,6 +16,7 @@ import {Options, Vue} from "vue-class-component";
 import RegisterInputView from "@/components/user/register/atoms/RegisterInputView.vue";
 import RegisterSelectorView from "@/components/user/register/atoms/RegisterSelectorView.vue";
 import RegisterButtonView from "@/components/user/register/atoms/RegisterButtonView.vue";
+import APIController from "@/controller/APIController";
 
 @Options({
   name: "RegisterFields",
@@ -51,61 +52,16 @@ export default class RegisterFields extends Vue {
   private mailPlaceHolder = "Email address"
   private password = ""
   private passwordPlaceHolder = "Password"
-  private birthdate = ""
+  private birthdate = "";
   private birthdatePlaceHolder = "Birthdate"
-  private country = ""
-  private sexe = ""
+  private country = this.countries[0]
+  private sexe = this.sexes[0]
   private picture = ""
   private picturePlaceHolder = "URL to profile picture"
 
   private async register() {
-      await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: this.mail,
-          username: this.username,
-          password: this.password
-        }),
-        headers: { "Content-type": "application/json" }
-      })
-      .then(response => {
-        if (response.status !== 201) {
-          throw new Error("Registration failed")
-        }
-        return response.json()
-      })
-      .then(json => {
-        console.log(json);
-        this.connect();
-      })
-      .catch(err => {
-        alert(err);
-      });
-    }
-    private async connect() {
-      await fetch(`${process.env.VUE_APP_AUTH_API_URL}/auth/login`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: this.mail,
-          password: this.password
-        }),
-        headers: { "Content-type": "application/json" }
-      })
-      .then(response => {
-        if (response.status !== 201) {
-          throw new Error("Connexion failed");
-        }
-        return response.json();
-      })
-      .then(json => {
-        sessionStorage.setItem('access_token', json.access_token);
-        window.location.pathname = '/';
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Connexion failed");
-      });
-    }
+    await APIController.register(this.mail, this.username, this.birthdate, this.sexe, this.country, this.password, this.picture);
+  }
 }
 </script>
 

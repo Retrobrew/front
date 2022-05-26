@@ -27,6 +27,7 @@ export default class UserProfileHead extends Vue {
 
 <style scoped>
 .user-profile-head {
+  padding: 10px;
   text-align: center;
 }
 </style>
