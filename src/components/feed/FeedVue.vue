@@ -1,5 +1,5 @@
 <template>
-  <div class="main-vue">
+  <div class="container mt-3">
     <div v-if="posts.length > 0">
       <div v-for="post in posts" v-bind:key="post.uuid">
         <PostVue
@@ -56,8 +56,3 @@ export default class FeedVue extends Vue {
 }
 </script>
 
-<style scoped>
-#feed div {
-  margin: 12px 0;
-}
-</style>

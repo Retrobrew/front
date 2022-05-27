@@ -1,6 +1,7 @@
 import {Post} from "@/object/Post";
 import {Friend} from "@/object/Friend";
 import {provide} from "vue";
+import {User} from "@/object/User";
 
 class APIController {
     constructor() {
@@ -89,6 +90,27 @@ class APIController {
                 return response.json();
             })
             .catch(err => console.error(err));
+    }
+
+    static getUserProfile(userUuid: string): Promise<User> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}`,
+            {
+                headers: { Authorization: "Bearer " + token }
+            }
+        ).then(response => {
+            return response.json()
+        }).then(json => {
+            return new User(
+                json.mail,
+                json.username,
+                json.dateOfBirth,
+                json.country,
+                json.sexe,
+                json.picture
+            );
+        })
     }
 
     static getMyFeed(): Promise<Array<Post>> {

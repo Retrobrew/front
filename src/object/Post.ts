@@ -5,9 +5,8 @@ export class Post {
     public content: string;
     public media: string = "";
     public comments: number;
-    public createdAt: Date;
-    public lastUpdatedAt: Date;
-
+    public createdAt: Date | null;
+    public lastUpdatedAt: Date | null;
 
     constructor(
         uuid: string,
@@ -27,6 +26,19 @@ export class Post {
         this.comments = comments;
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    static emptyPost(): Post {
+        return new Post(
+            "",
+            "",
+            "",
+            "",
+            "",
+            0,
+            new Date(),
+            new Date()
+        );
     }
 
 }
