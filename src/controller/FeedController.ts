@@ -5,9 +5,11 @@ export class FeedController {
         const token = sessionStorage.getItem('access_token');
         const posts: Array<Post> = [];
 
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/feeds/my`,{
-            headers: { Authorization: "Bearer " + token }
-        })
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/feeds/my`,
+            {
+                headers: { Authorization: "Bearer " + token }
+            })
             .then(response => {
                 if(response.status !== 200) {
                     throw new Error("Error while trying to fetch posts");
@@ -37,7 +39,9 @@ export class FeedController {
     static getHomeFeed(): Promise<Array<Post>> {
         const posts: Array<Post> = [];
 
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/feeds/home`)
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/feeds/home`
+        )
             .then(response => {
                 if(response.status !== 200) {
                     throw new Error("Error while trying to fetch posts");
@@ -62,5 +66,20 @@ export class FeedController {
 
                 return posts;
             })
+    }
+
+    static createPost(post: Post): Promise<string> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/`,
+            {
+                method: 'POST',
+                body: JSON.stringify(post),
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-type": "application/json"
+                }
+            }
+        ).then(res => res.json())
     }
 }

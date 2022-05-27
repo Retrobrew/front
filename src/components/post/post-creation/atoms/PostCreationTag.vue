@@ -1,7 +1,5 @@
 <template>
-  <div>
     <a class="nav-link" v-on:click="addTag">Add tag</a>
-  </div>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,5 @@
 <template>
-<div>
   <a href="" class="nav-link">upload a picture</a>
-</div>
 </template>
 
 <script>
