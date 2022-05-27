@@ -1,8 +1,9 @@
 <template>
   <HeaderVue />
-  <div class="row">
+
+  <div class="row m-0">
     <ProjectFiles
-        class="col-sm-1"
+        class="col-sm-1 p-1"
         v-bind:project-id="projectId"
         v-bind:files="files"
     />
@@ -13,6 +14,7 @@
       ></div>
       <div class="ide-action">
         <button class="btn btn-primary">Run code</button>
+        <button v-on:click="saveFile(currentFile)" class="btn btn-success">Save file</button>
       </div>
     </div>
   </div>
@@ -26,28 +28,40 @@
   import {TreeNode} from "@/object/TreeNode";
   import * as monaco from "monaco-editor";
 
-  const projectId = 555;
   const monacoEditorDiv = ref< HTMLElement | null> (null);
-  let monacoEditor: monaco.editor.IStandaloneCodeEditor
+  let monacoEditor: monaco.editor.IStandaloneCodeEditor;
+
+  const projectId = 555;
   const files: Array<TreeNode> = APIController.getProjectTree(projectId);
   const fileContent: string | any = "fn main() {}";
-  const editorOptions = {
-    language: "rust",
-    minimap: { enabled: false },
-    value: fileContent
-  };
+  const currentFile = "somefile.rs";
 
   onMounted(() => {
+    APIController.getFileContent(projectId, currentFile)
+    const editorOptions = {
+      language: "rust",
+      minimap: { enabled: false },
+      value: fileContent
+    };
+
     monacoEditor = monaco.editor.create(
         monacoEditorDiv.value!,
         editorOptions
     );
 
     monacoEditor.onDidChangeModelContent(event => {
-      console.log(event)
+      //TODO
       console.log(monacoEditor.getValue())
     })
   })
+
+  const saveFile = (filename: string) => {
+    console.log("Enregistrement du fichier: API à faire")
+    alert(`the file ${filename} was saved.`);
+  }
+
+
+
 
 
 </script>
