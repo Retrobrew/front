@@ -3,13 +3,11 @@
     <MDBCard>
       <MDBCardBody class="pb-2">
         <PostCreationForm v-bind:post="post"/>
-        <div class="row">
-          <PostCreationLabel class="col-sm-auto"/>
-          <PostCreationPicture class="col-sm-auto"/>
-          <span class="col-sm-8"></span>
-          <div class="col-sm-auto">
-            <button class="mt-2 btn btn-sm btn-success" v-on:click="createPost">Create</button>
-          </div>
+        <img class="card-img w-75 mt-2" v-bind:src="picture" v-if="showPicture"/>
+        <PostCreationLabel class="row pt-2"/>
+        <PostCreationPicture v-on:uploadPicture="addPicture($event)" class="row"/>
+        <div class="col-sm-1 float-end">
+          <button class="mt-2 btn btn-sm btn-success float-end" v-on:click="createPost">Create</button>
         </div>
       </MDBCardBody>
     </MDBCard>
@@ -44,6 +42,8 @@ import {inject} from "vue";
 export default class PostCreationVue extends Vue {
   private post: Post = Post.emptyPost();
   private user: User | undefined = inject('user');
+  private picture = "";
+  private showPicture = false;
 
   createPost(){
     FeedController
@@ -55,9 +55,11 @@ export default class PostCreationVue extends Vue {
         })
   }
 
+  addPicture(picture: any): void {
+    this.picture = URL.createObjectURL(picture);
+    this.showPicture = true;
+    // this.post.media = picture;
+  }
+
 }
 </script>
-
-<style scoped>
-
-</style>
