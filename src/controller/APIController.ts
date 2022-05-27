@@ -2,6 +2,7 @@ import {Post} from "@/object/Post";
 import {Friend} from "@/object/Friend";
 import {provide} from "vue";
 import {User} from "@/object/User";
+import {TreeNode} from "@/object/TreeNode";
 
 class APIController {
     constructor() {
@@ -209,6 +210,51 @@ class APIController {
         return fetch(`${process.env.VUE_APP_AUTH_API_URL}/friends/${friendUuid}/unfriend`, {
             method: "POST",
             headers: { Authorization: "Bearer " + token }
+        });
+    }
+
+    static getProjectTree(projectId: number): Array<TreeNode> {
+        /* TODO problème CORS
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/explorer?id=${projectId}`,
+        ).then((res) => {
+            return res.json()
+        });
+
+         */
+        const res = [{
+            "children":[
+                {
+                    "name":"rom.rs",
+                    "type":"file"
+                },
+                {
+                    "children": [{
+                        "name":"file.txt",
+                        "type":"file"
+                    }],
+                    "name":"test",
+                    "type":"directory"
+                }],
+            "name":"src",
+            "type":"directory"
+        }];
+
+        const files: Array<TreeNode> = [];
+
+        res.forEach(item => {
+            const node = TreeNode.createFromApi(item)
+            files.push(node);
+        });
+
+        return files;
+    }
+
+    static getFileContent(projectId: number, filename: string): Promise<void> {
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/viewer?id=${projectId}&path=/${filename}`,
+        ).then((res) => {
+            return res.json()
         });
     }
 }

@@ -1,37 +1,59 @@
 <template>
   <HeaderVue />
-  <div class="main-vue ide">
-    <div id="editor"></div>
-    <div class="ide-action">
-      <button class="btn btn-primary">Run code</button>
+  <div class="row">
+    <ProjectFiles
+        class="col-sm-1"
+        v-bind:project-id="projectId"
+        v-bind:files="files"
+    />
+    <div class="main-vue ide">
+      <div
+          class="monaco-editor"
+          ref="monacoEditorDiv"
+      ></div>
+      <div class="ide-action">
+        <button class="btn btn-primary">Run code</button>
+      </div>
     </div>
   </div>
+
 </template>
+<script setup lang="ts">
+  import HeaderVue from "@/components/header/HeaderVue.vue";
+  import ProjectFiles from "@/components/ide/atoms/ProjectFiles.vue";
+  import APIController from "@/controller/APIController";
+  import {onMounted, ref} from "vue";
+  import {TreeNode} from "@/object/TreeNode";
+  import * as monaco from "monaco-editor";
 
-<script>
-import {Options, Vue} from "vue-class-component";
-import loader from "@monaco-editor/loader";
-import HeaderVue from "@/components/header/HeaderVue";
+  const projectId = 555;
+  const monacoEditorDiv = ref< HTMLElement | null> (null);
+  let monacoEditor: monaco.editor.IStandaloneCodeEditor
+  const files: Array<TreeNode> = APIController.getProjectTree(projectId);
+  const fileContent: string | any = "fn main() {}";
+  const editorOptions = {
+    language: "rust",
+    minimap: { enabled: false },
+    value: fileContent
+  };
 
-@Options({
-  name: "IDEVue",
-  components: {HeaderVue},
-})
-export default class IDEVue extends Vue {
-  async mounted() {
-    loader.init().then((monaco) => {
-      const editorOptions = {
-        language: "rust",
-        minimap: { enabled: false },
-      };
-      monaco.editor.create(document.getElementById("editor"), editorOptions);
-  });
-  }
-}
+  onMounted(() => {
+    monacoEditor = monaco.editor.create(
+        monacoEditorDiv.value!,
+        editorOptions
+    );
+
+    monacoEditor.onDidChangeModelContent(event => {
+      console.log(event)
+      console.log(monacoEditor.getValue())
+    })
+  })
+
+
 </script>
 
 <style scoped>
-#editor {
+.monaco-editor {
   margin: 8px;
   height: 80vh;
 }
