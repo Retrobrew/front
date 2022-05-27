@@ -2,23 +2,7 @@
   <div>
     <ul v-for="file in files" v-bind:key="file.name">
         <li>{{ file.name }}</li>
-      <div v-if="file.children.length> 0">
-        <ul v-for="(item, index) in file" v-bind:key="index">
-          <li>{{item.name}}</li>
-        </ul>
-      </div>
-
     </ul>
-<!--    <vue-tree-list-->
-<!--        @click="onClick"-->
-<!--        @change-name="onChangeName"-->
-<!--        @delete-node="onDel"-->
-<!--        @add-node="onAddNode"-->
-<!--        :model="data"-->
-<!--        default-tree-node-name="new node"-->
-<!--        default-leaf-node-name="new leaf"-->
-<!--        v-bind:default-expanded="false"-->
-<!--    ></vue-tree-list>-->
   </div>
 
   <!--  <div class="tree">

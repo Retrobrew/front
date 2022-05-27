@@ -1,6 +1,5 @@
 <template>
   <HeaderVue />
-
   <div class="row m-0">
     <ProjectFiles
         class="col-sm-1 p-1"
@@ -13,7 +12,7 @@
           ref="monacoEditorDiv"
       ></div>
       <div class="ide-action">
-        <button class="btn btn-primary">Run code</button>
+        <button v-on:click="runCode" class="btn btn-primary">Run code</button>
         <button v-on:click="saveFile(currentFile)" class="btn btn-success">Save file</button>
       </div>
     </div>
@@ -23,31 +22,36 @@
 <script setup lang="ts">
   import HeaderVue from "@/components/header/HeaderVue.vue";
   import ProjectFiles from "@/components/ide/atoms/ProjectFiles.vue";
-  import APIController from "@/controller/APIController";
   import {onMounted, ref} from "vue";
   import {TreeNode} from "@/object/TreeNode";
   import * as monaco from "monaco-editor";
+  import ProjectController from "@/controller/ProjectController";
 
   const monacoEditorDiv = ref< HTMLElement | null> (null);
   let monacoEditor: monaco.editor.IStandaloneCodeEditor;
 
   const projectId = 555;
-  const files: Array<TreeNode> = APIController.getProjectTree(projectId);
-  const fileContent: string | any = "fn main() {}";
+  const files: Array<TreeNode> = ProjectController.getProjectTree(projectId);
+  let fileDefaultContent: string | any = "fn main() {}";
   const currentFile = "somefile.rs";
+  const currentLanguage = "rust";
 
   onMounted(() => {
-    APIController.getFileContent(projectId, currentFile)
     const editorOptions = {
       language: "rust",
       minimap: { enabled: false },
-      value: fileContent
+      value: fileDefaultContent
     };
 
     monacoEditor = monaco.editor.create(
         monacoEditorDiv.value!,
         editorOptions
     );
+
+    ProjectController.getFileContent(projectId, currentFile)
+        .then(res => {
+          monacoEditor.setValue(res.content)
+        })
 
     monacoEditor.onDidChangeModelContent(event => {
       //TODO
@@ -60,10 +64,9 @@
     alert(`the file ${filename} was saved.`);
   }
 
-
-
-
-
+  const runCode = () => {
+    // ProjectController.runCode(currentLanguage, projectId);
+  }
 </script>
 
 <style scoped>
