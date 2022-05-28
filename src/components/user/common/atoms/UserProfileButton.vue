@@ -17,7 +17,7 @@ export default class UserProfileButton extends Vue {
 
 <style scoped>
 .user-profile-button {
-  margin: 24px auto;
+  margin: 12px auto;
   text-align: center;
   display: flex;
 }
