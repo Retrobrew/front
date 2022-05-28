@@ -1,20 +1,21 @@
+import {User} from "@/object/User";
+
 export class Post {
     public uuid: string;
     public title: string;
-    public author: string;
+    public author: User | null;
     public content: string;
-    public media: string = "";
+    public media: File | null;
     public comments: number;
-    public createdAt: Date;
-    public lastUpdatedAt: Date;
-
+    public createdAt: Date | null;
+    public lastUpdatedAt: Date | null;
 
     constructor(
         uuid: string,
         title: string,
-        author: string,
+        author: User | null,
         content: string,
-        media: string,
+        media: File | null,
         comments: number,
         createdAt: Date,
         lastUpdatedAt: Date
@@ -27,6 +28,33 @@ export class Post {
         this.comments = comments;
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    static emptyPost(): Post {
+        return new Post(
+            "",
+            "",
+            null,
+            "",
+            null,
+            0,
+            new Date(),
+            new Date()
+        );
+    }
+
+    generateFormData(): FormData {
+        const formData = new FormData();
+        const date  = this.createdAt?.toUTCString()
+
+        formData.append('title', this.title);
+        formData.append('content', this.content);
+        formData.append('createdAt',date ? date : "" );
+        if(this.media){
+            formData.append('media', this.media)
+        }
+
+        return formData;
     }
 
 }

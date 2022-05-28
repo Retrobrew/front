@@ -19,7 +19,7 @@
             <MDBBtn color="success" class="me-2">Login</MDBBtn>
           </a>
           <a href="/register">
-            <MDBBtn color="primary">Register</MDBBtn>
+            <MDBBtn color="primary" class="mt-2">Register</MDBBtn>
           </a>
         </div>
         <div v-else>
@@ -27,7 +27,7 @@
             <MDBBtn color="success" class="me-2">Profile</MDBBtn>
           </a>
           <a v-on:click="logout">
-            <MDBBtn color="danger" class="me-2">Logout</MDBBtn>
+            <MDBBtn color="danger" class="mt-2">Logout</MDBBtn>
           </a>
         </div>
       </MDBNavbarNav>

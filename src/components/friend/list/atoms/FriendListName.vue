@@ -1,11 +1,12 @@
 <template>
-  <a :href="'/user'" class="link">
+  <a v-on:click="visitFriend(uuid)" class="link">
     <p>{{username}}</p>
   </a>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import APIController from "@/controller/APIController";
 
 @Options({
   name: "FriendListName",
@@ -15,10 +16,16 @@ import {Options, Vue} from "vue-class-component";
   }
 })
 export default class FriendListName extends Vue {
-  private friendLink = "";
-  async mounted() {
-    await this.$nextTick();
-    this.friendLink = `/user/${this.uuid}`;
+
+  private visitFriend(friendUuid: string){
+    APIController
+        .getUserProfile(friendUuid)
+        .then((res) => {
+          // console.log(res)
+          window.location.pathname = "/user"
+        }).catch(reason => {
+      console.error(reason);
+    })
   }
 }
 </script>

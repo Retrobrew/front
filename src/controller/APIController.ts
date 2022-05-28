@@ -1,6 +1,6 @@
-import {Post} from "@/object/Post";
 import {Friend} from "@/object/Friend";
 import {provide} from "vue";
+import {User} from "@/object/User";
 
 class APIController {
     constructor() {
@@ -91,67 +91,26 @@ class APIController {
             .catch(err => console.error(err));
     }
 
-    static getMyFeed(): Promise<Array<Post>> {
+    static getUserProfile(userUuid: string): Promise<User> {
         const token = sessionStorage.getItem('access_token');
-        const posts: Array<Post> = [];
-
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/feeds/my`,{
-            headers: { Authorization: "Bearer " + token }
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}`,
+            {
+                headers: { Authorization: "Bearer " + token }
+            }
+        ).then(response => {
+            return response.json()
+        }).then(json => {
+            return new User(
+                json.uuid,
+                json.mail,
+                json.username,
+                json.dateOfBirth,
+                json.country,
+                json.sexe,
+                json.picture
+            );
         })
-            .then(response => {
-                if(response.status !== 200) {
-                    throw new Error("Error while trying to fetch posts");
-                }
-
-                return response.json();
-            })
-            .then(json => {
-                json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        0,
-                        item.createdAt,
-                        item.lastUpdatedAt
-                    )
-                    posts.push(post);
-                })
-
-                return posts;
-            })
-    }
-
-    static getHomeFeed(): Promise<Array<Post>> {
-        const posts: Array<Post> = [];
-
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/feeds/home`)
-            .then(response => {
-                if(response.status !== 200) {
-                    throw new Error("Error while trying to fetch posts");
-                }
-
-                return response.json();
-            })
-            .then(json => {
-                json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        item.commentsNb,
-                        item.createdAt,
-                        item.lastUpdatedAt
-                    )
-                    posts.push(post);
-                })
-
-                return posts;
-            })
     }
 
     static getMyFriends(): Promise<Array<Friend>> {
