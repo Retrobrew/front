@@ -1,12 +1,14 @@
 export class User {
+    public uuid: String;
     public mail: String;
-    public name: String;
+    public username: String;
     public birthday: Date;
     public country: String;
     public sex: String;
     public picture: String;
 
     constructor(
+        uuid: String,
         mail: String,
         name: String,
         birthday: Date,
@@ -14,8 +16,9 @@ export class User {
         sex: String,
         picture: String
     ) {
+        this.uuid = uuid;
         this.mail = mail;
-        this.name = name;
+        this.username = name;
         this.birthday = birthday;
         this.country = country;
         this.sex = sex;

@@ -102,6 +102,7 @@ class APIController {
             return response.json()
         }).then(json => {
             return new User(
+                json.uuid,
                 json.mail,
                 json.username,
                 json.dateOfBirth,

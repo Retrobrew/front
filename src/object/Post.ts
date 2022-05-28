@@ -1,7 +1,9 @@
+import {User} from "@/object/User";
+
 export class Post {
     public uuid: string;
     public title: string;
-    public author: string;
+    public author: User | null;
     public content: string;
     public media: string = "";
     public comments: number;
@@ -11,7 +13,7 @@ export class Post {
     constructor(
         uuid: string,
         title: string,
-        author: string,
+        author: User | null,
         content: string,
         media: string,
         comments: number,
@@ -32,7 +34,7 @@ export class Post {
         return new Post(
             "",
             "",
-            "",
+            null,
             "",
             "",
             0,

@@ -1,7 +1,14 @@
 <template>
   <HeaderVue />
-  <PostCreationVue v-on:postCreated="updateFeed($event)"/>
-  <FeedVue v-bind:posts="posts"/>
+  <PostCreationVue
+      v-if="user"
+      v-on:postCreated="updateFeed($event)"
+  />
+  <FeedVue
+      v-on:deletePost="deletePost($event)"
+      v-bind:posts="posts"
+      class="mb-3"
+  />
 </template>
 
 <script lang="ts">
@@ -50,6 +57,12 @@ export default class Home extends Vue {
 
   updateFeed(post: Post){
     this.posts.push(post)
+  }
+  deletePost(postUuid: string) {
+    const post = this.posts.find(post => post.uuid === postUuid);
+    if(post){
+      this.posts.splice(this.posts.indexOf(post), 1)
+    }
   }
 }
 </script>

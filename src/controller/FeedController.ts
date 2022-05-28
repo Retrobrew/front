@@ -25,7 +25,7 @@ export class FeedController {
                         item.author,
                         item.content,
                         item.media,
-                        0,
+                        item.commentsNb,
                         item.createdAt,
                         item.lastUpdatedAt
                     )
@@ -81,5 +81,20 @@ export class FeedController {
                 }
             }
         ).then(res => res.json())
+    }
+
+    static deletePost(postUuid: string): Promise<void> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}`,
+            {
+                method: 'DELETE',
+                headers: {Authorization: "Bearer " + token }
+            }
+        ).then(res => {
+            if(res.status !== 200){
+                throw new Error('Not deleted')
+            }
+        }).catch(reason => console.error(reason))
     }
 }
