@@ -1,27 +1,8 @@
 <template>
-  <component :is="currentView" />
+  <router-view></router-view>
 </template>
 
 <script>
-import HomeVue from "@/components/home/HomeVue";
-import UserLogin from "@/components/user/login/UserLogin";
-import UserRegister from "@/components/user/register/UserRegister";
-import GroupHomeVue from "@/components/group/home/GroupHomeVue";
-import Error404 from "@/components/error/Error404";
-import UserProfileHomeVue from "@/components/user/profile/UserProfileHomeVue";
-import UserHomeVue from "@/components/user/user/UserHomeVue";
-import IDEVue from "@/components/ide/IDEVue";
-
-const routes = {
-  '/': HomeVue,
-  '/login': UserLogin,
-  '/register': UserRegister,
-  '/group': GroupHomeVue,
-  '/profile': UserProfileHomeVue,
-  '/user': UserHomeVue,
-  '/ide': IDEVue,
-}
-
 export default {
   name: 'App',
   data() {
@@ -29,16 +10,6 @@ export default {
       currentPath: window.location.pathname
     }
   },
-  computed: {
-    currentView() {
-      return routes[this.currentPath || '/'] || Error404
-    }
-  },
-  mounted() {
-    window.addEventListener('pathnamechange', () => {
-      this.currentPath = window.location.pathname
-    })
-  }
 }
 </script>
 

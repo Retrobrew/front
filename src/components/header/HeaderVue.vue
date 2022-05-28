@@ -1,8 +1,8 @@
 <template>
   <MDBNavbar expand="lg" dark bg="light" container>
-    <MDBNavbarBrand href="/">
+    <router-link to="/">
       <img src="../../assets/placeholder_logo.png" alt="" loading="lazy" />
-    </MDBNavbarBrand>
+    </router-link>
     <MDBNavbarToggler target="#navbarLeftAlignExample" @click="collapse4 = !collapse4" />
     <MDBCollapse v-model="collapse4" id="navbarLeftAlignExample">
       <MDBNavbarNav center>
@@ -12,20 +12,19 @@
         </form>
         <!-- Left links -->
       </MDBNavbarNav>
-
       <MDBNavbarNav right class="w-25 justify-content-end">
         <div v-if="!user">
-          <a href="/login">
+          <router-link to="/login">
             <MDBBtn color="success" class="me-2">Login</MDBBtn>
-          </a>
-          <a href="/register">
+          </router-link>
+          <router-link to="/register">
             <MDBBtn color="primary" class="mt-2">Register</MDBBtn>
-          </a>
+          </router-link>
         </div>
         <div v-else>
-          <a href="/profile">
+          <router-link to="/profile">
             <MDBBtn color="success" class="me-2">Profile</MDBBtn>
-          </a>
+          </router-link>
           <a v-on:click="logout">
             <MDBBtn color="danger" class="mt-2">Logout</MDBBtn>
           </a>
@@ -74,7 +73,7 @@ export default class HeaderVue extends Vue {
   private user: User | undefined = inject('user');
 
   logout(){
-    APIController.logout()
+    APIController.logout();
   }
 
 }

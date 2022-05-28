@@ -1,6 +1,6 @@
 <template>
   <HeaderVue />
-  <div id="user-profile" class="main-vue mt-3 shadow-0">
+  <div class="container mt-3 shadow-0">
     <MDBCard>
       <MDBCardHeader class="mb-2 pb-2">
         <UserProfileHead :user-name="user.username" :description="user.sex + ' - 78'"/>
@@ -19,11 +19,12 @@
         />
       </MDBCardBody>
     </MDBCard>
+  <div class="d-flex justify-content-center">
+    <FriendListVue class="mt-3 me-2"/>
+    <GroupListVue class="mt-3 ms-2"/>
   </div>
-  <div class="user-list row ">
-    <FriendListVue class="col-auto"/>
-    <GroupListVue class="col-auto"/>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -35,7 +36,11 @@ import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 import GroupListVue from "@/components/group/list/GroupListVue.vue";
 import {User} from "@/object/User";
 import {inject} from "vue";
-import { MDBCard, MDBCardHeader, MDBCardBody } from 'mdb-vue-ui-kit'
+import {
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody
+} from 'mdb-vue-ui-kit'
 
 @Options({
   name: "UserProfileHomeVue",
@@ -75,10 +80,6 @@ export default class UserProfileHomeVue extends Vue {
 </script>
 
 <style scoped>
-#user-profile{
-  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.15),0 6px 20px 0 rgba(0,0,0,0.15) !important;
-  border-radius: 4px;
-}
 .user-list {
   display: flex;
   justify-content: center;

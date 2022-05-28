@@ -27,7 +27,8 @@ import {FeedController} from "@/controller/FeedController";
   props: {
     posts: {
       type: Array,
-      required: true
+      required: true,
+      default: []
     }
   }
 })
