@@ -1,20 +1,25 @@
 <template>
-  <div class="post mt-2">
-      <PostHead
-          :post-label="postLabel"
-          :post-title="post.title"
-          :post-author="post.author"
-          :post-uuid="post.uuid"
-      />
-
-    <PostContent :content="post.content" />
-    <button
-        v-on:click="$emit('deletePost', post.uuid)"
-        v-if="showDelete"
-        class="btn btn-close btn-sm btn-danger btn-rounded float-sm-end me-3 ms-3"></button>
-    <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="post.comments" />
-  </div>
-
+    <MDBCard class="mt-3 mb-3 post">
+      <MDBCardHeader>
+        <PostHead
+            :post-label="postLabel"
+            :post-title="post.title"
+            :post-author="post.author"
+            :post-uuid="post.uuid"
+        />
+      </MDBCardHeader>
+      <MDBCardBody class="p-2">
+        <img v-if="post.media" :src="getPicture(post.media)" class="card-img"/>
+        <PostContent :content="post.content" />
+      </MDBCardBody>
+      <MDBCardFooter>
+        <button
+            v-on:click="$emit('deletePost', post.uuid)"
+            v-if="showDelete"
+            class="btn btn-close btn-sm btn-danger btn-rounded float-sm-end me-3 ms-3"></button>
+        <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="post.comments" />
+      </MDBCardFooter>
+    </MDBCard>
 </template>
 
 <script setup lang="ts">
@@ -24,20 +29,32 @@ import PostFoot from "@/components/post/post-display/molecules/PostFoot.vue";
 import {Post} from "@/object/Post";
 import {User} from "@/object/User";
 import {inject} from "vue";
+import {
+  MDBCard,
+  MDBCardBody,
+} from 'mdb-vue-ui-kit';
+
 const postLabel = "Pokemon";
 const postLikes = 19;
 const postDislike = 2;
 // eslint-disable-next-line no-undef
 const props = defineProps( {
-  post: Post,
+  post: {
+    type: Post,
+    required: true
+  },
 })
+
 const user: User | undefined = inject('user');
 const showDelete = user?.uuid == props.post?.author?.uuid;
+const getPicture = (media: any) => {
+  return URL.createObjectURL(new Blob(media.data))
+}
+
 </script>
 
 <style scoped>
 .post {
   background: #F0F0F0;
-  border-radius: 8px;
 }
 </style>

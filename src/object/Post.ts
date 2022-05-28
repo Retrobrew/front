@@ -5,7 +5,7 @@ export class Post {
     public title: string;
     public author: User | null;
     public content: string;
-    public media: string = "";
+    public media: File | null;
     public comments: number;
     public createdAt: Date | null;
     public lastUpdatedAt: Date | null;
@@ -15,7 +15,7 @@ export class Post {
         title: string,
         author: User | null,
         content: string,
-        media: string,
+        media: File | null,
         comments: number,
         createdAt: Date,
         lastUpdatedAt: Date
@@ -36,11 +36,25 @@ export class Post {
             "",
             null,
             "",
-            "",
+            null,
             0,
             new Date(),
             new Date()
         );
+    }
+
+    generateFormData(): FormData {
+        const formData = new FormData();
+        const date  = this.createdAt?.toUTCString()
+
+        formData.append('title', this.title);
+        formData.append('content', this.content);
+        formData.append('createdAt',date ? date : "" );
+        if(this.media){
+            formData.append('media', this.media)
+        }
+
+        return formData;
     }
 
 }

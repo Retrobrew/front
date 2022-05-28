@@ -70,17 +70,19 @@ export class FeedController {
 
     static createPost(post: Post): Promise<string> {
         const token = sessionStorage.getItem('access_token');
+        const formData = post.generateFormData();
+
         return fetch(
             `${process.env.VUE_APP_AUTH_API_URL}/posts/`,
             {
                 method: 'POST',
-                body: JSON.stringify(post),
+                body: formData,
                 headers: {
                     Authorization: "Bearer " + token,
-                    "Content-type": "application/json"
                 }
             }
         ).then(res => res.json())
+
     }
 
     static deletePost(postUuid: string): Promise<void> {

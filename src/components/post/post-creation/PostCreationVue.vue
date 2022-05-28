@@ -55,10 +55,10 @@ export default class PostCreationVue extends Vue {
         })
   }
 
-  addPicture(picture: any): void {
+  addPicture(picture: File): void {
     this.picture = URL.createObjectURL(picture);
     this.showPicture = true;
-    // this.post.media = picture;
+    this.post.media = picture;
   }
 
 }

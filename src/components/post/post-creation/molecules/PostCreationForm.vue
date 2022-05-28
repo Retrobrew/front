@@ -6,7 +6,6 @@
       v-model="post.title"
   />
   <MDBTextarea class="mt-1 form-control-sm" rows="2" placeholder="How do you feel today ?" v-model="post.content"></MDBTextarea>
-  <MDBCardImg v-if="post.media !== ''" :src="post.media"/>
 </template>
 
 <script lang="ts">
