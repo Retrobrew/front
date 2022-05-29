@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="mt-3">
     <MDBCard>
       <MDBCardBody class="pb-2">
         <PostCreationForm v-bind:post="post"/>

@@ -12,6 +12,7 @@ import UserRegister from "@/components/user/register/UserRegister.vue";
 import Error404 from "@/components/error/Error404.vue";
 import GroupHomeVue from "@/components/group/home/GroupHomeVue.vue";
 import IDEVue from "@/components/ide/IDEVue.vue";
+import GroupCreationVue from "@/components/group/creation/GroupCreationVue.vue";
 
 const app = createApp(App)
 const routes = [
@@ -20,6 +21,7 @@ const routes = [
     { path: '/user/:uuid', component: UserHomeVue },
     { path: '/login', component: UserLogin },
     { path: '/register', component: UserRegister },
+    { path: '/group/creation', component: GroupCreationVue },
     { path: '/group/:uuid', component: GroupHomeVue },
     { path: '/ide', component: IDEVue },
     { path: '/:pathMatch(.*)*', component: Error404 },
