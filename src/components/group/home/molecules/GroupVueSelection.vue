@@ -1,7 +1,7 @@
 <template>
   <div class="group-vue-selector">
     <button class="btn btn-primary" @click="this.setAndEmitGroupVue('feed')">Feed</button>
-    <button class="btn btn-primary" @click="this.setAndEmitGroupVue('project')">Project</button>
+    <button v-if="isProject" class="btn btn-primary" @click="this.setAndEmitGroupVue('project')">Project</button>
     <button class="btn btn-primary" @click="this.setAndEmitGroupVue('repository')">Repository</button>
   </div>
 </template>
@@ -11,7 +11,10 @@ import {Options, Vue} from "vue-class-component";
 import {Emit} from "vue-property-decorator";
 
 @Options({
-  name: "GroupVueSelection"
+  name: "GroupVueSelection",
+  props: {
+    isProject: Boolean
+  }
 })
 export default class GroupVueSelection extends Vue {
   private groupVue: String = "feed";

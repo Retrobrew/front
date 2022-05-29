@@ -1,11 +1,14 @@
 <template>
   <HeaderVue />
-  <GroupBanner :link="groupBanner" />
+  <GroupBanner
+      :link="groupBanner"
+  />
   <GroupHead
+      v-on:editName="editName($event)"
       v-on:uploadPicture="addPicture($event)"
-      v-bind:groupName="group.name ? group.name : groupName"
+      v-bind:groupName="group.name"
       v-bind:groupIcon="group.picture?group.picture:picturePlaceholder" />
-  <div class="container mt-3">
+  <div class="container mt-4">
     <GroupCreationForm
         v-bind:group="group"
     />
@@ -31,12 +34,14 @@ import {Group} from "@/object/group";
 })
 export default class GroupCreationVue extends Vue {
   private picturePlaceholder = "/assets/gameboy.jpg"
-  private groupName = "Pokemon emerald"
   private groupBanner = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgamefabrique.com%2Fstorage%2Fscreenshots%2Fgba%2Fpokemon-emerald-09.png&f=1&nofb=1"
   private group: Group = Group.emptyGroup()
 
   addPicture(event: any){
     this.group.picture = URL.createObjectURL(event)
+  }
+  editName(event: any){
+    this.group.name = event
   }
 }
 </script>

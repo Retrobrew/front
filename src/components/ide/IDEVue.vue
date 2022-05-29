@@ -35,10 +35,10 @@
   import HeaderVue from "@/components/header/HeaderVue.vue";
   import ProjectFiles from "@/components/ide/atoms/ProjectFiles.vue";
   import {onMounted, ref} from "vue";
-  import {TreeNode} from "@/object/TreeNode";
   import * as monaco from "monaco-editor";
-  import ProjectController from "@/controller/ProjectController";
   import { MDBSpinner } from 'mdb-vue-ui-kit'
+  import {TreeNode} from "@/object/TreeNode";
+  import ProjectController from "@/controller/ProjectController";
 
   const monacoEditorDiv = ref< HTMLElement | null> (null);
   let monacoEditor: monaco.editor.IStandaloneCodeEditor;
