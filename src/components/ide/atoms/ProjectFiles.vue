@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="text-dark form-label ps-2">Project files</p>
     <ul v-for="file in files" v-bind:key="file.name">
         <li>{{ file.name }}</li>
     </ul>

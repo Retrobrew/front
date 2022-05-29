@@ -6,17 +6,29 @@
         v-bind:project-id="projectId"
         v-bind:files="files"
     />
-    <div class="main-vue ide">
+    <div class="main-vue ide container">
       <div
-          class="monaco-editor"
+          class="monaco-editor-background monaco-editor monaco-tl-contents"
           ref="monacoEditorDiv"
       ></div>
-      <div class="ide-action">
-        <button v-on:click="runCode" class="btn btn-primary">Run code</button>
-        <button v-on:click="saveFile(currentFile)" class="btn btn-success">Save file</button>
+      <div class="d-flex justify-content-center m-2">
+        <button v-on:click="compileCode" class="btn btn-dark m-1">Compile code</button>
+        <button v-bind:disabled="!wasCompiled" v-on:click="testProject" class="btn btn-primary m-1">Test project</button>
+        <button v-on:click="saveFile(currentFile)" class="btn btn-success m-1">Save file</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="d-flex justify-content-center">
+    <MDBSpinner v-if="isCompiling" class="m-3"/>
+    <div v-if="logs" class="container p-2 m-2">
+      <h5 class="align-self-center">Result ...</h5>
+      <div class="bg-light log-container p-5">
+        {{logs}}
       </div>
     </div>
   </div>
+
 
 </template>
 <script setup lang="ts">
@@ -26,17 +38,25 @@
   import {TreeNode} from "@/object/TreeNode";
   import * as monaco from "monaco-editor";
   import ProjectController from "@/controller/ProjectController";
+  import { MDBSpinner } from 'mdb-vue-ui-kit'
 
   const monacoEditorDiv = ref< HTMLElement | null> (null);
   let monacoEditor: monaco.editor.IStandaloneCodeEditor;
 
   const projectId = 555;
-  const files: Array<TreeNode> = ProjectController.getProjectTree(projectId);
+  let files = ref<Array<TreeNode>>([]);
   let fileDefaultContent: string | any = "fn main() {}";
-  const currentFile = "somefile.rs";
+  let logs = ref("");
+  let wasCompiled = ref(false);
+  let isCompiling = ref(false);
+  const currentFile = "rom.rs";
   const currentLanguage = "rust";
 
   onMounted(() => {
+    ProjectController.getProjectTree(projectId)
+        .then(res => {
+          files.value = res;
+       })
     const editorOptions = {
       language: "rust",
       minimap: { enabled: false },
@@ -54,8 +74,9 @@
         })
 
     monacoEditor.onDidChangeModelContent(event => {
+      wasCompiled.value = false;
       //TODO
-      console.log(monacoEditor.getValue())
+      // console.log(monacoEditor.getValue())
     })
   })
 
@@ -64,21 +85,41 @@
     alert(`the file ${filename} was saved.`);
   }
 
-  const runCode = () => {
-    // ProjectController.runCode(currentLanguage, projectId);
+  const compileCode = () => {
+    isCompiling.value = true
+    logs.value = "";
+
+    ProjectController
+        .compileProject(projectId, currentLanguage)
+        .then(res => {
+          isCompiling.value = false;
+          logs.value = res;
+          wasCompiled.value = true;
+        })
   }
+
+  const testProject = () => {
+    ProjectController
+        .testProject(projectId)
+        .then(testUrl => {
+          console.log(testUrl);
+          // window.open(testUrl, '_blank');
+        })
+  }
+
 </script>
 
 <style scoped>
 .monaco-editor {
   margin: 8px;
-  height: 80vh;
+  min-height: 500px;
 }
 .ide {
   background-color: #F0F0F0;
   border-radius: 4px;
 }
-.ide-action {
-  text-align: center;
+.container {
+  background-color: #F0F0F0;
+  border-radius: 4px;
 }
 </style>
