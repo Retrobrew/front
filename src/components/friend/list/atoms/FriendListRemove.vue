@@ -18,7 +18,7 @@ export default class FriendListRemove extends Vue {
         .unfriend(friendUuid)
         .then(res => {
           if(res.status === 200) {
-            // this.$parent.$emit("delete-friend", this.friendUuid);
+            // this.$parent.$emit("delete-friend", friendUuid);
           }
       })
 

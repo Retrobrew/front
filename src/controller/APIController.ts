@@ -70,14 +70,14 @@ class APIController {
     static logout(): void {
         sessionStorage.removeItem('access_token');
         provide('user', undefined);
-        window.location.reload();
+        window.location.pathname = "/";
     }
 
     static isLogged(): boolean {
         return !!sessionStorage.getItem('access_token');
     }
 
-    static getUser(): Promise<any> {
+    static getCurrentUser(): Promise<any> {
         const token = sessionStorage.getItem('access_token');
         return fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
             headers: { Authorization: "Bearer " + token }

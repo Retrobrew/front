@@ -17,15 +17,14 @@ import APIController from "@/controller/APIController";
 })
 export default class FriendListName extends Vue {
 
-  private visitFriend(friendUuid: string){
+  private visitFriend(friendUuid: string) {
     APIController
         .getUserProfile(friendUuid)
         .then((res) => {
-          // console.log(res)
           window.location.pathname = "/user"
         }).catch(reason => {
-      console.error(reason);
-    })
+          console.error(reason);
+        })
   }
 }
 </script>
