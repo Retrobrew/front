@@ -11,6 +11,7 @@ if(APIController.isLogged()){
     APIController.getCurrentUser()
         .then(json => {
             const user = new User(
+                json.uuid,
                 json.email,
                 json.username,
                 new Date(json.dateOfBirth),

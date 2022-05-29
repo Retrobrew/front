@@ -1,7 +1,7 @@
 <template>
   <HeaderVue />
   <div id="user-profile" class="main-vue">
-    <UserProfileHead :user-name="user.name" :description="user.sex + ' - 78'"/>
+    <UserProfileHead :user-name="user.username" :description="user.sex + ' - 78'"/>
     <UserProfileBody
         :user-picture="user.picture"
         :password-name="passwordName"

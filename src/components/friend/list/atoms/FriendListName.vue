@@ -21,7 +21,6 @@ export default class FriendListName extends Vue {
     APIController
         .getUserProfile(friendUuid)
         .then((res) => {
-          // console.log(res)
           window.location.pathname = "/user"
         }).catch(reason => {
           console.error(reason);

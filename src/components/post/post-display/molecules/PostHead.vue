@@ -1,8 +1,11 @@
 <template>
   <div class="post-head">
     <PostLabel :label="postLabel" />
-    <PostTitle :title="postTitle" />
-    <PostUsername :username="postUser" />
+    <PostTitle :title="postTitle" class="m-1"/>
+    <a v-on:click="showProfile(postAuthor.uuid)" class="link float-end m-1">
+      <PostUsername :username="postAuthor.username" />
+    </a>
+
   </div>
 </template>
 
@@ -11,6 +14,8 @@ import {Options, Vue} from "vue-class-component";
 import PostLabel from "@/components/post/post-display/atoms/PostLabel.vue";
 import PostTitle from "@/components/post/post-display/atoms/PostTitle.vue";
 import PostUsername from "@/components/post/post-display/atoms/PostUsername.vue";
+import {User} from "@/object/User";
+import {inject} from "vue";
 
 @Options({
   name: "PostHead",
@@ -22,10 +27,20 @@ import PostUsername from "@/components/post/post-display/atoms/PostUsername.vue"
   props: {
     postLabel: String,
     postTitle: String,
-    postUser: String,
+    postUuid: String,
+    postAuthor: User,
   }
 })
 export default class PostHead extends Vue {
+  private user: User | undefined = inject('user');
+
+  showProfile(userUuid: string) {
+    if(this.user?.uuid === userUuid){
+      window.location.pathname = '/profile'
+      return;
+    }
+    window.location.pathname = '/user'
+  }
 }
 </script>
 
