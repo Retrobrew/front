@@ -37,7 +37,7 @@ app.provide('user', undefined);
 app.use(router);
 
 if(APIController.isLogged()){
-    APIController.getUser()
+    APIController.getCurrentUser()
         .then(json => {
             const user = new User(
                 json.uuid,
