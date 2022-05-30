@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <PostCreationVue
+        v-bind:group-uuid="groupUuid"
         v-if="user"
         v-on:postCreated="updateFeed($event)"
     />
@@ -17,66 +18,76 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import {Options, Vue} from "vue-class-component";
-import PostVue from "@/components/post/post-display/PostVue.vue";
-import {FeedController} from "@/controller/FeedController";
-import {User} from "@/object/User";
-import {inject} from "vue";
-import {Post} from "@/object/Post";
+<script setup lang="ts">
 import PostCreationVue from "@/components/post/post-creation/PostCreationVue.vue";
+import PostVue from "@/components/post/post-display/PostVue.vue"
+import {inject, onMounted, ref} from "vue";
+import {User} from "@/object/User";
+import {Post} from "@/object/Post";
+import {FeedController} from "@/controller/FeedController";
+import {useRoute} from "vue-router";
 
-@Options({
-  name: "FeedVue",
-  components: {
-    PostVue,
-    PostCreationVue,
+// eslint-disable-next-line no-undef
+const props = defineProps({
+  groupUuid: {
+    type: String,
   },
-})
-export default class FeedVue extends Vue {
-  private user: User | undefined = inject('user');
-  private posts: Array<Post> = [];
+});
 
-  mounted() {
-    if(this.$route.fullPath.includes('group')){
-      return;
-    }
-    if(!this.user){
-      FeedController.getHomeFeed()
-          .then((posts) => {
-            this.posts = posts;
-          })
-          .catch((reason) => {
-            //TODO afficher un message d'erreur;
-            console.error(reason);
-          });
-      return
-    }
-    FeedController.getMyFeed()
-        .then((posts) => {
-          this.posts = posts;
+const route = useRoute();
+const user: User | undefined = inject('user');
+let posts = ref<Array<Post>>([]);
+
+onMounted(() => {
+  //Si on est sur la page d'un groupe
+  if(props.groupUuid){
+    console.log("Working")
+    FeedController
+        .getGroupFeed(props.groupUuid)
+        .then(res => {
+          posts.value = res;
+        }).catch(reason => console.error(reason))
+
+    return;
+  }
+
+  if(route.fullPath.includes('group')){
+    return;
+  }
+  if(!user){
+    FeedController.getHomeFeed()
+        .then((feed) => {
+          posts.value = feed;
         })
         .catch((reason) => {
           //TODO afficher un message d'erreur;
           console.error(reason);
         });
+    return
   }
+  FeedController.getMyFeed()
+      .then((feed) => {
+        posts.value = feed;
+      })
+      .catch((reason) => {
+        //TODO afficher un message d'erreur;
+        console.error(reason);
+      });
+});
 
+const updateFeed = (post: Post) => {
+  posts.value.unshift(post)
+}
 
-  updateFeed(post: Post){
-    this.posts.push(post)
-  }
-
-  deletePost(postUuid: string) {
-    FeedController.deletePost(postUuid).then(() => {
-      const post = this.posts.find(post => post.uuid === postUuid);
-      if(post){
-        this.posts.splice(this.posts.indexOf(post), 1)
-      }
-    })
-
-  }
+const deletePost = (postUuid: string) => {
+  FeedController.deletePost(postUuid).then(() => {
+    const post = posts.value.find(post => post.uuid === postUuid);
+    if(post){
+      posts.value.splice(posts.value.indexOf(post), 1)
+    }
+  })
 
 }
+
 </script>
 

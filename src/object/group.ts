@@ -1,17 +1,17 @@
 export class Group {
-    public uuid: String;
-    public name: String;
-    public description: String;
+    public uuid: string;
+    public name: string;
+    public description: string;
     public picture: any;
     public banner: any;
     public isProject: boolean;
 
 
     constructor(
-        uuid: String,
-        name: String,
-        description: String,
-        picture: String,
+        uuid: string,
+        name: string,
+        description: string,
+        picture: string,
         isProject: boolean
     ) {
         this.uuid = uuid;

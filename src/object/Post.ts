@@ -9,6 +9,7 @@ export class Post {
     public comments: number;
     public createdAt: Date | null;
     public lastUpdatedAt: Date | null;
+    public postedIn: string | undefined;
 
     constructor(
         uuid: string,
@@ -52,6 +53,9 @@ export class Post {
         formData.append('createdAt',date ? date : "" );
         if(this.media){
             formData.append('media', this.media)
+        }
+        if(this.postedIn){
+            formData.append('postedIn', this.postedIn)
         }
 
         return formData;

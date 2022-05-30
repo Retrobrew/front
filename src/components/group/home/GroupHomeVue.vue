@@ -8,7 +8,10 @@
       v-bind:is-project="group.isProject"
       @groupVue="(value) => this.groupVue = value"
   />
-  <FeedVue v-if="this.groupVue === 'feed'"/>
+  <FeedVue
+      v-bind:groupUuid="group.uuid"
+      v-if="this.groupVue === 'feed' && !loading"
+  />
   <ProjectHomeVue v-if="this.groupVue === 'project'" />
   <RepositoryHomeVue v-if="this.groupVue === 'repository'" />
 </template>
@@ -35,21 +38,26 @@ import {GroupController} from "@/controller/GroupController";
     FeedVue,
     GroupBanner,
     HeaderVue
-  }
+  },
 })
 export default class GroupHomeVue extends Vue {
+  private loading = true;
   private defaultBanner = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgamefabrique.com%2Fstorage%2Fscreenshots%2Fgba%2Fpokemon-emerald-09.png&f=1&nofb=1"
   private groupVue = "feed";
+  private group: Group = Group.emptyGroup();
+  private groupUuid: string = "";
 
-  private group: Group = Group.emptyGroup()
 
   mounted() {
-    const groupUuid: string = this.$route.params['uuid'] as string
-
+    this.groupUuid = this.$route.params['uuid'] as string
     GroupController
-        .getGroup(groupUuid)
+        .getGroup(this.groupUuid)
         .then((res) => {
-          this.group = res
+          this.group = res;
+          this.loading = false;
+        })
+        .catch(reason => {
+          console.log("Do something")
         })
   }
 }
