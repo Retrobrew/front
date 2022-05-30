@@ -30,6 +30,7 @@ import GroupListTitle from "@/components/group/list/atoms/GroupListTitle.vue";
 import GroupListCard from "@/components/group/list/molecules/GroupListCard.vue";
 import {Group} from "@/object/group";
 import { MDBInput } from 'mdb-vue-ui-kit';
+import {GroupController} from "@/controller/GroupController";
 
 @Options({
   name: "GroupListVue",
@@ -41,6 +42,17 @@ import { MDBInput } from 'mdb-vue-ui-kit';
 })
 export default class GroupListVue extends Vue {
   private groups: Array<Group> = [];
+
+  mounted() {
+    GroupController
+        .getUserGroups()
+        .then(res => {
+          this.groups = res;
+        })
+        .catch(reason => {
+          console.error(reason)
+        })
+  }
 
   private quitGroup(groupUuid: string): void{
     console.log("Not implemented yet")

@@ -1,5 +1,5 @@
 <template>
-  <img :src="link" />
+  <img :src="link"  class="card"/>
 </template>
 
 <script lang="ts">

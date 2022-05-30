@@ -22,7 +22,7 @@ const routes = [
     { path: '/login', component: UserLogin },
     { path: '/register', component: UserRegister },
     { path: '/group/creation', component: GroupCreationVue },
-    { path: '/group/:uuid', component: GroupHomeVue },
+    { path: '/group/:uuid', component: GroupHomeVue, name: 'group', params: true },
     { path: '/ide', component: IDEVue },
     { path: '/:pathMatch(.*)*', component: Error404 },
 ];
