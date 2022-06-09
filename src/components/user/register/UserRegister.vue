@@ -1,5 +1,6 @@
 <template>
   <div class="user-register">
+    <HeaderVue />
     <h1>Register</h1>
     <RegisterFields />
     <RegisterLoginRedirection />
@@ -10,10 +11,12 @@
 import {Options, Vue} from "vue-class-component";
 import RegisterFields from "@/components/user/register/molecules/RegisterFields.vue";
 import RegisterLoginRedirection from "@/components/user/register/atoms/RegisterLoginRedirection.vue";
+import HeaderVue from "@/components/header/HeaderVue.vue";
 
 @Options({
   name: "UserRegister",
   components: {
+    HeaderVue,
     RegisterFields,
     RegisterLoginRedirection
   }

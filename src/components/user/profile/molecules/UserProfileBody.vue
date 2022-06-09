@@ -1,0 +1,57 @@
+<template>
+  <div class="user-profile-body">
+    <UserProfileChangePicture :link="userPicture" />
+    <div class="fields">
+      <UserProfileField :field-name="passwordName" :value="passwordValue" />
+      <UserProfileField :field-name="passwordConfirmName" :value="passwordValue" />
+      <UserProfileField :field-name="mailName" :value="mailValue" />
+      <UserProfileSelector :field-name="countriesName" :list="countries" :value="countryValue" />
+    </div>
+  </div>
+  <UserProfileButton :label="saveButton" />
+</template>
+
+<script lang="ts">
+import {Options, Vue} from "vue-class-component";
+import UserProfilePicture from "@/components/user/common/atoms/UserProfilePicture.vue";
+import UserProfileField from "@/components/user/profile/atoms/UserProfileField.vue";
+import UserProfileSelector from "@/components/user/profile/atoms/UserProfileSelector.vue";
+import UserProfileButton from "@/components/user/common/atoms/UserProfileButton.vue";
+import UserProfileChangePicture from "@/components/user/profile/molecules/UserProfileChangePicture.vue";
+
+@Options({
+  name: "UserProfileBody",
+  components: {
+    UserProfileChangePicture,
+    UserProfileButton,
+    UserProfilePicture,
+    UserProfileField,
+    UserProfileSelector,
+  },
+  props : {
+    userPicture: String,
+    passwordName: String,
+    passwordValue: String,
+    passwordConfirmName: String,
+    mailName: String,
+    mailValue: String,
+    countriesName: String,
+    countries: Array,
+    countryValue: String,
+  }
+})
+export default class UserProfileBody extends Vue {
+  private saveButton = "Save";
+}
+</script>
+
+<style scoped>
+.user-profile-body {
+  display: flex;
+  justify-content: space-between;
+}
+.user-profile-body .fields {
+  margin: 8px;
+  width: 40%;
+}
+</style>

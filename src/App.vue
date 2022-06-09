@@ -6,12 +6,20 @@
 import HomeVue from "@/components/home/HomeVue";
 import UserLogin from "@/components/user/login/UserLogin";
 import UserRegister from "@/components/user/register/UserRegister";
+import GroupHomeVue from "@/components/group/home/GroupHomeVue";
 import Error404 from "@/components/error/Error404";
+import UserProfileHomeVue from "@/components/user/profile/UserProfileHomeVue";
+import UserHomeVue from "@/components/user/user/UserHomeVue";
+import IDEVue from "@/components/ide/IDEVue";
 
 const routes = {
   '/': HomeVue,
   '/login': UserLogin,
-  '/register': UserRegister
+  '/register': UserRegister,
+  '/group': GroupHomeVue,
+  '/profile': UserProfileHomeVue,
+  '/user': UserHomeVue,
+  '/ide': IDEVue,
 }
 
 export default {
@@ -36,8 +44,14 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.main-vue {
+  margin: auto;
+  min-width: 200px;
+  width: 80vw;
+  max-width: 1200px;
 }
 </style>

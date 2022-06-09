@@ -1,25 +1,68 @@
 <template>
-  <h1>Welcome to Retrobrew !</h1>
+  <HeaderVue />
+  <PostCreationVue
+      v-if="user"
+      v-on:postCreated="updateFeed($event)"
+  />
+  <FeedVue
+      v-on:deletePost="deletePost($event)"
+      v-bind:posts="posts"
+      class="mb-3"
+  />
 </template>
 
 <script lang="ts">
-  import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import HeaderVue from "@/components/header/HeaderVue.vue";
+import FeedVue from "@/components/feed/FeedVue.vue";
+import {inject} from "vue";
+import {User} from "@/object/User";
+import PostCreationVue from "@/components/post/post-creation/PostCreationVue.vue";
+import {Post} from "@/object/Post";
+import {FeedController} from "@/controller/FeedController";
 
-  export default class Home extends Vue {
-    private isLoginValid: boolean = false;
-
-    beforeMount() {
-      console.log(process.env)
-      const token = sessionStorage.getItem('access_token');
-      if (token === undefined) {
-        this.isLoginValid = false;
-      } else {
-        fetch(`${process.env.VUE_APP_AUTH_API_URL}/profile`, {
-          headers: { Authorization: "Bearer " + token }
-        })
-            .then(response => console.log(response));
-      }
-    }
-
+@Options({
+  name: "Home",
+  components: {
+    FeedVue,
+    HeaderVue,
+    PostCreationVue
   }
+})
+export default class Home extends Vue {
+  private user: User | undefined = inject('user');
+  private posts: Array<Post> = [];
+
+  mounted() {
+    if(!this.user){
+      FeedController.getHomeFeed()
+          .then((posts) => {
+            this.posts = posts;
+          })
+          .catch((reason) => {
+            //TODO afficher un message d'erreur;
+            console.error(reason);
+          });
+      return
+    }
+    FeedController.getMyFeed()
+        .then((posts) => {
+          this.posts = posts;
+        })
+        .catch((reason) => {
+          //TODO afficher un message d'erreur;
+          console.error(reason);
+        });
+  }
+
+  updateFeed(post: Post){
+    this.posts.push(post)
+  }
+  deletePost(postUuid: string) {
+    const post = this.posts.find(post => post.uuid === postUuid);
+    if(post){
+      this.posts.splice(this.posts.indexOf(post), 1)
+    }
+  }
+}
 </script>

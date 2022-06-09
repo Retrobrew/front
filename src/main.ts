@@ -1,7 +1,28 @@
-import "bootstrap/dist/css/bootstrap.min.css"
+import 'mdb-vue-ui-kit/css/mdb.min.css'
 import { createApp } from 'vue'
 import App from './App.vue'
+import {User} from "@/object/User";
+import APIController from "@/controller/APIController";
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.provide('user', undefined);
 
-import "bootstrap/dist/js/bootstrap.js"
+if(APIController.isLogged()){
+    APIController.getCurrentUser()
+        .then(json => {
+            const user = new User(
+                json.uuid,
+                json.email,
+                json.username,
+                new Date(json.dateOfBirth),
+                json.country,
+                json.sexe,
+                json.picture
+            )
+
+            app.provide('user', user);
+            app.mount("#app")
+        })
+}else {
+    app.mount("#app")
+}
