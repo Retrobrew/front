@@ -41,7 +41,6 @@ let posts = ref<Array<Post>>([]);
 onMounted(() => {
   //Si on est sur la page d'un groupe
   if(props.groupUuid){
-    console.log("Working")
     FeedController
         .getGroupFeed(props.groupUuid)
         .then(res => {
