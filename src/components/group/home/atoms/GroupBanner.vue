@@ -1,8 +1,8 @@
 <template>
   <div class="group-banner-box">
     <img :src="link"/>
-    <div class="d-flex justify-content-end mb-2">
-      <div v-if="userIsCreator">
+    <div>
+      <div v-if="userIsCreator" class="d-flex justify-content-end mb-2">
         <MDBBtn class="btn-light me-2" v-on:click="$emit('delete-group')">
           Delete Group
           <MDBIcon
@@ -13,8 +13,8 @@
           />
         </MDBBtn>
       </div>
-      <div v-else>
-        <div v-if="isMember">
+      <div v-else class="d-flex justify-content-end mb-2">
+        <div v-if="!isMember">
           <MDBBtn class="btn-primary me-2" v-on:click="$emit('quit-group')">Quit Group</MDBBtn>
         </div>
         <div v-else>
