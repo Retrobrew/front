@@ -1,5 +1,5 @@
 <template>
-  <p>{{name}}</p>
+  <p class="mt-3">{{name}}</p>
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ import {Options, Vue} from "vue-class-component";
 @Options({
   props: {
     name: String
-  }
+  },
 })
 export default class GroupName extends Vue {
 }

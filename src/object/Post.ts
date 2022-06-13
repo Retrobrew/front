@@ -9,6 +9,7 @@ export class Post {
     public comments: number;
     public createdAt: Date | null;
     public lastUpdatedAt: Date | null;
+    public postedIn: string | undefined;
 
     constructor(
         uuid: string,
@@ -18,7 +19,8 @@ export class Post {
         media: File | null,
         comments: number,
         createdAt: Date,
-        lastUpdatedAt: Date
+        lastUpdatedAt: Date,
+        postedIn: string
     ) {
         this.uuid = uuid;
         this.title = title;
@@ -28,6 +30,7 @@ export class Post {
         this.comments = comments;
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
+        this.postedIn = postedIn;
     }
 
     static emptyPost(): Post {
@@ -39,7 +42,8 @@ export class Post {
             null,
             0,
             new Date(),
-            new Date()
+            new Date(),
+            "home"
         );
     }
 
@@ -52,6 +56,9 @@ export class Post {
         formData.append('createdAt',date ? date : "" );
         if(this.media){
             formData.append('media', this.media)
+        }
+        if(this.postedIn){
+            formData.append('postedIn', this.postedIn)
         }
 
         return formData;

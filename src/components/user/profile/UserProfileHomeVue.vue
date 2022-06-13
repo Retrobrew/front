@@ -1,23 +1,30 @@
 <template>
   <HeaderVue />
-  <div id="user-profile" class="main-vue">
-    <UserProfileHead :user-name="user.username" :description="user.sex + ' - 78'"/>
-    <UserProfileBody
-        :user-picture="user.picture"
-        :password-name="passwordName"
-        :password-value="passwordValue"
-        :password-confirm-name="passwordConfirmName"
-        :mail-name="mailName"
-        :mail-value="user.mail"
-        :countries-name="countriesName"
-        :countries="countries"
-        :country-value="countryValue"
-    />
+  <div class="container mt-3 shadow-0">
+    <MDBCard v-if="user">
+      <MDBCardHeader class="mb-2 pb-2">
+        <UserProfileHead :user-name="user.username" :description="user.sex + ' - 78'"/>
+      </MDBCardHeader>
+      <MDBCardBody class="pb-1">
+        <UserProfileBody
+            :user-picture="user.picture"
+            :password-name="passwordName"
+            :password-value="passwordValue"
+            :password-confirm-name="passwordConfirmName"
+            :mail-name="mailName"
+            :mail-value="user.mail"
+            :countries-name="countriesName"
+            :countries="countries"
+            :country-value="countryValue"
+        />
+      </MDBCardBody>
+    </MDBCard>
+  <div class="d-flex justify-content-center">
+    <FriendListVue class="mt-3 me-2"/>
+    <GroupListVue class="mt-3 ms-2"/>
   </div>
-  <div class="user-list">
-    <FriendListVue />
-    <GroupListVue />
   </div>
+
 </template>
 
 <script lang="ts">
@@ -29,6 +36,11 @@ import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 import GroupListVue from "@/components/group/list/GroupListVue.vue";
 import {User} from "@/object/User";
 import {inject} from "vue";
+import {
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody
+} from 'mdb-vue-ui-kit'
 
 @Options({
   name: "UserProfileHomeVue",
@@ -38,6 +50,9 @@ import {inject} from "vue";
     UserProfileBody,
     UserProfileHead,
     HeaderVue,
+    MDBCard,
+    MDBCardHeader,
+    MDBCardBody
   }
 })
 export default class UserProfileHomeVue extends Vue {
@@ -65,11 +80,6 @@ export default class UserProfileHomeVue extends Vue {
 </script>
 
 <style scoped>
-#user-profile {
-  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
-  border-radius: 8px;
-  margin: 24px auto;
-}
 .user-list {
   display: flex;
   justify-content: center;
