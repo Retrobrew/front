@@ -4,7 +4,6 @@
       <MDBCardBody class="pb-2">
         <PostCreationForm v-bind:post="post"/>
         <img class="card-img w-75 mt-2" v-bind:src="picture" v-if="showPicture"/>
-        <PostCreationLabel class="row pt-2"/>
         <PostCreationPicture v-on:uploadPicture="addPicture($event)" class="row"/>
         <input :value="groupUuid" type="hidden"/>
         <div class="col-sm-1 float-end">
@@ -24,7 +23,6 @@ import {
   MDBCardBody,
 } from 'mdb-vue-ui-kit';
 import PostCreationPicture from "@/components/post/post-creation/atoms/PostCreationPicture.vue";
-import PostCreationLabel from "@/components/post/post-creation/atoms/PostCreationTag.vue";
 import {User} from "@/object/User";
 import {inject, ref} from "vue";
 
