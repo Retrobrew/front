@@ -1,33 +1,51 @@
-<script setup lang="ts">
-import {defineProps} from "vue";
-
-const props = defineProps(['label']);
-</script>
-
 <template>
-  <div class="post-label">
-    <p>{{props.label}}</p>
+  <div>
+    <div v-if="label" class="post-tag tag">
+      <p>{{label}}</p>
+    </div>
+    <div v-else class="disabled-tag tag">
+      <p>
+        {{groupDeleted}}
+      </p>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
 
+@Options({
+  props: {
+    label: {
+      type: String
+    }
+  }
+})
 export default class PostLabel extends Vue{
+  private groupDeleted = "This group was deleted"
 }
 </script>
 
 <style scoped>
-.post-label {
+.post-tag {
   background-color: #8b8bff;
-  border-radius: 8px;
-  margin: 8px;
-  padding: 2px 4px;
 }
 
-.post-label p {
-  color: #F0F0F0;
+.tag {
+  margin: 8px;
+  padding: 4px 15px;
+  border-radius: 10px;
+}
+.tag p {
   margin: 0;
   padding: 0;
+  color: #F0F0F0;
 }
+
+.disabled-tag {
+  padding: 4px 20px 4px 15px;
+  background-color: #8b8bff95;
+  font-style: italic;
+}
+
 </style>

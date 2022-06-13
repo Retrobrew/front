@@ -27,7 +27,8 @@ export class FeedController {
                         item.media,
                         item.commentsNb,
                         item.createdAt,
-                        item.lastUpdatedAt
+                        item.lastUpdatedAt,
+                        item.postedIn
                     )
                     posts.push(post);
                 })
@@ -59,7 +60,8 @@ export class FeedController {
                         item.media,
                         item.commentsNb,
                         item.createdAt,
-                        item.lastUpdatedAt
+                        item.lastUpdatedAt,
+                        item.postedIn
                     )
                     posts.push(post);
                 })
@@ -121,7 +123,8 @@ export class FeedController {
                         item.media,
                         item.commentsNb,
                         item.createdAt,
-                        item.lastUpdatedAt
+                        item.lastUpdatedAt,
+                        item.postedIn
                     )
 
                     feed.push(post);

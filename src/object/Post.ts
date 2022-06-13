@@ -19,7 +19,8 @@ export class Post {
         media: File | null,
         comments: number,
         createdAt: Date,
-        lastUpdatedAt: Date
+        lastUpdatedAt: Date,
+        postedIn: string
     ) {
         this.uuid = uuid;
         this.title = title;
@@ -29,6 +30,7 @@ export class Post {
         this.comments = comments;
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
+        this.postedIn = postedIn;
     }
 
     static emptyPost(): Post {
@@ -40,7 +42,8 @@ export class Post {
             null,
             0,
             new Date(),
-            new Date()
+            new Date(),
+            "home"
         );
     }
 
