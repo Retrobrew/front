@@ -14,7 +14,7 @@ import {Options, Vue} from "vue-class-component";
 import GroupListPicture from "@/components/group/list/atoms/GroupListPicture.vue";
 import GroupListName from "@/components/group/list/atoms/GroupListName.vue";
 import GroupListRemove from "@/components/group/list/atoms/GroupListRemove.vue";
-import {Group} from "@/object/group";
+import {Group} from "@/object/Group";
 
 @Options({
   name: "GroupListCard",

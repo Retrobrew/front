@@ -21,7 +21,7 @@ import {Options, Vue} from "vue-class-component";
 import GroupBanner from "@/components/group/creation/atoms/GroupBanner.vue";
 import GroupHead from "@/components/group/creation/molecules/GroupHead.vue";
 import GroupCreationForm from "@/components/group/creation/molecules/GroupCreationForm.vue";
-import {Group} from "@/object/group";
+import {Group} from "@/object/Group";
 
 @Options({
   name: "GroupCreationVue",

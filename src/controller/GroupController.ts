@@ -1,4 +1,5 @@
-import {Group} from "@/object/group";
+import {Group} from "@/object/Group";
+import {HTTPStatus} from "@/utils/HTTPStatus";
 
 export class GroupController {
     static createGroup(group: Group): Promise<string> {
@@ -16,7 +17,7 @@ export class GroupController {
             }
         ).then(response => {
             return response.json()
-        })
+        }).catch((error) => error.message);
 
     }
 
@@ -59,6 +60,24 @@ export class GroupController {
 
     static quitGroup(groupUuid: string): Promise<void> {
         return new Promise(() =>{})
+    }
+
+    static deleteGroup(groupUuid: string): Promise<boolean> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/groups/${groupUuid}`,
+            {
+                headers: {Authorization: "Bearer " + token},
+                method: 'DELETE'
+            }
+        ).then(response => {
+            if(response.status !== HTTPStatus.ACCEPTED){
+                console.error("Could not delete group")
+                return false;
+            }
+            return true;
+        })
+
     }
 
 }

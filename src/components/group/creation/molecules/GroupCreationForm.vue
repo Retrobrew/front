@@ -31,7 +31,7 @@ import {
   MDBInput,
   MDBCheckbox
 } from 'mdb-vue-ui-kit';
-import {Group} from "@/object/group";
+import {Group} from "@/object/Group";
 import {GroupController} from "@/controller/GroupController";
 
 @Options({
@@ -53,10 +53,12 @@ export default class PostCreationForm extends Vue {
 
   private createGroup(group: Group): void {
     GroupController
-        .createGroup(group)
-        .then((res: any) => {
-          this.$router.push(`/group/${res.uuid}`)
-        })
+      .createGroup(group)
+      .then((res: any) => {
+        this.$router.push(`/group/${res.uuid}`)
+      }).catch((error) =>{
+        console.error(error);
+      })
   }
 }
 </script>
