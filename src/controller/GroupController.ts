@@ -1,5 +1,6 @@
 import {Group} from "@/object/Group";
 import {HTTPStatus} from "@/utils/HTTPStatus";
+import {UserProfileGroup} from "@/object/UserProfileGroup";
 
 export class GroupController {
     static createGroup(group: Group): Promise<string> {
@@ -37,7 +38,7 @@ export class GroupController {
 
     }
 
-    static getUserGroups(): Promise<Array<Group>> {
+    static getUserGroups(): Promise<Array<UserProfileGroup>> {
         const token = sessionStorage.getItem('access_token');
 
         return fetch(
@@ -48,9 +49,14 @@ export class GroupController {
         )
             .then(response => response.json())
             .then(json => {
-                const groups: Group[] = [];
+                const groups: UserProfileGroup[] = [];
                 json.forEach((group: any) => {
-                    groups.push(Group.createFromApi(group))
+                    const groupDto = new UserProfileGroup(
+                        group.groupUuid,
+                        group.groupName,
+                        group.creator
+                    );
+                    groups.push(groupDto)
                 })
 
                 return groups;
@@ -59,7 +65,38 @@ export class GroupController {
     }
 
     static quitGroup(groupUuid: string): Promise<void> {
-        return new Promise(() =>{})
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/groups/${groupUuid}/quit`,
+            {
+                headers: {Authorization: "Bearer " + token},
+                method: 'POST'
+            }
+        ).then(response => {
+            if(response.status !== HTTPStatus.ACCEPTED){
+                console.error("Could not quit group")
+            }
+        }).catch(error => console.error(error.message))
+
+    }
+
+    static joinGroup(groupUuid: string): Promise<boolean> {
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/groups/${groupUuid}/join`,
+            {
+                headers: {Authorization: "Bearer " + token},
+                method: 'POST'
+            }
+        ).then(response => {
+            if(response.status !== HTTPStatus.ACCEPTED){
+                console.error("Could not join group")
+                return false;
+            }
+            return true;
+        })
     }
 
     static deleteGroup(groupUuid: string): Promise<boolean> {
