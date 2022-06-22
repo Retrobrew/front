@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {defineEmits, defineProps} from "vue";
 
-const props = defineProps(['inputPlaceHolder']);
+const props = defineProps(['inputPlaceHolder', 'inputType']);
 const emits = defineEmits(['inputValue']);
 </script>
 
 <template>
-  <input class="form-control user-login-fields-input" @change='emits("inputValue", $event.target.value)' :placeholder="props.inputPlaceHolder">
+  <input class="form-control user-login-fields-input" @change='emits("inputValue", $event.target.value)' :placeholder="props.inputPlaceHolder" :type="props.inputType">
 </template>
 
 <script lang="ts">
