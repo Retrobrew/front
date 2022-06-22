@@ -1,7 +1,7 @@
 <template>
   <div class="field">
     <p>{{fieldName}}</p>
-    <input class="form-control user-login-fields-input" :value="value"/>
+    <input class="form-control user-login-fields-input" :value="value" :type="fieldType"/>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ import {Options, Vue} from "vue-class-component";
   name: "UserProfileField",
   props: {
     fieldName: String,
+    fieldType: String,
     value: String,
   }
 })
