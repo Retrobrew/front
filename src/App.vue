@@ -25,4 +25,8 @@ export default {
   width: 80vw;
   max-width: 1200px;
 }
+
+.link {
+  cursor: pointer;
+}
 </style>

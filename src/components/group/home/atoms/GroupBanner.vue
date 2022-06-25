@@ -13,15 +13,14 @@
           />
         </MDBBtn>
       </div>
-      <div v-else class="d-flex justify-content-end mb-2">
-        <div v-if="!isMember">
+      <div v-else class="d-flex justify-content-end mb-2 me-10">
+        <div v-if="isMember">
           <MDBBtn class="btn-primary me-2" v-on:click="$emit('quit-group')">Quit Group</MDBBtn>
         </div>
         <div v-else>
           <MDBBtn class="btn-primary me-2" v-on:click="$emit('join-group')">Join Group</MDBBtn>
         </div>
       </div>
-
     </div>
   </div>
 </template>
