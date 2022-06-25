@@ -39,6 +39,18 @@ export class Group {
         )
     }
 
+    static homeGroup() : Group {
+        return new Group(
+            "",
+            "home",
+            "home",
+            "",
+            "",
+            false,
+            []
+        )
+    }
+
     static createFromApi(json: any): Group {
         return new Group(
             json.createdBy,

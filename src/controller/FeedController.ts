@@ -19,18 +19,7 @@ export class FeedController {
             })
             .then(json => {
                 json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        item.commentsNb,
-                        item.createdAt,
-                        item.lastUpdatedAt,
-                        item.postedIn
-                    )
-                    posts.push(post);
+                    posts.push(Post.createFromApi(item));
                 })
 
                 return posts;
@@ -52,18 +41,7 @@ export class FeedController {
             })
             .then(json => {
                 json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        item.commentsNb,
-                        item.createdAt,
-                        item.lastUpdatedAt,
-                        item.postedIn
-                    )
-                    posts.push(post);
+                    posts.push(Post.createFromApi(item));
                 })
 
                 return posts;
@@ -115,19 +93,7 @@ export class FeedController {
                 const feed: Array<Post> = [];
 
                 json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        item.commentsNb,
-                        item.createdAt,
-                        item.lastUpdatedAt,
-                        item.postedIn
-                    )
-
-                    feed.push(post);
+                    feed.push(Post.createFromApi(item));
                 })
 
                 return feed;

@@ -2,7 +2,7 @@
     <MDBCard class="mt-3 mb-3 post">
       <MDBCardHeader>
         <PostHead
-            :post-label="post.postedIn"
+            :post-label="post.postedIn.name"
             :post-title="post.title"
             :post-author="post.author"
             :post-uuid="post.uuid"
