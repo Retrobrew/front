@@ -1,4 +1,5 @@
 import {User} from "@/object/User";
+import {Group} from "@/object/Group";
 
 export class Post {
     public uuid: string;
@@ -9,6 +10,7 @@ export class Post {
     public comments: number;
     public createdAt: Date | null;
     public lastUpdatedAt: Date | null;
+    public postedIn: Group | undefined;
 
     constructor(
         uuid: string,
@@ -18,7 +20,8 @@ export class Post {
         media: File | null,
         comments: number,
         createdAt: Date,
-        lastUpdatedAt: Date
+        lastUpdatedAt: Date,
+        postedIn: Group
     ) {
         this.uuid = uuid;
         this.title = title;
@@ -28,6 +31,7 @@ export class Post {
         this.comments = comments;
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
+        this.postedIn = postedIn;
     }
 
     static emptyPost(): Post {
@@ -39,7 +43,8 @@ export class Post {
             null,
             0,
             new Date(),
-            new Date()
+            new Date(),
+            Group.homeGroup()
         );
     }
 
@@ -53,8 +58,25 @@ export class Post {
         if(this.media){
             formData.append('media', this.media)
         }
+        if(this.postedIn){
+            formData.append('postedIn', this.postedIn.uuid)
+        }
 
         return formData;
+    }
+
+    static createFromApi(json: any): Post {
+        return new Post(
+            json.uuid,
+            json.title,
+            json.author,
+            json.content,
+            json.media,
+            json.commentsNb,
+            json.createdAt,
+            json.lastUpdatedAt,
+            json.postedIn
+        )
     }
 
 }

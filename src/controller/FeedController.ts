@@ -19,17 +19,7 @@ export class FeedController {
             })
             .then(json => {
                 json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        item.commentsNb,
-                        item.createdAt,
-                        item.lastUpdatedAt
-                    )
-                    posts.push(post);
+                    posts.push(Post.createFromApi(item));
                 })
 
                 return posts;
@@ -51,17 +41,7 @@ export class FeedController {
             })
             .then(json => {
                 json.forEach((item: any) => {
-                    const post = new Post(
-                        item.uuid,
-                        item.title,
-                        item.author,
-                        item.content,
-                        item.media,
-                        item.commentsNb,
-                        item.createdAt,
-                        item.lastUpdatedAt
-                    )
-                    posts.push(post);
+                    posts.push(Post.createFromApi(item));
                 })
 
                 return posts;
@@ -98,5 +78,25 @@ export class FeedController {
                 throw new Error('Not deleted')
             }
         }).catch(reason => console.error(reason))
+    }
+
+    static getGroupFeed(groupUuid: string): Promise<Array<Post>> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/feeds/group/${groupUuid}`,
+            {
+                headers: {Authorization: "Bearer " + token }
+            }
+        )
+            .then(res => res.json())
+            .then(json => {
+                const feed: Array<Post> = [];
+
+                json.forEach((item: any) => {
+                    feed.push(Post.createFromApi(item));
+                })
+
+                return feed;
+            })
     }
 }

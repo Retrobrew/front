@@ -1,20 +1,20 @@
 export class User {
-    public uuid: String;
-    public mail: String;
-    public username: String;
+    public uuid: string;
+    public mail: string;
+    public username: string;
     public birthday: Date;
-    public country: String;
-    public sex: String;
-    public picture: String;
+    public country: string;
+    public sex: string;
+    public picture: string;
 
     constructor(
-        uuid: String,
-        mail: String,
-        name: String,
+        uuid: string,
+        mail: string,
+        name: string,
         birthday: Date,
-        country: String,
-        sex: String,
-        picture: String
+        country: string,
+        sex: string,
+        picture: string
     ) {
         this.uuid = uuid;
         this.mail = mail;

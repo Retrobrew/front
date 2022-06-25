@@ -10,9 +10,8 @@
       </div>
     </div>
     <div v-else>
-      <p class="text-center">Vous n'avez pas encore d'ami :/</p>
+      <p class="text-center">You don't have any friends yet :/</p>
     </div>
-
   </div>
 </template>
 
@@ -58,6 +57,5 @@ export default class FriendListVue extends Vue {
   box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
   border-radius: 8px;
   max-width: 580px;
-  margin: 20px;
 }
 </style>

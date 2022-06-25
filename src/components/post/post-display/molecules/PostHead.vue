@@ -39,7 +39,7 @@ export default class PostHead extends Vue {
       window.location.pathname = '/profile'
       return;
     }
-    window.location.pathname = '/user'
+    window.location.pathname = `/user/${userUuid}`;
   }
 }
 </script>

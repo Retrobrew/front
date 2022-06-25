@@ -1,5 +1,8 @@
 <template>
-  <p>{{groupName}}</p>
+  <router-link :to="{name: 'group', params:{uuid: groupUuid}}">
+    {{groupName}}
+  </router-link>
+
 </template>
 
 <script lang="ts">
@@ -9,6 +12,10 @@ import {Options, Vue} from "vue-class-component";
   name: "GroupListName",
   props: {
     groupName: String,
+    groupUuid: {
+      type: String,
+      required: true
+    }
   }
 })
 export default class GroupListName extends Vue {

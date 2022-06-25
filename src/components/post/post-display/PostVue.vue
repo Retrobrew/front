@@ -2,7 +2,7 @@
     <MDBCard class="mt-3 mb-3 post">
       <MDBCardHeader>
         <PostHead
-            :post-label="postLabel"
+            :post-label="post.postedIn.name"
             :post-title="post.title"
             :post-author="post.author"
             :post-uuid="post.uuid"
@@ -34,7 +34,6 @@ import {
   MDBCardBody,
 } from 'mdb-vue-ui-kit';
 
-const postLabel = "Pokemon";
 const postLikes = 19;
 const postDislike = 2;
 // eslint-disable-next-line no-undef
