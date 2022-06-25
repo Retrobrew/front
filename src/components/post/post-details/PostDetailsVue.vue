@@ -2,6 +2,7 @@
   <HeaderVue />
   <div class="main-vue">
     <PostVue v-bind:post="post" v-if="!loading"/>
+    <CommentListVue v-bind:comments="post.comments" />
   </div>
 </template>
 
@@ -11,10 +12,11 @@ import PostVue from "@/components/post/post-display/PostVue.vue";
 import {PostController} from "@/controller/PostController";
 import {Post} from "@/object/Post";
 import HeaderVue from "@/components/header/HeaderVue.vue";
+import CommentListVue from "@/components/comment/comment-list/CommentListVue.vue";
 
 @Options({
   name: "PostDetailsVue",
-  components: {HeaderVue, PostVue},
+  components: {CommentListVue, HeaderVue, PostVue},
 })
 export default class PostDetailsVue extends Vue {
   private postUuid: string = "";

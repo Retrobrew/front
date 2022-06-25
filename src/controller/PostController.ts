@@ -23,7 +23,8 @@ export class PostController {
                 await this.getAuthor(json.author).then(author => author),
                 json.content,
                 json.media,
-                json.commentsNb,
+                // json.commentsNb,
+                7,
                 json.createdAt,
                 json.lastUpdatedAt,
                 json.postedIn
