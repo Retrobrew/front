@@ -5,7 +5,6 @@
     <a v-on:click="showProfile(postAuthor.uuid)" class="link float-end m-1">
       <PostUsername :username="postAuthor.username" />
     </a>
-
   </div>
 </template>
 

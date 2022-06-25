@@ -17,7 +17,7 @@
             v-on:click="$emit('deletePost', post.uuid)"
             v-if="showDelete"
             class="btn btn-close btn-sm btn-danger btn-rounded float-sm-end me-3 ms-3"></button>
-        <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="post.comments" />
+        <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="post.comments" :post-uuid="post.uuid"/>
       </MDBCardFooter>
     </MDBCard>
 </template>
