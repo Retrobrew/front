@@ -50,6 +50,7 @@ export class FeedController {
 
     static createPost(post: Post): Promise<string> {
         const token = sessionStorage.getItem('access_token');
+        console.log(post)
         const formData = post.generateFormData();
 
         return fetch(

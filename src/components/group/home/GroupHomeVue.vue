@@ -16,7 +16,7 @@
       @groupVue="(value) => this.groupVue = value"
   />
   <FeedVue
-      v-bind:groupUuid="group.uuid"
+      v-bind:group="group"
       v-if="this.groupVue === 'feed' && !loading"
   />
   <ProjectHomeVue v-if="this.groupVue === 'project'" />
