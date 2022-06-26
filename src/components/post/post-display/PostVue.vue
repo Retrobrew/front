@@ -41,7 +41,6 @@ import {
 } from 'mdb-vue-ui-kit';
 import {PostController} from "@/controller/PostController";
 
-const postLikes = 19;
 const postDislikes = 2;
 // eslint-disable-next-line no-undef
 const props = defineProps( {
@@ -56,20 +55,29 @@ const showDelete = user?.uuid == props.post?.author?.uuid;
 const getPicture = (media: any) => {
   return URL.createObjectURL(new Blob(media.data))
 }
-let liked = ref(false);
+let liked = ref<boolean>(props.post.likedByUser);
+let postLikes = ref<number>(props.post.likesNb);
 
 const likePost = () => {
   if(liked.value){
-    liked.value = false;
+    PostController
+      .unlikePost(props.post.uuid)
+      .then((res) => {
+        if(res){
+          liked.value = false;
+          --postLikes.value;
+        }
+      })
     return;
   }
   PostController
-      .likePost(props.post.uuid)
-      .then((res) => {
-        if(res){
-          liked.value = true;
-        }
-      })
+    .likePost(props.post.uuid)
+    .then((res) => {
+      if(res){
+        liked.value = true;
+        ++postLikes.value;
+      }
+    })
 }
 
 </script>
