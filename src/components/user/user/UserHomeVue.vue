@@ -1,8 +1,12 @@
 <template>
   <HeaderVue />
-  <div id="user-profile" class="main-vue">
-    <UserProfileHead :user-name="userName" :description="userDescription"/>
-    <UserBody :user-picture="userPicture"/>
+  <div
+      id="user-profile"
+      class="main-vue"
+      v-if="user"
+  >
+    <UserProfileHead :user-name="user.username" :description="userDescription"/>
+    <UserBody :user-picture="user.picture"/>
   </div>
 </template>
 
@@ -12,17 +16,28 @@ import HeaderVue from "@/components/header/HeaderVue.vue";
 import UserProfileHead from "@/components/user/common/molecules/UserProfileHead.vue";
 import UserBody from "@/components/user/user/molecules/UserBody.vue";
 import {User} from "@/object/User";
-import {inject} from "vue";
+import APIController from "@/controller/APIController";
 
 @Options({
   name: "UserHomeVue",
   components: {UserBody, UserProfileHead, HeaderVue}
 })
-export default class UserHomeVue extends Vue{
-  private friend: User | undefined = inject('friend');
-  private userName = "@Cédric🇫🇷";
-  private userDescription = "Male - 25";
-  private userPicture = "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fi1.kym-cdn.com%2Fphotos%2Fimages%2Ffacebook%2F000%2F782%2F020%2Ffad.jpg&f=1&nofb=1";
+export default class UserHomeVue extends Vue {
+  private userUuid: string = "";
+  private user: User | null = null;
+  private userDescription = "";
+
+  mounted() {
+    this.userUuid = this.$route.params['uuid'] as string;
+
+    APIController
+        .getUserProfile(this.userUuid)
+        .then((res) => {
+          this.user = res;
+          this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`
+          console.log(this.userDescription);
+        })
+  }
 }
 </script>
 
