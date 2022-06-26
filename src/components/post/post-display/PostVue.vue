@@ -17,7 +17,13 @@
             v-on:click="$emit('deletePost', post.uuid)"
             v-if="showDelete"
             class="btn btn-close btn-sm btn-danger btn-rounded float-sm-end me-3 ms-3"></button>
-        <PostFoot :likes="postLikes" :dislikes="postDislike" :comments="post.comments" />
+        <PostFoot
+          v-on:like-post="likePost"
+          :liked="liked"
+          :likes="postLikes"
+          :dislikes="postDislikes"
+          :comments="post.comments"
+        />
       </MDBCardFooter>
     </MDBCard>
 </template>
@@ -28,14 +34,15 @@ import PostHead from "@/components/post/post-display/molecules/PostHead.vue";
 import PostFoot from "@/components/post/post-display/molecules/PostFoot.vue";
 import {Post} from "@/object/Post";
 import {User} from "@/object/User";
-import {inject} from "vue";
+import {inject, ref} from "vue";
 import {
   MDBCard,
   MDBCardBody,
 } from 'mdb-vue-ui-kit';
+import {PostController} from "@/controller/PostController";
 
 const postLikes = 19;
-const postDislike = 2;
+const postDislikes = 2;
 // eslint-disable-next-line no-undef
 const props = defineProps( {
   post: {
@@ -48,6 +55,21 @@ const user: User | undefined = inject('user');
 const showDelete = user?.uuid == props.post?.author?.uuid;
 const getPicture = (media: any) => {
   return URL.createObjectURL(new Blob(media.data))
+}
+let liked = ref(false);
+
+const likePost = () => {
+  if(liked.value){
+    liked.value = false;
+    return;
+  }
+  PostController
+      .likePost(props.post.uuid)
+      .then((res) => {
+        if(res){
+          liked.value = true;
+        }
+      })
 }
 
 </script>

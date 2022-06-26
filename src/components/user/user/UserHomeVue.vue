@@ -35,7 +35,6 @@ export default class UserHomeVue extends Vue {
         .then((res) => {
           this.user = res;
           this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`
-          console.log(this.userDescription);
         })
   }
 }
