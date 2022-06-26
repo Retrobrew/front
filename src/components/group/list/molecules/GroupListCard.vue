@@ -1,6 +1,6 @@
 <template>
   <div class="group-list-card">
-    <GroupListPicture :link="groupIcon" />
+    <GroupListPicture :link="group.picture" />
     <GroupListName
         class="mt-2"
         :group-name="group.name"
@@ -40,7 +40,6 @@ import {UserProfileGroup} from "@/object/UserProfileGroup";
   }
 })
 export default class GroupListCard extends Vue {
-  private groupIcon = "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fgetdrawings.com%2Ffree-icon%2Fpokemon-emerald-icon-63.png&f=1&nofb=1"
 }
 </script>
 

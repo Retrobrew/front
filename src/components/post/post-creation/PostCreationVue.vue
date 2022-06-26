@@ -25,12 +25,13 @@ import {
 import PostCreationPicture from "@/components/post/post-creation/atoms/PostCreationPicture.vue";
 import {User} from "@/object/User";
 import {inject, ref} from "vue";
+import {Group} from "@/object/Group";
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
-  groupUuid: {
-    type: String,
-        required: false
+  group: {
+    type: Group,
+    required: true
   }
 });
 
@@ -49,9 +50,7 @@ const emits = defineEmits(['postCreated']);
   }
 
 const createPost = () => {
-  if(props.groupUuid){
-    post.value.postedIn = props.groupUuid
-  }
+  post.value.postedIn = props.group;
   FeedController
       .createPost(post.value)
       .then((res: any) => {

@@ -59,6 +59,7 @@ export class Post {
             formData.append('media', this.media)
         }
         if(this.postedIn){
+            console.log(this.postedIn)
             formData.append('postedIn', this.postedIn.uuid)
         }
 

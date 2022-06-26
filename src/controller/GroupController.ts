@@ -56,6 +56,11 @@ export class GroupController {
                         group.groupName,
                         group.creator
                     );
+
+                    if(group.picture){
+                        groupDto.picture = group.picture
+                    }
+
                     groups.push(groupDto)
                 })
 
