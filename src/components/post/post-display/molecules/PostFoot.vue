@@ -1,6 +1,11 @@
 <template>
   <div class="post-foot">
-    <PostReaction :like="likes" :dislike="dislikes" />
+    <PostReaction
+        :liked="liked"
+        v-on:like-post="$emit('like-post')"
+        :likes="likes"
+        :dislikes="dislikes"
+    />
     <PostComment :number="comments" />
   </div>
 </template>
@@ -20,6 +25,7 @@ import PostComment from "@/components/post/post-display/atoms/PostComment.vue";
     likes: Number,
     dislikes: Number,
     comments: Number,
+    liked: Boolean
   }
 })
 export default class PostFoot extends Vue {
