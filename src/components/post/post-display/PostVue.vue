@@ -59,6 +59,10 @@ let liked = ref<boolean>(props.post.likedByUser);
 let postLikes = ref<number>(props.post.likesNb);
 
 const likePost = () => {
+  if(user == undefined){
+    return;
+  }
+
   if(liked.value){
     PostController
       .unlikePost(props.post.uuid)
