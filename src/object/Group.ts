@@ -58,7 +58,7 @@ export class Group {
         }
 
         return new Group(
-            json.createdBy,
+            json.createdBy.uuid,
             json.uuid,
             json.name,
             json.description,
