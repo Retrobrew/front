@@ -1,7 +1,11 @@
 <template>
-  <div class="version-card">
+  <div class="container version-card p-2">
     <VersionTitle :title="repositoryTitle"/>
-    <VersionBody :version-number="repositoryVersion" :version-language="repositoryLanguage"/>
+    <VersionBody
+        :version-number="repositoryVersion"
+        :version-language="repositoryLanguage"
+        :project-id="group.uuid"
+    />
   </div>
 </template>
 
@@ -9,10 +13,20 @@
 import {Options, Vue} from "vue-class-component";
 import VersionTitle from "@/components/repository/atoms/VersionTitle.vue";
 import VersionBody from "@/components/repository/molecules/VersionBody.vue";
+import {Group} from "@/object/Group";
 
 @Options({
   name: "RepositoryVersionVue",
-  components: {VersionBody, VersionTitle}
+  components: {
+    VersionBody,
+    VersionTitle
+  },
+  props: {
+    group: {
+      type: Group,
+      required: true
+    }
+  }
 })
 export default class RepositoryVersionVue extends Vue {
   private repositoryTitle = "final game";
@@ -24,8 +38,6 @@ export default class RepositoryVersionVue extends Vue {
 <style scoped>
 .version-card {
   background-color: #F0F0F0;
-  margin: 8px auto;
   border-radius: 8px;
-  width: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <p class="version-card-title">{{title}}</p>
+  <div class="version-card-title mb-2">{{title}}</div>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 <template>
   <div class="version-card-body">
     <VersionNumber :version="versionNumber"/>
-    <VersionButton />
+    <VersionButton :project-id="projectId"/>
     <VersionLanguage :language="versionLanguage"/>
   </div>
 </template>
@@ -18,6 +18,10 @@ import VersionLanguage from "@/components/repository/atoms/VersionLanguage.vue";
   props: {
     versionNumber: String,
     versionLanguage: String,
+    projectId: {
+      type: String,
+      required: true
+    }
   }
 })
 export default class VersionBody extends Vue {

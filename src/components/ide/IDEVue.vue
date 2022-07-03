@@ -1,14 +1,15 @@
 <template>
   <HeaderVue />
-  <div class="row m-0">
-    <ProjectFiles
-        class="col-sm-1 p-1"
-        v-bind:project-id="projectId"
-        v-bind:files="files"
-    />
-    <div class="main-vue ide container">
+  <div class="mt-3 container">
+<!--        <ProjectFiles-->
+<!--        class="col-sm-1 p-1 ms-2"-->
+<!--        v-bind:project-id="projectId"-->
+<!--        v-bind:files="files"-->
+<!--    />-->
+    <div class="ide p-2 mb-2">
+      <div class="text-center h4 text-uppercase">{{ currentFile }}</div>
       <div
-          class="monaco-editor-background monaco-editor monaco-tl-contents"
+          class="monaco-editor-background m-2 monaco-tl-contents monaco-editor"
           ref="monacoEditorDiv"
       ></div>
       <div class="d-flex justify-content-center m-2">
@@ -18,42 +19,74 @@
       </div>
     </div>
 
+    <div
+        v-if="errorMsg"
+        class="alert alert-danger alert-dismissible fade show mt-3"
+    >
+      {{errorMsg}}
+      <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          v-on:click="closeError"
+      ></button>
+    </div>
   </div>
-  <div class="d-flex justify-content-center">
-    <MDBSpinner v-if="isCompiling" class="m-3"/>
-    <div v-if="logs" class="container p-2 m-2">
-      <h5 class="align-self-center">Result ...</h5>
-      <div class="bg-light log-container p-5">
+  <div class="d-flex justify-content-center container">
+    <div v-if="!isLoadingProject && !errorMsg" class="ide container p-2 mt-2">
+      <h4 class="align-self-center card-title">Logs</h4>
+      <div class="text-center m-3">
+        <MDBSpinner v-if="isCompiling"/>
+      </div>
+      <div v-if="logs" class="bg-light p-5">
         {{logs}}
       </div>
     </div>
   </div>
 
+  <div class="text-center m-3">
+    <MDBSpinner v-if="isLoadingProject"/>
+  </div>
+  <div class="text-center">
+    <button
+        v-on:click="router.push(`/group/${projectId}`)"
+        class="btn btn-primary btn-sm"
+    >
+      <MDBIcon icon="arrow-left" class="me-2"></MDBIcon> Back to group
+    </button>
+  </div>
 
 </template>
 <script setup lang="ts">
   import HeaderVue from "@/components/header/HeaderVue.vue";
-  import ProjectFiles from "@/components/ide/atoms/ProjectFiles.vue";
   import {onMounted, ref} from "vue";
   import * as monaco from "monaco-editor";
-  import { MDBSpinner } from 'mdb-vue-ui-kit'
-  import {TreeNode} from "@/object/TreeNode";
+  import { MDBSpinner, MDBIcon } from 'mdb-vue-ui-kit'
+  import { TreeNode } from "@/object/TreeNode";
   import ProjectController from "@/controller/ProjectController";
+  import {useRoute, useRouter} from "vue-router";
+
+  const router = useRouter();
+  const route = useRoute();
 
   const monacoEditorDiv = ref< HTMLElement | null> (null);
   let monacoEditor: monaco.editor.IStandaloneCodeEditor;
 
-  const projectId = 555;
+  const currentFile = "rom.rs";
+  const currentLanguage = "rust";
+  let projectId = ref<string>(route.params['projectId']);
   let files = ref<Array<TreeNode>>([]);
   let fileDefaultContent: string | any = "fn main() {}";
   let logs = ref("");
+
+  let errorMsg = ref("");
   let wasCompiled = ref(false);
   let isCompiling = ref(false);
-  const currentFile = "rom.rs";
-  const currentLanguage = "rust";
+  let isLoadingProject = ref(false);
+
 
   onMounted(() => {
-    ProjectController.getProjectTree(projectId)
+    ProjectController.getProjectTree(555)
         .then(res => {
           files.value = res;
        })
@@ -68,7 +101,7 @@
         editorOptions
     );
 
-    ProjectController.getFileContent(projectId, currentFile)
+    ProjectController.getFileContent(555, currentFile)
         .then(res => {
           monacoEditor.setValue(res.content)
         })
@@ -90,35 +123,52 @@
     logs.value = "";
 
     ProjectController
-        .compileProject(projectId, currentLanguage)
-        .then(res => {
-          isCompiling.value = false;
-          logs.value = res;
-          wasCompiled.value = true;
-        })
+      .compileProject(projectId, currentLanguage)
+      .then(res => {
+        isCompiling.value = false;
+        res = cleanLogs(res);
+        logs.value = res;
+        wasCompiled.value = true;
+      }).catch(error => {
+        wasCompiled.value = false;
+        errorMsg.value = "Error while trying to compile project. Please try again.";
+
+        console.error(error.message);
+    }).finally(() => {
+      isCompiling.value = false;
+    })
   }
 
   const testProject = () => {
+    isLoadingProject.value = true;
     ProjectController
-        .testProject(projectId)
-        .then(testUrl => {
-          console.log(testUrl);
-          // window.open(testUrl, '_blank');
-        })
+      .testProject(projectId)
+      .then(testUrl => {
+        // console.log(testUrl);
+        window.open(testUrl, '_blank');
+      }).catch(error => {
+        errorMsg.value = "Error while trying to execute project";
+        console.error(error.message)
+    }).finally(() => {
+      isLoadingProject.value = false;
+    })
+  }
+
+  const closeError = () => {
+    errorMsg.value = "";
+  }
+
+  const cleanLogs = (logs: String) => {
+    return logs.replace('<br>', "\n");
   }
 
 </script>
 
 <style scoped>
 .monaco-editor {
-  margin: 8px;
   min-height: 500px;
 }
 .ide {
-  background-color: #F0F0F0;
-  border-radius: 4px;
-}
-.container {
   background-color: #F0F0F0;
   border-radius: 4px;
 }

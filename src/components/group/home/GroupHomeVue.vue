@@ -20,7 +20,10 @@
       v-if="this.groupVue === 'feed' && !loading"
   />
   <ProjectHomeVue v-if="this.groupVue === 'project'" />
-  <RepositoryHomeVue v-if="this.groupVue === 'repository'" />
+  <RepositoryHomeVue
+      v-if="this.groupVue === 'repository'"
+      :group="group"
+  />
 </template>
 
 <script lang="ts">
