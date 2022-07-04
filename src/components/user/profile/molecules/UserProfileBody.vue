@@ -2,9 +2,9 @@
   <div class="user-profile-body">
     <UserProfileChangePicture :link="userPicture" />
     <div class="fields">
-      <UserProfileField :field-name="passwordName" :value="passwordValue" />
-      <UserProfileField :field-name="passwordConfirmName" :value="passwordValue" />
-      <UserProfileField :field-name="mailName" :value="mailValue" />
+      <UserProfileField :field-name="passwordName" :value="passwordValue" :field-type="passwordType"/>
+      <UserProfileField :field-name="passwordConfirmName" :value="passwordValue" :field-type="passwordType"/>
+      <UserProfileField :field-name="mailName" :value="mailValue" :field-type="mailType"/>
       <UserProfileSelector :field-name="countriesName" :list="countries" :value="countryValue" />
     </div>
   </div>
@@ -42,6 +42,8 @@ import UserProfileChangePicture from "@/components/user/profile/molecules/UserPr
 })
 export default class UserProfileBody extends Vue {
   private saveButton = "Save";
+  private mailType = "email";
+  private passwordType = "password";
 }
 </script>
 
