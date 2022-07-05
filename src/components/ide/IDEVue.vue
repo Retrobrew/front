@@ -12,6 +12,7 @@
       <ProjectActions
           :current-file="currentFile"
           :was-compiled="wasCompiled"
+          v-on:new-file="$emit('new-file')"
           v-on:compilation-error="errorMsg = $event"
           v-on:project-loading="isLoadingProject = $event"
           v-on:project-compilation="isCompiling = $event"
@@ -68,6 +69,7 @@ import {defineProps, onMounted, ref} from "vue";
   let wasCompiled = ref(false);
   let isCompiling = ref(false);
   let isLoadingProject = ref(false);
+  let showNewFileForm = ref(false);
 
   onMounted(() => {
     ProjectController.getProjectTree(555)

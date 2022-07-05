@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center m-2">
     <button
         v-on:click="compileCode"
-        class="btn btn-dark m-1">
+        class="btn btn-primary m-1">
       Compile code
     </button>
     <button
@@ -16,6 +16,11 @@
         class="btn btn-success m-1">
       Save file
     </button>
+    <button
+        v-on:click="emit('new-file')"
+        class="btn btn-primary m-1">
+      New file
+    </button>
   </div>
 </template>
 
@@ -25,6 +30,7 @@ import ProjectController from "@/controller/ProjectController";
 
 
 const emit = defineEmits<{
+  (e: 'new-file'): void
   (e: 'compilationError', msg: string): void
   (e: 'projectLoading', isLoading: boolean): void
   (e: 'projectCompilation', isCompiling: boolean): void
