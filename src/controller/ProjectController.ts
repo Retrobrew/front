@@ -29,27 +29,6 @@ class ProjectController {
 
             return files
         });
-
-
-        // const res = [{
-        //     "children":[
-        //         {
-        //             "name":"rom.rs",
-        //             "type":"file"
-        //         },
-        //         {
-        //             "children": [{
-        //                 "name":"file.txt",
-        //                 "type":"file"
-        //             }],
-        //             "name":"test",
-        //             "type":"directory"
-        //         }],
-        //     "name":"src",
-        //     "type":"directory"
-        // }];
-
-        // return files;
     }
 
     static getFileContent(projectId: number, filename: string): Promise<any> {
@@ -58,11 +37,6 @@ class ProjectController {
         ).then((res) => {
             return res.json()
         }).catch(reason => console.error(reason));
-
-        // return fetch('/file.json')
-        //     .then((res) => {
-        //         return res.json()
-        //     })
     }
 
     static compileProject(projectId: number, compiler: string): Promise<string> {
