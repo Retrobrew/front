@@ -19,7 +19,7 @@
   <ProjectFileForm
       :project-id="group.uuid"
       v-if="showNewFileForm"
-      v-on:created-file="reload = !reload"
+      v-on:created-file="onFileCreated($event)"
   />
 </template>
 
@@ -53,6 +53,12 @@ export default class RepositoryVersionVue extends Vue {
   private selectedFile = "";
   private showNewFileForm = false;
   private reload = false;
+
+  private onFileCreated(file: string): void {
+    this.reload = !this.reload;
+    this.showNewFileForm = false;
+    this.selectedFile = file;
+  }
 
 }
 </script>

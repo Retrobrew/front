@@ -78,7 +78,7 @@ const createNewFile = (event: SubmitEvent) => {
 
   ProjectController.createFile(formData)
     .then(res => {
-      emit('created-file', cleanedFilename)
+      emit('created-file', cleanedFilename + fileExtension.value)
     })
     .catch(error => {
       console.error("Error while trying to create file " + cleanedFilename)
