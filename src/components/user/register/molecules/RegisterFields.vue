@@ -1,8 +1,8 @@
 <template>
   <div class="user-register-fields">
-    <RegisterInputView @input-value="(value) => this.username = value" :input-place-holder="this.usernamePlaceHolder" />
-    <RegisterInputView @input-value="(value) => this.password = value" :input-place-holder="this.passwordPlaceHolder"/>
-    <RegisterInputView @input-value="(value) => this.mail = value" :input-place-holder="this.mailPlaceHolder"/>
+    <RegisterInputView @input-value="(value) => this.username = value" :input-place-holder="this.usernamePlaceHolder"/>
+    <RegisterInputView @input-value="(value) => this.password = value" :input-place-holder="this.passwordPlaceHolder" :input-type="passwordInputType"/>
+    <RegisterInputView @input-value="(value) => this.mail = value" :input-place-holder="this.mailPlaceHolder" :input-type="mailInputType"/>
     <RegisterInputView @input-value="(value) => this.birthdate = value" :input-place-holder="this.birthdatePlaceHolder" type="date"/>
     <RegisterSelectorView @input-value="(value) => this.country = value" :list="this.countries"/>
     <RegisterSelectorView @input-value="(value) => this.sexe = value" :list="this.sexes"/>
@@ -50,8 +50,10 @@ export default class RegisterFields extends Vue {
   private usernamePlaceHolder = "Username"
   private mail = ""
   private mailPlaceHolder = "Email address"
+  private mailInputType = "email"
   private password = ""
   private passwordPlaceHolder = "Password"
+  private passwordInputType = "password"
   private birthdate = "";
   private birthdatePlaceHolder = "Birthdate"
   private country = this.countries[0]

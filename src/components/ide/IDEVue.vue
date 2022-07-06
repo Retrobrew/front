@@ -1,66 +1,89 @@
 <template>
-  <HeaderVue />
-  <div class="row m-0">
-    <ProjectFiles
-        class="col-sm-1 p-1"
-        v-bind:project-id="projectId"
-        v-bind:files="files"
-    />
-    <div class="main-vue ide container">
+  <div
+      v-if="currentFile"
+      class="mt-3 container version-card m-0"
+  >
+    <div class="p-2 mb-2">
+      <div class="text-center h4 text-uppercase">{{ currentFile }}</div>
       <div
-          class="monaco-editor-background monaco-editor monaco-tl-contents"
+          class="monaco-editor-background m-2 monaco-tl-contents monaco-editor"
           ref="monacoEditorDiv"
       ></div>
-      <div class="d-flex justify-content-center m-2">
-        <button v-on:click="compileCode" class="btn btn-dark m-1">Compile code</button>
-        <button v-bind:disabled="!wasCompiled" v-on:click="testProject" class="btn btn-primary m-1">Test project</button>
-        <button v-on:click="saveFile(currentFile)" class="btn btn-success m-1">Save file</button>
-      </div>
+      <ProjectActions
+          :project-id="projectId"
+          :current-file="currentFile"
+          :was-compiled="wasCompiled"
+          v-on:new-file="$emit('new-file')"
+          v-on:save-file="saveFile(currentFile)"
+          v-on:compilation-error="errorMsg = $event"
+          v-on:project-loading="isLoadingProject = $event"
+          v-on:project-compilation="isCompiling = $event"
+          v-on:compilation-success="handleCompileResult($event)"
+      />
     </div>
-
+    <ErrorMsg
+        v-if="errorMsg"
+        :error-msg="errorMsg"
+        v-on:close="errorMsg=''"
+    />
   </div>
-  <div class="d-flex justify-content-center">
-    <MDBSpinner v-if="isCompiling" class="m-3"/>
-    <div v-if="logs" class="container p-2 m-2">
-      <h5 class="align-self-center">Result ...</h5>
-      <div class="bg-light log-container p-5">
-        {{logs}}
-      </div>
-    </div>
+  <ProjectLogs
+      :is-compiling="isCompiling"
+      :is-loading-project="isLoadingProject"
+      :error-msg="errorMsg"
+      :logs="logs"
+  />
+  <div class="text-center m-3">
+    <MDBSpinner v-if="isLoadingProject"/>
   </div>
-
 
 </template>
 <script setup lang="ts">
-  import HeaderVue from "@/components/header/HeaderVue.vue";
-  import ProjectFiles from "@/components/ide/atoms/ProjectFiles.vue";
-  import {onMounted, ref} from "vue";
+import {defineProps, onMounted, ref} from "vue";
   import * as monaco from "monaco-editor";
   import { MDBSpinner } from 'mdb-vue-ui-kit'
-  import {TreeNode} from "@/object/TreeNode";
+  import { TreeNode } from "@/object/TreeNode";
   import ProjectController from "@/controller/ProjectController";
+  import { useRouter} from "vue-router";
+  import ProjectLogs from "@/components/ide/atoms/ProjectLogs.vue";
+  import ErrorMsg from "@/components/error/ErrorMsg.vue";
+  import ProjectActions from "@/components/ide/atoms/ProjectActions.vue";
+
+  const router = useRouter();
 
   const monacoEditorDiv = ref< HTMLElement | null> (null);
   let monacoEditor: monaco.editor.IStandaloneCodeEditor;
 
-  const projectId = 555;
+  const props = defineProps({
+    currentFile: {
+      type: String,
+      required: true
+    },
+    projectId: {
+      type: String,
+      required: true
+    }
+  })
+
+  const currentLanguage = "rust";
   let files = ref<Array<TreeNode>>([]);
-  let fileDefaultContent: string | any = "fn main() {}";
+  let fileContent: string | any = "fn main() {}";
   let logs = ref("");
+
+  let errorMsg = ref("");
   let wasCompiled = ref(false);
   let isCompiling = ref(false);
-  const currentFile = "rom.rs";
-  const currentLanguage = "rust";
+  let isLoadingProject = ref(false);
 
   onMounted(() => {
-    ProjectController.getProjectTree(projectId)
+    ProjectController.getProjectTree(props.projectId)
         .then(res => {
           files.value = res;
        })
     const editorOptions = {
       language: "rust",
       minimap: { enabled: false },
-      value: fileDefaultContent
+      value: fileContent
     };
 
     monacoEditor = monaco.editor.create(
@@ -68,58 +91,38 @@
         editorOptions
     );
 
-    ProjectController.getFileContent(projectId, currentFile)
+    ProjectController.getFileContent(props.projectId, props.currentFile)
         .then(res => {
           monacoEditor.setValue(res.content)
         })
 
     monacoEditor.onDidChangeModelContent(event => {
       wasCompiled.value = false;
-      //TODO
-      // console.log(monacoEditor.getValue())
+      fileContent = monacoEditor.getValue();
     })
   })
 
-  const saveFile = (filename: string) => {
-    console.log("Enregistrement du fichier: API à faire")
-    alert(`the file ${filename} was saved.`);
+  const handleCompileResult = (compileResult: {
+    wasCompiled: boolean,
+    logs: string
+  }) => {
+    wasCompiled.value = compileResult.wasCompiled;
+    logs.value = compileResult.logs
   }
 
-  const compileCode = () => {
-    isCompiling.value = true
-    logs.value = "";
-
-    ProjectController
-        .compileProject(projectId, currentLanguage)
+  const saveFile = (file: string) =>  {
+    ProjectController.saveFile(props.projectId, file ,fileContent)
         .then(res => {
-          isCompiling.value = false;
-          logs.value = res;
-          wasCompiled.value = true;
-        })
-  }
-
-  const testProject = () => {
-    ProjectController
-        .testProject(projectId)
-        .then(testUrl => {
-          console.log(testUrl);
-          // window.open(testUrl, '_blank');
-        })
+          console.log(res)
+        }).catch(error => {
+          console.error("Nope")
+    })
   }
 
 </script>
 
-<style scoped>
+<style>
 .monaco-editor {
-  margin: 8px;
   min-height: 500px;
-}
-.ide {
-  background-color: #F0F0F0;
-  border-radius: 4px;
-}
-.container {
-  background-color: #F0F0F0;
-  border-radius: 4px;
 }
 </style>

@@ -33,6 +33,7 @@ import {
 } from 'mdb-vue-ui-kit';
 import {Group} from "@/object/Group";
 import {GroupController} from "@/controller/GroupController";
+import ProjectController from "@/controller/ProjectController";
 
 @Options({
   name: "PostCreationForm",
@@ -55,6 +56,18 @@ export default class PostCreationForm extends Vue {
     GroupController
       .createGroup(group)
       .then((res: any) => {
+        if(group.isProject){
+          ProjectController
+            .createProject(res.uuid)
+            .catch(error => {
+              console.error(error);
+              console.log("Could not initiate project repo")
+            })
+        }
+
+        return res;
+      })
+      .then((res) => {
         this.$router.push(`/group/${res.uuid}`)
       }).catch((error) =>{
         console.error(error);

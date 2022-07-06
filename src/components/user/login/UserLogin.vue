@@ -1,7 +1,7 @@
 <template>
+  <HeaderVue />
   <div class="user-login">
-    <HeaderVue />
-    <h1>Login</h1>
+    <h1 class="mt-3">Login</h1>
     <LoginFields />
     <LoginRegisterRedirection />
   </div>
