@@ -10,9 +10,11 @@
           ref="monacoEditorDiv"
       ></div>
       <ProjectActions
+          :project-id="projectId"
           :current-file="currentFile"
           :was-compiled="wasCompiled"
           v-on:new-file="$emit('new-file')"
+          v-on:save-file="saveFile(currentFile)"
           v-on:compilation-error="errorMsg = $event"
           v-on:project-loading="isLoadingProject = $event"
           v-on:project-compilation="isCompiling = $event"
@@ -56,30 +58,32 @@ import {defineProps, onMounted, ref} from "vue";
     currentFile: {
       type: String,
       required: true
+    },
+    projectId: {
+      type: String,
+      required: true
     }
   })
 
   const currentLanguage = "rust";
-  let projectId = 555;
   let files = ref<Array<TreeNode>>([]);
-  let fileDefaultContent: string | any = "fn main() {}";
+  let fileContent: string | any = "fn main() {}";
   let logs = ref("");
 
   let errorMsg = ref("");
   let wasCompiled = ref(false);
   let isCompiling = ref(false);
   let isLoadingProject = ref(false);
-  let showNewFileForm = ref(false);
 
   onMounted(() => {
-    ProjectController.getProjectTree(555)
+    ProjectController.getProjectTree(props.projectId)
         .then(res => {
           files.value = res;
        })
     const editorOptions = {
       language: "rust",
       minimap: { enabled: false },
-      value: fileDefaultContent
+      value: fileContent
     };
 
     monacoEditor = monaco.editor.create(
@@ -87,15 +91,14 @@ import {defineProps, onMounted, ref} from "vue";
         editorOptions
     );
 
-    ProjectController.getFileContent(555, props.currentFile)
+    ProjectController.getFileContent(props.projectId, props.currentFile)
         .then(res => {
           monacoEditor.setValue(res.content)
         })
 
     monacoEditor.onDidChangeModelContent(event => {
       wasCompiled.value = false;
-      //TODO
-      // console.log(monacoEditor.getValue())
+      fileContent = monacoEditor.getValue();
     })
   })
 
@@ -105,6 +108,11 @@ import {defineProps, onMounted, ref} from "vue";
   }) => {
     wasCompiled.value = compileResult.wasCompiled;
     logs.value = compileResult.logs
+  }
+
+  const saveFile = (file: string) =>  {
+    console.log(fileContent)
+    // ProjectController.saveFile(props.projectId, file,fileContent )
   }
 
 </script>

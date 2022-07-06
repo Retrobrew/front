@@ -2,20 +2,24 @@
   <div class="container version-card p-2">
     <VersionTitle :title="repositoryTitle"/>
     <VersionBody
+        :key="reload"
         :version-number="repositoryVersion"
         :version-language="repositoryLanguage"
         :project-id="group.uuid"
-        v-on:select-file="selectedFile = $event"
+        v-on:select-file="selectedFile = $event; showNewFileForm = false"
+        v-on:new-file="showNewFileForm = true"
     />
   </div>
   <IDEVue
+      :project-id="group.uuid"
+      :current-file="selectedFile"
       :key="selectedFile"
       v-if="selectedFile && !showNewFileForm"
-      :current-file="selectedFile"
-      v-on:new-file="showNewFileForm = true"
   />
   <ProjectFileForm
+      :project-id="group.uuid"
       v-if="showNewFileForm"
+      v-on:created-file="reload = !reload"
   />
 </template>
 
@@ -48,12 +52,7 @@ export default class RepositoryVersionVue extends Vue {
   private repositoryLanguage = "Rust";
   private selectedFile = "";
   private showNewFileForm = false;
-
-  private createNewFile() {
-    console.log("Not implemented yet");
-    //Show component new File
-    //Hide IDE
-  }
+  private reload = false;
 
 }
 </script>

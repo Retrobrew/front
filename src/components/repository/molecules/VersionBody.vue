@@ -10,6 +10,15 @@
       </div>
         <div id="tree" class="list-group list-group-root well shadow-sm"></div>
     </div>
+    <div class="m-3">
+      <div>
+        <button
+            v-on:click="$emit('new-file')"
+            class="btn btn-primary m-1">
+          New file
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,9 +45,11 @@ import ProjectController from "@/controller/ProjectController";
 export default class VersionBody extends Vue {
   private files: Array<TreeNode> = [];
   private selectedFile = "";
+  //Prop
+  projectId!: string;
 
   mounted() {
-    ProjectController.getProjectTree(555)
+    ProjectController.getProjectTree(this.projectId)
         .then(res => {
           this.files = res;
           const div = document.getElementById("tree");

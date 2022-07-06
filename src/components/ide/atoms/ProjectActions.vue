@@ -12,14 +12,9 @@
       Test project
     </button>
     <button
-        v-on:click="saveFile(currentFile)"
+        v-on:click="emit('save-file')"
         class="btn btn-success m-1">
       Save file
-    </button>
-    <button
-        v-on:click="emit('new-file')"
-        class="btn btn-primary m-1">
-      New file
     </button>
   </div>
 </template>
@@ -30,7 +25,7 @@ import ProjectController from "@/controller/ProjectController";
 
 
 const emit = defineEmits<{
-  (e: 'new-file'): void
+  (e: 'save-file'): void
   (e: 'compilationError', msg: string): void
   (e: 'projectLoading', isLoading: boolean): void
   (e: 'projectCompilation', isCompiling: boolean): void
@@ -45,6 +40,10 @@ const props = defineProps({
   currentFile: {
     type: String,
     required: true
+  },
+  projectId: {
+    type: String,
+    required: true
   }
 })
 
@@ -57,7 +56,7 @@ const testProject = () => {
   )
 
   ProjectController
-      .testProject(555)
+      .testProject(props.projectId)
       .then(testUrl => {
         window.open(testUrl, '_blank');
       }).catch(error => {
@@ -68,17 +67,11 @@ const testProject = () => {
   })
 }
 
-const saveFile = (filename: string) => {
-  console.log("Enregistrement du fichier: API à faire")
-  alert(`the file ${filename} was saved.`);
-}
-
 const compileCode = () => {
   emit('projectCompilation', true)
 
   ProjectController
-    // .compileProject(projectId.value, currentLanguage)
-    .compileProject(555, 'roms.rs')
+    .compileProject(props.projectId, props.currentFile)
     .then(res => {
       res = cleanLogs(res);
       emit('compilationSuccess', {
