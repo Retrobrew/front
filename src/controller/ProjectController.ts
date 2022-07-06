@@ -65,7 +65,7 @@ class ProjectController {
    static saveFile(projectId: string, filename: string, filecontent: string): Promise<boolean> {
         const formData: FormData = new FormData();
         formData.append('project', projectId);
-        formData.append('file', filename);
+        formData.append('file', `/${filename}`);
         formData.append('content',filecontent );
         return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/write`,
@@ -74,7 +74,7 @@ class ProjectController {
                body: formData,
            }
         ).then(res => {
-           if (res.status == 400) {
+           if (res.status != 200) {
                console.error(res.text())
 
                return false;

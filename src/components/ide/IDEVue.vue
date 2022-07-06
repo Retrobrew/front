@@ -111,8 +111,12 @@ import {defineProps, onMounted, ref} from "vue";
   }
 
   const saveFile = (file: string) =>  {
-    console.log(fileContent)
-    // ProjectController.saveFile(props.projectId, file,fileContent )
+    ProjectController.saveFile(props.projectId, file ,fileContent)
+        .then(res => {
+          console.log(res)
+        }).catch(error => {
+          console.error("Nope")
+    })
   }
 
 </script>

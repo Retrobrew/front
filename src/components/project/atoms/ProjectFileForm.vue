@@ -75,14 +75,13 @@ const createNewFile = (event: SubmitEvent) => {
 
   const formData = new FormData((event.target as HTMLFormElement));
   formData.set('filename', cleanedFilename)
-  console.log(formData.get('filename'))
 
   ProjectController.createFile(formData)
     .then(res => {
       emit('created-file', cleanedFilename)
     })
     .catch(error => {
-      console.log("NOPE")
+      console.error("Error while trying to create file " + cleanedFilename)
     })
 
 }
