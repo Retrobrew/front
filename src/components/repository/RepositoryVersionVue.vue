@@ -15,6 +15,7 @@
       :current-file="selectedFile"
       :key="selectedFile"
       v-if="selectedFile && !showNewFileForm"
+      v-on:delete-file="selectedFile = ''; reload = !reload"
   />
   <ProjectFileForm
       :project-id="group.uuid"

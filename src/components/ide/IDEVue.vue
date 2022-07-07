@@ -13,7 +13,7 @@
           :project-id="projectId"
           :current-file="currentFile"
           :was-compiled="wasCompiled"
-          v-on:new-file="$emit('new-file')"
+          v-on:delete-file="$emit('delete-file')"
           v-on:save-file="saveFile(currentFile)"
           v-on:compilation-error="errorMsg = $event"
           v-on:project-loading="isLoadingProject = $event"

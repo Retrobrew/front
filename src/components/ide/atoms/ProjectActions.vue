@@ -16,6 +16,11 @@
         class="btn btn-success m-1">
       Save file
     </button>
+    <button
+        v-on:click="onDeleteFile"
+        class="btn btn-danger m-1">
+      Delete file
+    </button>
   </div>
 </template>
 
@@ -26,6 +31,7 @@ import ProjectController from "@/controller/ProjectController";
 
 const emit = defineEmits<{
   (e: 'save-file'): void
+  (e: 'delete-file'): void
   (e: 'compilationError', msg: string): void
   (e: 'projectLoading', isLoading: boolean): void
   (e: 'projectCompilation', isCompiling: boolean): void
@@ -94,6 +100,18 @@ const compileCode = () => {
 
 const cleanLogs = (logs: String) => {
   return logs.replaceAll('<br>', "\n ");
+}
+
+const onDeleteFile = () => {
+  if(confirm("You are about to delete the file " + props.currentFile)) {
+    ProjectController.deleteFile(props.projectId, props.currentFile)
+        .then((res) => {
+          if(res) {
+            emit('delete-file')
+          }
+        })
+        .catch(error => console.error(error.message))
+  }
 }
 </script>
 
