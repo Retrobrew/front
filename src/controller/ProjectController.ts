@@ -22,6 +22,14 @@ class ProjectController {
         })
     }
 
+    static deleteFile(projectId: string, file: string): Promise<boolean> {
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/delete?id=${projectId}&path=/${file}`
+        ).then((res) => {
+            return res.status === 200;
+        })
+    }
+
     static getProjectTree(projectId: string): Promise<Array<TreeNode>> {
 
         return fetch(
