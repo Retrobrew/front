@@ -42,7 +42,6 @@
 import {defineProps, onMounted, ref} from "vue";
   import * as monaco from "monaco-editor";
   import { MDBSpinner } from 'mdb-vue-ui-kit'
-  import { TreeNode } from "@/object/TreeNode";
   import ProjectController from "@/controller/ProjectController";
   import { useRouter} from "vue-router";
   import ProjectLogs from "@/components/ide/atoms/ProjectLogs.vue";
@@ -66,7 +65,6 @@ import {defineProps, onMounted, ref} from "vue";
   })
 
   const currentLanguage = "rust";
-  let files = ref<Array<TreeNode>>([]);
   let fileContent: string | any = "fn main() {}";
   let logs = ref("");
 
@@ -76,10 +74,6 @@ import {defineProps, onMounted, ref} from "vue";
   let isLoadingProject = ref(false);
 
   onMounted(() => {
-    ProjectController.getProjectTree(props.projectId)
-        .then(res => {
-          files.value = res;
-       })
     const editorOptions = {
       language: "rust",
       minimap: { enabled: false },
