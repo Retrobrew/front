@@ -64,15 +64,10 @@ export default class VersionBody extends Vue {
 
   private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement) {
     files.forEach((item:TreeNode) => {
-      let name = item.name;
-      if(name.length === 0) {
-        name = "src"
-      }
-
       const link = document.createElement('a');
       link.href = '#';
       link.classList.add('list-group-item');
-      link.innerHTML = name;
+      link.innerHTML = item.name;
       link.addEventListener('click', this.selectFile.bind(this))
       parentNode.appendChild(link);
 

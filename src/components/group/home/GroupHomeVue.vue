@@ -94,7 +94,7 @@ export default class GroupHomeVue extends Vue {
       .then((success: boolean) => {
 
         if(success){
-          this.$router.push('/home');
+          this.$router.push('/');
           return;
         }
         alert("Error while trying to delete group");
