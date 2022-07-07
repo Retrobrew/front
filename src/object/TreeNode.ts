@@ -16,8 +16,16 @@ export class TreeNode {
                 children.push(this.createFromApi(child))
             })
         }
+
+        let name = json.name;
+        if(name.length === 0 ||
+            name.includes('version') ||
+            name.includes('latest')
+        ){
+            name = "src"
+        }
         return new TreeNode(
-            json.name,
+            name,
             json.type,
             children
         )
