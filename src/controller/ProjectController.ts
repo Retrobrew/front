@@ -51,9 +51,13 @@ class ProjectController {
         });
     }
 
-    static getFileContent(projectId: string, filename: string): Promise<any> {
+    static getFileContent(
+        projectId: string,
+        filename: string,
+        version: string
+    ): Promise<any> {
         return fetch(
-            `${process.env.VUE_APP_PROJECT_API_URL}/viewer?id=${projectId}&path=/${filename}`,
+            `${process.env.VUE_APP_PROJECT_API_URL}/viewer?id=${projectId}&path=/${filename}&version=${version}`,
         ).then((res) => {
             return res.json()
         }).catch(reason => console.error(reason));
@@ -102,7 +106,7 @@ class ProjectController {
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/archive?id=${projectId}&version=${versionNb}`
        ).then(res => {
-           return res.text()
+           return res.json()
        });
    }
 
@@ -110,7 +114,6 @@ class ProjectController {
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/version?id=${projectId}`
        ).then(res => {
-           console.log(res)
            return res.text()
        });
    }

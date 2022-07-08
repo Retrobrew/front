@@ -5,13 +5,15 @@
       :version-language="repositoryLanguage"
       :version-number="version"
       :project-id="group.uuid"
-      v-on:browse-version="onBrowseVersion($event)"
+      v-on:browse-version="onBrowseVersion($event); selectedFile=''"
       v-on:select-file="selectedFile = $event; showNewFileForm = false"
       v-on:new-file="showNewFileForm = true;  showCreateVersionForm = false"
       v-on:new-version="showNewFileForm = false; showCreateVersionForm = true"
     />
   </div>
   <IDEVue
+      :version="version"
+      :readonly="version !== 'latest'"
       :project-id="group.uuid"
       :current-file="selectedFile"
       :key="selectedFile"
