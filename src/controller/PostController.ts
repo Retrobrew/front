@@ -69,11 +69,11 @@ export class PostController {
                 method: 'POST',
                 headers: {
                     Authorization: "Bearer " + token,
-                    contentType: "application/json"
+                    "Content-type": "application/json"
                 },
                 body: JSON.stringify({
                     content: content,
-                    createdAt: "2022-07-08 14:55:54",
+                    createdAt: new Date(),
                 })
             }
         ).then(res => {
