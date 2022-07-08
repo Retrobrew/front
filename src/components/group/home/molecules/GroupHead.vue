@@ -2,7 +2,7 @@
   <div class="main-vue group-head">
     <GroupIcon :link="groupIcon" />
     <GroupName :name="groupName" />
-    <GroupFollow />
+<!--    <GroupFollow />-->
   </div>
 </template>
 

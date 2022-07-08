@@ -1,5 +1,5 @@
 <template>
-  <img :src="link?link:picturePlaceholder" class="card"/>
+  <img :src="link" class="card"/>
 </template>
 
 <script lang="ts">
@@ -12,7 +12,6 @@ import {Options, Vue} from "vue-class-component";
   }
 })
 export default class FriendListPicture extends Vue {
-  private picturePlaceholder: string = '/assets/avatar-placeholder.png';
 
 }
 </script>

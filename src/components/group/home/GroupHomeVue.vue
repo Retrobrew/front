@@ -16,11 +16,14 @@
       @groupVue="(value) => this.groupVue = value"
   />
   <FeedVue
-      v-bind:groupUuid="group.uuid"
+      v-bind:group="group"
       v-if="this.groupVue === 'feed' && !loading"
   />
   <ProjectHomeVue v-if="this.groupVue === 'project'" />
-  <RepositoryHomeVue v-if="this.groupVue === 'repository'" />
+  <RepositoryHomeVue
+      v-if="this.groupVue === 'repository'"
+      :group="group"
+  />
 </template>
 
 <script lang="ts">
@@ -91,7 +94,7 @@ export default class GroupHomeVue extends Vue {
       .then((success: boolean) => {
 
         if(success){
-          this.$router.push('/home');
+          this.$router.push('/');
           return;
         }
         alert("Error while trying to delete group");

@@ -1,6 +1,11 @@
 <template>
   <div class="post-foot">
-    <PostReaction :like="likes" :dislike="dislikes" />
+    <PostReaction
+        :liked="liked"
+        v-on:like-post="$emit('like-post')"
+        :likes="likes"
+        :dislikes="dislikes"
+    />
     <router-link v-bind:to="'/post/' + postUuid">
       <PostComment :number="comments" />
     </router-link>
@@ -23,6 +28,7 @@ import PostComment from "@/components/post/post-display/atoms/PostComment.vue";
     dislikes: Number,
     comments: Number,
     postUuid: String,
+    liked: Boolean
   }
 })
 export default class PostFoot extends Vue {

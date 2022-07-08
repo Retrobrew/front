@@ -1,5 +1,8 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  devServer: {
+    proxy: process.env.VUE_APP_AUTH_API_URL
+  },
   transpileDependencies: true
 })
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");

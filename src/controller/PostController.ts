@@ -27,7 +27,9 @@ export class PostController {
                 7,
                 json.createdAt,
                 json.lastUpdatedAt,
-                json.postedIn
+                json.postedIn,
+                json.liked,
+                json.likesNb
             );
         });
     }
@@ -57,5 +59,56 @@ export class PostController {
                 json.role
             );
         });
+    }
+
+    static commentPost(postUuid: string, content: string): Promise<boolean> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/comment`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: "Bearer " + token,
+                    contentType: "application/json"
+                },
+                body: JSON.stringify({
+                    content: content,
+                    createdAt: "2022-07-08 14:55:54",
+                })
+            }
+        ).then(res => {
+            return res.status === 200;
+        })
+    }
+
+    static likePost(postUuid: string): Promise<boolean> {
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/like`,
+            {
+                method: 'PUT',
+                headers: {
+                    Authorization: "Bearer " + token,
+                }
+            }
+        ).then(res => {
+            return res.status === 200;
+        })
+    }
+    static unlikePost(postUuid: string): Promise<boolean> {
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/unlike`,
+            {
+                method: 'PUT',
+                headers: {
+                    Authorization: "Bearer " + token,
+                }
+            }
+        ).then(res => {
+            return res.status === 200;
+        })
     }
 }

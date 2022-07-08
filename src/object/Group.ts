@@ -52,12 +52,17 @@ export class Group {
     }
 
     static createFromApi(json: any): Group {
+        let picture = "/assets/vector-gameboy.png";
+        if(json.picture) {
+            picture = json.picture;
+        }
+
         return new Group(
-            json.createdBy,
+            json.createdBy.uuid,
             json.uuid,
             json.name,
             json.description,
-            json.picture,
+            picture,
             json.isProject,
             json.members
         );

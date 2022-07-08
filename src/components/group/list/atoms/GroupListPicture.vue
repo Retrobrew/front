@@ -1,5 +1,5 @@
 <template>
-  <img :src="link"  class="card"/>
+  <img :src="link"  class="shadow btn-rounded "/>
 </template>
 
 <script lang="ts">

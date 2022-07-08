@@ -101,6 +101,10 @@ class APIController {
         ).then(response => {
             return response.json()
         }).then(json => {
+            let picture =  '/assets/avatar-placeholder.png';
+            if(json.picture){
+                picture = json.picture;
+            }
             return new User(
                 json.uuid,
                 json.mail,
@@ -108,7 +112,7 @@ class APIController {
                 json.dateOfBirth,
                 json.country,
                 json.sexe,
-                json.picture
+                picture
             );
         })
     }
@@ -129,10 +133,46 @@ class APIController {
             })
             .then(json => {
                 json.forEach((item: any) => {
+                    let picture =  '/assets/avatar-placeholder.png';
+                    if(json.picture){
+                        picture = json.picture;
+                    }
                     const friend = new Friend(
                         item.username,
                         item.country,
-                        item.picture,
+                        picture,
+                        item.userUuid
+                    );
+                    friends.push(friend);
+                })
+                return friends
+            })
+    }
+
+    static getAllUsers(): Promise<Array<Friend>> {
+        const token = sessionStorage.getItem('access_token');
+        const friends: Array<Friend> = [];
+
+        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
+            headers: { Authorization: "Bearer " + token }
+        })
+            .then(response => {
+                if(response.status !== 200) {
+                    throw new Error("Error while trying to fetch posts");
+                }
+
+                return response.json();
+            })
+            .then(json => {
+                json.forEach((item: any) => {
+                    let picture =  '/assets/avatar-placeholder.png';
+                    if(json.picture){
+                        picture = json.picture;
+                    }
+                    const friend = new Friend(
+                        item.username,
+                        item.country,
+                        picture,
                         item.userUuid
                     );
                     friends.push(friend);

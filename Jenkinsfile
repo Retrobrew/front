@@ -45,7 +45,10 @@ pipeline{
             }
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
-                    sh 'yarn build'
+                    withCredentials([file(credentialsId: 'RETROBREW_VUE_PROPERTIES_PROD', variable: 'FILE')]) {
+                        sh "cp \$FILE ."
+                        sh 'yarn build --prod'
+                    }
                 }
             }
         }
