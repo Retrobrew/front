@@ -2,7 +2,7 @@
   <div class="group-list-card">
     <GroupListPicture :link="group.picture" />
     <GroupListName
-        class="mt-2"
+        class="pt-2 mt-2"
         :group-name="group.name"
         :group-uuid="group.uuid"
     />

@@ -44,7 +44,10 @@ export default class GroupListVue extends Vue {
   private groups: Array<UserProfileGroup> = [];
 
   mounted() {
-    GroupController
+    const routePath = this.$route.path;
+
+    if(routePath === '/profile') {
+      GroupController
         .getUserGroups()
         .then(res => {
           this.groups = res;
@@ -52,7 +55,17 @@ export default class GroupListVue extends Vue {
         .catch(reason => {
           console.error(reason)
         })
+      return;
+    }
+    GroupController.getAllGroups()
+      .then(res => {
+
+      })
+      .catch(reason => {
+        console.error(reason)
+      })
   }
+
 
   private quitGroup(groupUuid: string): void{
     const group = this.groups.find((item) => {

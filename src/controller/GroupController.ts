@@ -69,6 +69,37 @@ export class GroupController {
 
     }
 
+    static getAllGroups(): Promise<Array<UserProfileGroup>> {
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/my/groups`,
+            {
+                headers: {Authorization: "Bearer " + token}
+            }
+        )
+            .then(response => response.json())
+            .then(json => {
+                const groups: UserProfileGroup[] = [];
+                json.forEach((group: any) => {
+                    const groupDto = new UserProfileGroup(
+                        group.groupUuid,
+                        group.groupName,
+                        group.creator
+                    );
+
+                    if(group.picture){
+                        groupDto.picture = group.picture
+                    }
+
+                    groups.push(groupDto)
+                })
+
+                return groups;
+            })
+
+    }
+
     static quitGroup(groupUuid: string): Promise<void> {
         const token = sessionStorage.getItem('access_token');
 

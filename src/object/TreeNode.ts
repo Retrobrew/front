@@ -17,15 +17,8 @@ export class TreeNode {
             })
         }
 
-        let name = json.name;
-        if(name.length === 0 ||
-            name.includes('version') ||
-            name.includes('latest')
-        ){
-            name = "src"
-        }
         return new TreeNode(
-            name,
+            json.name,
             json.type,
             children
         )
