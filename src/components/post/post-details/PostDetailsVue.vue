@@ -2,6 +2,7 @@
   <HeaderVue />
   <div class="main-vue">
     <PostVue v-bind:post="post" v-if="!loading"/>
+    <CommentCreationVue />
     <CommentListVue v-bind:comments="post.comments" />
   </div>
 </template>
@@ -13,18 +14,21 @@ import {PostController} from "@/controller/PostController";
 import {Post} from "@/object/Post";
 import HeaderVue from "@/components/header/HeaderVue.vue";
 import CommentListVue from "@/components/comment/comment-list/CommentListVue.vue";
+import CommentCreationVue from "@/components/comment/comment-creation/CommentCreationVue.vue";
+import {useRoute} from "vue-router";
 
 @Options({
   name: "PostDetailsVue",
-  components: {CommentListVue, HeaderVue, PostVue},
+  components: {CommentCreationVue, CommentListVue, HeaderVue, PostVue},
 })
 export default class PostDetailsVue extends Vue {
   private postUuid: string = "";
   private loading = true;
   private post: Post = Post.emptyPost();
+  private route = useRoute();
 
   mounted() {
-    this.postUuid = this.$route.params['uuid'] as string
+    this.postUuid = this.route.params.uuid as string
     PostController.getPost(this.postUuid)
         .then((res) => {
           this.post = res;
