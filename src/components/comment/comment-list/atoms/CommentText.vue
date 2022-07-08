@@ -1,6 +1,6 @@
 <template>
   <div class="comment-text">
-    <p>Placeholder d'un commentaire sous un post!</p>
+    <p>{{content}}</p>
   </div>
 </template>
 
@@ -9,6 +9,9 @@ import {Options, Vue} from "vue-class-component";
 
 @Options({
   name: "CommentText",
+  props: {
+    content: String,
+  }
 })
 export default class CommentText extends Vue {
 }

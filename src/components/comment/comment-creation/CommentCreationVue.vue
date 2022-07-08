@@ -44,8 +44,8 @@ export default class CommentCreationVue extends Vue {
   private createComment = () => {
     this.postUuid = this.route.params.uuid as string
     PostController.commentPost(this.postUuid, this.comment)
-      .then((res) => {
-        console.log(res);
+      .then((_) => {
+        window.location.reload()
       })
       .catch((err) => {
         console.error(err);

@@ -1,5 +1,6 @@
 import {Post} from "@/object/Post";
 import {User} from "@/object/User";
+import {Comment} from "@/object/Comment";
 
 export class PostController {
     static getPost(uuid: string): Promise<Post> {
@@ -23,8 +24,7 @@ export class PostController {
                 await this.getAuthor(json.author).then(author => author),
                 json.content,
                 json.media,
-                // json.commentsNb,
-                7,
+                0,
                 json.createdAt,
                 json.lastUpdatedAt,
                 json.postedIn,
@@ -59,6 +59,31 @@ export class PostController {
                 json.role
             );
         });
+    }
+
+    static getComments(postUuid: string): Promise<Array<Comment>> {
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/comments`,
+            {
+                headers: { Authorization: "Bearer " + token }
+            }
+        ).then(response => {
+            if(response.status !== 200) {
+                throw new Error("Error while trying to fetch comments");
+            }
+
+            return response.json();
+        }).then(async json => {
+            const comments: Array<Comment> = [];
+
+            for (const item of json) {
+                comments.push(await Comment.createFromApi(item));
+            }
+
+            return comments;
+        })
     }
 
     static commentPost(postUuid: string, content: string): Promise<boolean> {

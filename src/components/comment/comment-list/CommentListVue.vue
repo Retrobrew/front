@@ -1,18 +1,18 @@
 <template>
   <div class="main-vue comment-list">
-    <Comment v-for="comment in comments" :comment="comment" v-bind:key="comment" />
+    <CommentVue v-for="comment in comments" :comment="comment" v-bind:key="comment" />
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import Comment from "@/components/comment/comment-list/molecules/Comment.vue";
+import CommentVue from "@/components/comment/comment-list/molecules/CommentVue.vue";
 
 @Options({
   name: "CommentListVue",
-  components: {Comment},
+  components: {CommentVue},
   props: {
-    comments: Number,
+    comments: Array,
   }
 })
 export default class CommentListVue extends Vue {

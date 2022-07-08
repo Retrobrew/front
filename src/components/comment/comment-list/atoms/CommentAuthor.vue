@@ -1,6 +1,6 @@
 <template>
   <div class="comment-author">
-    <p>Quentin</p>
+    <p>{{author}}</p>
   </div>
 </template>
 
@@ -9,6 +9,9 @@ import {Options, Vue} from "vue-class-component";
 
 @Options({
   name: "CommentAuthor",
+  props: {
+    author: String,
+  }
 })
 export default class CommentAuthor extends Vue {
 }
