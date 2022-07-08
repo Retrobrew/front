@@ -71,9 +71,9 @@ export default class VersionBody extends Vue {
       });
 
     ProjectController.getVersions(this.projectId)
-        .then(res => {
+        .then((res: any) => {
           // this.versions = ["1","2", '1.1.1'].sort();
-          this.versions = Array.from(res).sort()
+          this.versions = res.sort()
           console.log(res)
           console.log(this.versions)
         })
