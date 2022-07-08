@@ -1,11 +1,21 @@
 <template>
   <div class="group-list-card">
-    <GroupListPicture :link="groupIcon" />
+    <GroupListPicture :link="group.picture" />
     <GroupListName
+        class="pt-2 mt-2"
         :group-name="group.name"
         :group-uuid="group.uuid"
     />
-    <GroupListRemove v-bind:group-uuid="group.uuid"/>
+    <div v-if="group.userIsGroupCreator" class="group-delete">
+      <GroupListRemove
+          v-on:remove-group="$emit('leave-group',$event)"
+          v-bind:group-uuid="group.uuid"/>
+    </div>
+    <div v-else class="group-leave">
+      <GroupListLeave
+          v-on:remove-group="$emit('leave-group',$event)"
+          v-bind:group-uuid="group.uuid"/>
+    </div>
   </div>
 </template>
 
@@ -14,21 +24,22 @@ import {Options, Vue} from "vue-class-component";
 import GroupListPicture from "@/components/group/list/atoms/GroupListPicture.vue";
 import GroupListName from "@/components/group/list/atoms/GroupListName.vue";
 import GroupListRemove from "@/components/group/list/atoms/GroupListRemove.vue";
+import GroupListLeave from "@/components/group/list/atoms/GroupListLeave.vue";
 import {Group} from "@/object/Group";
+import {UserProfileGroup} from "@/object/UserProfileGroup";
 
 @Options({
   name: "GroupListCard",
-  components: {GroupListRemove, GroupListName, GroupListPicture},
+  components: {GroupListRemove, GroupListName, GroupListPicture, GroupListLeave},
   props: {
     group: {
-      type:Group,
+      type: UserProfileGroup,
       required: true,
       default: Group.emptyGroup()
     }
   }
 })
 export default class GroupListCard extends Vue {
-  private groupIcon = "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fgetdrawings.com%2Ffree-icon%2Fpokemon-emerald-icon-63.png&f=1&nofb=1"
 }
 </script>
 
@@ -37,5 +48,11 @@ export default class GroupListCard extends Vue {
   display: flex;
   justify-content: space-between;
   padding: 24px 48px;
+}
+.group-leave {
+  margin: auto 2px;
+}
+.group-delete {
+  margin: auto 0;
 }
 </style>

@@ -1,4 +1,5 @@
 import {User} from "@/object/User";
+import {Group} from "@/object/Group";
 
 export class Post {
     public uuid: string;
@@ -9,7 +10,9 @@ export class Post {
     public comments: number;
     public createdAt: Date | null;
     public lastUpdatedAt: Date | null;
-    public postedIn: string | undefined;
+    public postedIn: Group | undefined;
+    public likedByUser: boolean;
+    public likesNb: number;
 
     constructor(
         uuid: string,
@@ -20,7 +23,9 @@ export class Post {
         comments: number,
         createdAt: Date,
         lastUpdatedAt: Date,
-        postedIn: string
+        postedIn: Group,
+        liked: boolean,
+        likesNb: number
     ) {
         this.uuid = uuid;
         this.title = title;
@@ -31,6 +36,8 @@ export class Post {
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
         this.postedIn = postedIn;
+        this.likedByUser = liked;
+        this.likesNb = likesNb;
     }
 
     static emptyPost(): Post {
@@ -43,7 +50,9 @@ export class Post {
             0,
             new Date(),
             new Date(),
-            "home"
+            Group.homeGroup(),
+            false,
+            0
         );
     }
 
@@ -58,10 +67,26 @@ export class Post {
             formData.append('media', this.media)
         }
         if(this.postedIn){
-            formData.append('postedIn', this.postedIn)
+            formData.append('postedIn', this.postedIn.uuid)
         }
 
         return formData;
+    }
+
+    static createFromApi(json: any): Post {
+        return new Post(
+            json.uuid,
+            json.title,
+            json.author,
+            json.content,
+            json.media,
+            json.commentsNb,
+            json.createdAt,
+            json.lastUpdatedAt,
+            json.postedIn,
+            json.likedByUser,
+            json.likesNb
+        )
     }
 
 }

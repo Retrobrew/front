@@ -12,23 +12,31 @@
         </form>
         <!-- Left links -->
       </MDBNavbarNav>
-      <MDBNavbarNav right class="w-25 justify-content-end">
-        <div v-if="!user">
-          <router-link to="/login">
-            <MDBBtn color="success" class="me-2">Login</MDBBtn>
-          </router-link>
-          <router-link to="/register">
-            <MDBBtn color="primary" class="mt-2">Register</MDBBtn>
-          </router-link>
-        </div>
-        <div v-else>
-          <router-link to="/profile">
-            <MDBBtn color="success" class="me-2">Profile</MDBBtn>
-          </router-link>
-          <a v-on:click="logout">
-            <MDBBtn color="danger" class="mt-2">Logout</MDBBtn>
-          </a>
-        </div>
+      <MDBNavbarNav v-if="!user" right class="mt-1 me-2">
+        <router-link to="/login" class="nav-link">
+          <MDBNavbarItem class="ps-2">
+            Login
+          </MDBNavbarItem>
+        </router-link>
+        <router-link to="/register" class="nav-link">
+          <MDBNavbarItem class="ps-2">Register</MDBNavbarItem>
+        </router-link>
+      </MDBNavbarNav>
+      <MDBNavbarNav right v-else class="mt-1 me-2">
+        <router-link to="/find-friends" class="nav-link">
+          <MDBNavbarItem class="ps-2">
+            Friends
+          </MDBNavbarItem>
+        </router-link>
+        <router-link to="/find-groups" class="nav-link">
+          <MDBNavbarItem class="ps-2">Groups</MDBNavbarItem>
+        </router-link>
+        <router-link to="/profile" class="nav-link">
+          <MDBNavbarItem class="ps-1">Profile</MDBNavbarItem>
+        </router-link>
+        <a v-on:click="logout" class="nav-link">
+          <MDBNavbarItem class="ps-1">Logout</MDBNavbarItem>
+        </a>
       </MDBNavbarNav>
     </MDBCollapse>
   </MDBNavbar>
@@ -46,7 +54,8 @@ import {
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
-  MDBDropdownItem
+  MDBDropdownItem,
+  MDBCardLink
 } from 'mdb-vue-ui-kit';
 import {Options, Vue} from "vue-class-component";
 import {inject} from "vue";
@@ -65,7 +74,8 @@ import APIController from "@/controller/APIController";
     MDBDropdown,
     MDBDropdownToggle,
     MDBDropdownMenu,
-    MDBDropdownItem
+    MDBDropdownItem,
+    MDBCardLink
   },
 })
 export default class HeaderVue extends Vue {

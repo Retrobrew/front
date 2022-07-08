@@ -16,6 +16,7 @@ export class TreeNode {
                 children.push(this.createFromApi(child))
             })
         }
+
         return new TreeNode(
             json.name,
             json.type,

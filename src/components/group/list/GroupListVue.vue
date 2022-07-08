@@ -28,9 +28,9 @@
 import {Options, Vue} from "vue-class-component";
 import GroupListTitle from "@/components/group/list/atoms/GroupListTitle.vue";
 import GroupListCard from "@/components/group/list/molecules/GroupListCard.vue";
-import {Group} from "@/object/Group";
 import { MDBInput } from 'mdb-vue-ui-kit';
 import {GroupController} from "@/controller/GroupController";
+import {UserProfileGroup} from "@/object/UserProfileGroup";
 
 @Options({
   name: "GroupListVue",
@@ -41,10 +41,13 @@ import {GroupController} from "@/controller/GroupController";
   }
 })
 export default class GroupListVue extends Vue {
-  private groups: Array<Group> = [];
+  private groups: Array<UserProfileGroup> = [];
 
   mounted() {
-    GroupController
+    const routePath = this.$route.path;
+
+    if(routePath === '/profile') {
+      GroupController
         .getUserGroups()
         .then(res => {
           this.groups = res;
@@ -52,10 +55,28 @@ export default class GroupListVue extends Vue {
         .catch(reason => {
           console.error(reason)
         })
+      return;
+    }
+    GroupController.getAllGroups()
+      .then(res => {
+
+      })
+      .catch(reason => {
+        console.error(reason)
+      })
   }
 
+
   private quitGroup(groupUuid: string): void{
-    console.log("Not implemented yet")
+    const group = this.groups.find((item) => {
+      return item.uuid === groupUuid
+    })
+    if(!group) {
+      alert("group not found");
+      return;
+    }
+
+    this.groups.splice(this.groups.indexOf(group), 1)
   }
 }
 </script>

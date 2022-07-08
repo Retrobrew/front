@@ -101,6 +101,10 @@ class APIController {
         ).then(response => {
             return response.json()
         }).then(json => {
+            let picture =  '/assets/avatar-placeholder.png';
+            if(json.picture){
+                picture = json.picture;
+            }
             return new User(
                 json.uuid,
                 json.mail,
@@ -108,7 +112,7 @@ class APIController {
                 json.dateOfBirth,
                 json.country,
                 json.sexe,
-                json.picture
+                picture
             );
         })
     }
@@ -129,10 +133,14 @@ class APIController {
             })
             .then(json => {
                 json.forEach((item: any) => {
+                    let picture =  '/assets/avatar-placeholder.png';
+                    if(json.picture){
+                        picture = json.picture;
+                    }
                     const friend = new Friend(
                         item.username,
                         item.country,
-                        item.picture,
+                        picture,
                         item.userUuid
                     );
                     friends.push(friend);

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <PostCreationVue
-        v-bind:group-uuid="groupUuid"
+        v-bind:group="group"
         v-if="user"
         v-on:postCreated="updateFeed($event)"
     />
@@ -26,12 +26,14 @@ import {User} from "@/object/User";
 import {Post} from "@/object/Post";
 import {FeedController} from "@/controller/FeedController";
 import {useRoute} from "vue-router";
+import {Group} from "@/object/Group";
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
-  groupUuid: {
-    type: String,
-  },
+  group: {
+    type: Group,
+    required: true
+  }
 });
 
 const route = useRoute();
@@ -40,9 +42,9 @@ let posts = ref<Array<Post>>([]);
 
 onMounted(() => {
   //Si on est sur la page d'un groupe
-  if(props.groupUuid){
+  if(props.group.uuid !== "home"){
     FeedController
-        .getGroupFeed(props.groupUuid)
+        .getGroupFeed(props.group.uuid)
         .then(res => {
           posts.value = res;
         }).catch(reason => console.error(reason))
@@ -53,6 +55,7 @@ onMounted(() => {
   if(route.fullPath.includes('group')){
     return;
   }
+
   if(!user){
     FeedController.getHomeFeed()
         .then((feed) => {
@@ -64,6 +67,7 @@ onMounted(() => {
         });
     return
   }
+
   FeedController.getMyFeed()
       .then((feed) => {
         posts.value = feed;

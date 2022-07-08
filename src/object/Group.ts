@@ -6,6 +6,7 @@ export class Group {
     public picture: any;
     public banner: any;
     public isProject: boolean;
+    public members: Array<any>;
 
 
     constructor(
@@ -14,7 +15,8 @@ export class Group {
         name: string,
         description: string,
         picture: string,
-        isProject: boolean
+        isProject: boolean,
+        members: Array<any>
     ) {
         this.creator = creator;
         this.uuid = uuid;
@@ -22,6 +24,7 @@ export class Group {
         this.description = description;
         this.picture = picture;
         this.isProject = isProject;
+        this.members = members;
     }
 
     static emptyGroup() : Group {
@@ -31,23 +34,43 @@ export class Group {
             "",
             "",
             "",
-            false
+            false,
+            []
+        )
+    }
+
+    static homeGroup() : Group {
+        return new Group(
+            "",
+            "home",
+            "home",
+            "",
+            "",
+            false,
+            []
         )
     }
 
     static createFromApi(json: any): Group {
+        let picture = "/assets/vector-gameboy.png";
+        if(json.picture) {
+            picture = json.picture;
+        }
+
         return new Group(
-            json.createdBy,
+            json.createdBy.uuid,
             json.uuid,
             json.name,
             json.description,
-            json.picture,
-            json.isProject
+            picture,
+            json.isProject,
+            json.members
         );
     }
 
     public hasMember(userUuid: string): boolean {
-        //TODO
-        return true;
+        return this.members.find((item) => {
+            return item.user === userUuid;
+        }) !== undefined;
     }
 }

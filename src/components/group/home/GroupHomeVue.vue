@@ -2,6 +2,8 @@
   <HeaderVue />
   <GroupBanner
       v-on:delete-group="deleteGroup"
+      v-on:join-group="joinGroup"
+      v-on:quit-group="quitGroup"
       :user-is-creator="isCreator"
       :is-member="isMember"
       :link="group.banner ? group.banner : defaultBanner"
@@ -14,11 +16,14 @@
       @groupVue="(value) => this.groupVue = value"
   />
   <FeedVue
-      v-bind:groupUuid="group.uuid"
+      v-bind:group="group"
       v-if="this.groupVue === 'feed' && !loading"
   />
   <ProjectHomeVue v-if="this.groupVue === 'project'" />
-  <RepositoryHomeVue v-if="this.groupVue === 'repository'" />
+  <RepositoryHomeVue
+      v-if="this.groupVue === 'repository'"
+      :group="group"
+  />
 </template>
 
 <script lang="ts">
@@ -67,7 +72,7 @@ export default class GroupHomeVue extends Vue {
           this.group = res;
           this.loading = false;
           if(!this.group.creator){
-            console.error("Missing group creator");
+            console.error("Missing group's creator");
             return;
           }
 
@@ -80,7 +85,7 @@ export default class GroupHomeVue extends Vue {
           this.isMember = this.isCreator || this.group.hasMember(this.user.uuid);
         })
         .catch(reason => {
-          console.log("Do something")
+          console.error(reason)
         })
   }
 
@@ -89,12 +94,37 @@ export default class GroupHomeVue extends Vue {
       .then((success: boolean) => {
 
         if(success){
-          this.$router.push('/home');
+          this.$router.push('/');
           return;
         }
         alert("Error while trying to delete group");
 
       })
+  }
+
+  joinGroup(){
+    GroupController.joinGroup(this.group.uuid)
+      .then((success) => {
+        if(success){
+          this.isMember = true;
+          return;
+        }
+        alert("Could not join group");
+
+      }).catch(reason => {
+        alert("Error while trying to join group");
+        console.error(reason)
+    })
+  }
+
+  quitGroup(){
+    GroupController.quitGroup(this.group.uuid)
+        .then(() => {
+          this.isMember = false;
+        }).catch(reason => {
+      alert("Error while trying to quit group");
+      console.error(reason)
+    })
   }
 }
 </script>

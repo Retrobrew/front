@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="label" class="post-tag tag">
+    <div v-if="label" class="post-tag tag link">
       <p>{{label}}</p>
     </div>
     <div v-else class="disabled-tag tag">
@@ -29,6 +29,10 @@ export default class PostLabel extends Vue{
 <style scoped>
 .post-tag {
   background-color: #8b8bff;
+}
+
+.post-tag:hover {
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,.2),0 4px 20px 0 rgba(0,0,0,.1);
 }
 
 .tag {

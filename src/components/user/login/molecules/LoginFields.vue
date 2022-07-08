@@ -1,7 +1,7 @@
 <template>
   <div class="user-login-fields">
-    <LoginInputView @input-value="(value) => this.mail = value" :input-place-holder="mailPlaceHolder" />
-    <LoginInputView @input-value="(value) => this.password = value" :input-place-holder="passwordPlaceHolder" />
+    <LoginInputView @input-value="(value) => this.mail = value" :input-place-holder="mailPlaceHolder" :input-type="mailType"/>
+    <LoginInputView @input-value="(value) => this.password = value" :input-place-holder="passwordPlaceHolder" :input-type="passwordType"/>
     <LoginButtonView :label="connectButtonLabel" :action="connect" />
   </div>
 </template>
@@ -22,7 +22,9 @@ import APIController from "@/controller/APIController";
 export default class LoginFields extends Vue {
   private connectButtonLabel = "Connect";
   private mailPlaceHolder = "Email";
+  private mailType = "email";
   private passwordPlaceHolder = "Password";
+  private passwordType = "password";
 
   private mail = "";
   private password = "";

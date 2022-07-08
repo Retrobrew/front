@@ -14,11 +14,15 @@ import GroupHomeVue from "@/components/group/home/GroupHomeVue.vue";
 import IDEVue from "@/components/ide/IDEVue.vue";
 import GroupCreationVue from "@/components/group/creation/GroupCreationVue.vue";
 import PostDetailsVue from "@/components/post/post-details/PostDetailsVue.vue";
+import FindFriendsVue from "@/components/friend/list/FindFriendsVue.vue";
+import FindGroupsVue from "@/components/group/list/FindGroupsVue.vue";
 
 const app = createApp(App)
 const routes = [
     { path: '/', component: Home },
     { path: '/profile', component: UserProfileHomeVue },
+    { path: '/find-friends', component: FindFriendsVue },
+    { path: '/find-groups', component: FindGroupsVue },
     { path: '/user/:uuid', component: UserHomeVue },
     { path: '/login', component: UserLogin },
     { path: '/register', component: UserRegister },
@@ -26,13 +30,13 @@ const routes = [
     { path: '/group/:uuid', component: GroupHomeVue, name: 'group', params: true },
     { path: '/post/:uuid', component: PostDetailsVue, name: 'post', params: true },
     { path: '/ide', component: IDEVue },
+    { path: '/project/:projectId/edit/:file', component: IDEVue, params: true },
     { path: '/:pathMatch(.*)*', component: Error404 },
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
-
 })
 
 app.provide('user', undefined);
