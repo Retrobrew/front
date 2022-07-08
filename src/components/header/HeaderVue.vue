@@ -14,7 +14,7 @@
       </MDBNavbarNav>
       <MDBNavbarNav v-if="!user" right class="mt-1 me-2 w-25" style="justify-content: flex-end">
         <MDBNavbarItem>
-          <a href="https://wwww.retrobrew.fr/android/retrowbrew.apk" target="_blank" class="btn btn-rounded btn-primary">
+          <a href="https://retrobrew.fr/android/retrobrew.apk" target="_blank" class="btn btn-rounded btn-primary">
             <i class="fab fa-android" />
             Get the app!
           </a>
