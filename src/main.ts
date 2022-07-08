@@ -13,8 +13,8 @@ import Error404 from "@/components/error/Error404.vue";
 import GroupHomeVue from "@/components/group/home/GroupHomeVue.vue";
 import IDEVue from "@/components/ide/IDEVue.vue";
 import GroupCreationVue from "@/components/group/creation/GroupCreationVue.vue";
+import FindFriendsVue from "@/components/user/list/FindFriendsVue.vue";
 import PostDetailsVue from "@/components/post/post-details/PostDetailsVue.vue";
-import FindFriendsVue from "@/components/friend/list/FindFriendsVue.vue";
 import FindGroupsVue from "@/components/group/list/FindGroupsVue.vue";
 
 const app = createApp(App)
@@ -29,7 +29,6 @@ const routes = [
     { path: '/group/creation', component: GroupCreationVue },
     { path: '/group/:uuid', component: GroupHomeVue, name: 'group', params: true },
     { path: '/post/:uuid', component: PostDetailsVue, name: 'post', params: true },
-    { path: '/ide', component: IDEVue },
     { path: '/project/:projectId/edit/:file', component: IDEVue, params: true },
     { path: '/:pathMatch(.*)*', component: Error404 },
 ];

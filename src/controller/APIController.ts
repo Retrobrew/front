@@ -149,6 +149,38 @@ class APIController {
             })
     }
 
+    static getAllUsers(): Promise<Array<Friend>> {
+        const token = sessionStorage.getItem('access_token');
+        const friends: Array<Friend> = [];
+
+        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
+            headers: { Authorization: "Bearer " + token }
+        })
+            .then(response => {
+                if(response.status !== 200) {
+                    throw new Error("Error while trying to fetch posts");
+                }
+
+                return response.json();
+            })
+            .then(json => {
+                json.forEach((item: any) => {
+                    let picture =  '/assets/avatar-placeholder.png';
+                    if(json.picture){
+                        picture = json.picture;
+                    }
+                    const friend = new Friend(
+                        item.username,
+                        item.country,
+                        picture,
+                        item.userUuid
+                    );
+                    friends.push(friend);
+                })
+                return friends
+            })
+    }
+
     static unfriend(friendUuid: string): Promise<any> {
         const token = sessionStorage.getItem('access_token');
         return fetch(`${process.env.VUE_APP_AUTH_API_URL}/friends/${friendUuid}/unfriend`, {
