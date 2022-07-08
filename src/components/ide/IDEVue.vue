@@ -10,6 +10,7 @@
           ref="monacoEditorDiv"
       ></div>
       <ProjectActions
+          :readonly="readonly"
           :project-id="projectId"
           :current-file="currentFile"
           :was-compiled="wasCompiled"
@@ -61,6 +62,14 @@ import {defineProps, onMounted, ref} from "vue";
     projectId: {
       type: String,
       required: true
+    },
+    version: {
+      type: String,
+      required: true
+    },
+    readonly: {
+      type: Boolean,
+      required: true
     }
   })
 
@@ -75,9 +84,10 @@ import {defineProps, onMounted, ref} from "vue";
 
   onMounted(() => {
     const editorOptions = {
-      language: "rust",
+      language: currentLanguage,
       minimap: { enabled: false },
-      value: fileContent
+      value: fileContent,
+      readOnly: props.readonly
     };
 
     monacoEditor = monaco.editor.create(
@@ -85,7 +95,11 @@ import {defineProps, onMounted, ref} from "vue";
         editorOptions
     );
 
-    ProjectController.getFileContent(props.projectId, props.currentFile)
+    ProjectController.getFileContent(
+        props.projectId,
+        props.currentFile,
+        props.version
+    )
         .then(res => {
           monacoEditor.setValue(res.content)
         })
