@@ -11,16 +11,18 @@
         class="btn btn-primary m-1">
       Test project
     </button>
-    <button
-        v-on:click="emit('save-file')"
-        class="btn btn-success m-1">
-      Save file
-    </button>
-    <button
-        v-on:click="onDeleteFile"
-        class="btn btn-danger m-1">
-      Delete file
-    </button>
+    <div v-if="!readonly">
+      <button
+          v-on:click="emit('save-file')"
+          class="btn btn-success m-1">
+        Save file
+      </button>
+      <button
+          v-on:click="onDeleteFile"
+          class="btn btn-danger m-1">
+        Delete file
+      </button>
+    </div>
   </div>
 </template>
 
@@ -49,6 +51,10 @@ const props = defineProps({
   },
   projectId: {
     type: String,
+    required: true
+  },
+  readonly: {
+    type: Boolean,
     required: true
   }
 })
