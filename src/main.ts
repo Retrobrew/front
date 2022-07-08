@@ -13,11 +13,15 @@ import Error404 from "@/components/error/Error404.vue";
 import GroupHomeVue from "@/components/group/home/GroupHomeVue.vue";
 import IDEVue from "@/components/ide/IDEVue.vue";
 import GroupCreationVue from "@/components/group/creation/GroupCreationVue.vue";
+import FindFriendsVue from "@/components/friend/list/FindFriendsVue.vue";
+import FindGroupsVue from "@/components/group/list/FindGroupsVue.vue";
 
 const app = createApp(App)
 const routes = [
     { path: '/', component: Home },
     { path: '/profile', component: UserProfileHomeVue },
+    { path: '/find-friends', component: FindFriendsVue },
+    { path: '/find-groups', component: FindGroupsVue },
     { path: '/user/:uuid', component: UserHomeVue },
     { path: '/login', component: UserLogin },
     { path: '/register', component: UserRegister },
@@ -30,7 +34,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-
 })
 
 app.provide('user', undefined);

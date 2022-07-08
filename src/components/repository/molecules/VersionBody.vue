@@ -1,8 +1,9 @@
 <template>
   <div class="">
-    <div class="version-card-body">
-      <VersionNumber :version="versionNumber"/>
-      <VersionLanguage :language="versionLanguage"/>
+
+    <div class="card-header h3">Versions</div>
+    <div class="version-card-body" v-for="(version, index) in versions" :key="index">
+      <VersionNumber v-on:browse-version="$emit('browse-version', $event)" :version="version"/>
     </div>
     <div class="card m-3">
       <div class="card-header">
@@ -10,12 +11,19 @@
       </div>
         <div id="tree" class="list-group list-group-root well shadow-sm"></div>
     </div>
-    <div class="m-3">
+    <div class="m-3 d-flex">
       <div>
         <button
             v-on:click="$emit('new-file')"
             class="btn btn-primary m-1">
           New file
+        </button>
+      </div>
+      <div>
+        <button
+            v-on:click="$emit('new-version')"
+            class="btn btn-primary m-1">
+          Create version
         </button>
       </div>
     </div>
@@ -45,19 +53,29 @@ import ProjectController from "@/controller/ProjectController";
 export default class VersionBody extends Vue {
   private files: Array<TreeNode> = [];
   private selectedFile = "";
+  private versions: Array<String> = [];
   //Prop
   projectId!: string;
+  versionNumber!: string;
 
   mounted() {
-    ProjectController.getProjectTree(this.projectId)
-        .then(res => {
-          this.files = res;
-          const div = document.getElementById("tree");
-          if(!div){
-            return;
-          }
+    ProjectController.getProjectTree(this.projectId, this.versionNumber)
+      .then(res => {
+        this.files = res;
+        const div = document.getElementById("tree");
+        if(!div){
+          return;
+        }
 
-          this.displayFiles(this.files, div);
+        this.displayFiles(this.files, div);
+      });
+
+    ProjectController.getVersions(this.projectId)
+        .then(res => {
+          // this.versions = ["1","2", '1.1.1'].sort();
+          this.versions = Array.from(res).sort()
+          console.log(res)
+          console.log(this.versions)
         })
 
   }
