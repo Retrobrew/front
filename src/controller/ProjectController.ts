@@ -30,18 +30,24 @@ class ProjectController {
         })
     }
 
-    static getProjectTree(projectId: string): Promise<Array<TreeNode>> {
+    static getProjectTree(projectId: string, versionNumber: string): Promise<Array<TreeNode>> {
 
         return fetch(
-            `${process.env.VUE_APP_PROJECT_API_URL}/explorer?id=${projectId}`,
+            `${process.env.VUE_APP_PROJECT_API_URL}/explorer?id=${projectId}&version=${versionNumber}`,
         ).then((res) => {
             return res.json()
         }).then( (json) => {
             const files: Array<TreeNode> = [];
-            const node = TreeNode.createFromApi(json)
-            files.push(node);
-
-            return files
+            json.children.forEach((file: any) => {
+                const node = TreeNode.createFromApi(file)
+                files.push(node);
+            })
+            const rootNode = new TreeNode(
+                "src",
+                json.type,
+                files
+            )
+            return [rootNode]
         });
     }
 
@@ -90,6 +96,23 @@ class ProjectController {
            return true
         });
 
+   }
+
+   static createArchive(projectId: string, versionNb: string): Promise<string> {
+       return fetch(
+           `${process.env.VUE_APP_PROJECT_API_URL}/archive?id=${projectId}&version=${versionNb}`
+       ).then(res => {
+           return res.text()
+       });
+   }
+
+   static getVersions(projectId: string): Promise<string> {
+       return fetch(
+           `${process.env.VUE_APP_PROJECT_API_URL}/version?id=${projectId}`
+       ).then(res => {
+           console.log(res)
+           return res.text()
+       });
    }
 }
 

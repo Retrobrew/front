@@ -1,5 +1,5 @@
 <template>
-  <p class="version-card-body-version">{{version}}</p>
+  <div class="link-dark link" v-on:click="$emit('browse-version', version)">{{version}}</div>
 </template>
 
 <script lang="ts">
@@ -15,11 +15,11 @@ export default class VersionNumber extends Vue{
 }
 </script>
 
-<style scoped>
-.version-card-body-version {
-  font-size: 1.5em;
-  font-weight: 800;
-  padding: 0;
-  margin: 0;
-}
-</style>
+<!--<style scoped>-->
+<!--.version-card-body-version {-->
+<!--  font-size: 1.5em;-->
+<!--  font-weight: 800;-->
+<!--  padding: 0;-->
+<!--  margin: 0;-->
+<!--}-->
+<!--</style>-->

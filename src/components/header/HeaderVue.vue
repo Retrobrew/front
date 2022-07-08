@@ -23,12 +23,12 @@
         </router-link>
       </MDBNavbarNav>
       <MDBNavbarNav right v-else class="mt-1 me-2">
-        <router-link to="/login" class="nav-link">
+        <router-link to="/find-friends" class="nav-link">
           <MDBNavbarItem class="ps-2">
             Friends
           </MDBNavbarItem>
         </router-link>
-        <router-link to="/register" class="nav-link">
+        <router-link to="/find-groups" class="nav-link">
           <MDBNavbarItem class="ps-2">Groups</MDBNavbarItem>
         </router-link>
         <router-link to="/profile" class="nav-link">
