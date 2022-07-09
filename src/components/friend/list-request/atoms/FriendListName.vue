@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import APIController from "@/controller/APIController";
 
 @Options({
   name: "FriendListName",
@@ -17,7 +18,13 @@ import {Options, Vue} from "vue-class-component";
 export default class FriendListName extends Vue {
 
   private visitFriend(friendUuid: string) {
-    this.$router.push(`/user/${friendUuid}`)
+    APIController
+        .getUser(friendUuid)
+        .then((res) => {
+          this.$router.push(`/user/${friendUuid}`)
+        }).catch(reason => {
+          console.error(reason);
+        })
   }
 }
 </script>

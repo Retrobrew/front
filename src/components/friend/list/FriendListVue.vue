@@ -19,8 +19,8 @@
 import {Options, Vue} from "vue-class-component";
 import FriendListTitle from "@/components/friend/list/atoms/FriendListTitle.vue";
 import FriendListCard from "@/components/friend/list/molecules/FriendListCard.vue";
-import APIController from "@/controller/APIController";
 import {Friend} from "@/object/Friend";
+import {FriendshipController} from "@/controller/FriendshipController";
 
 @Options({
   name: "FriendListVue",
@@ -33,7 +33,7 @@ export default class FriendListVue extends Vue {
   private friends: Array<Friend> = [];
 
   mounted() {
-    APIController.getMyFriends()
+    FriendshipController.getMyFriends()
       .then((friends) => {
         this.friends = friends;
       })

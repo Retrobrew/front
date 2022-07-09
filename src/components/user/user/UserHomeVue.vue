@@ -57,7 +57,6 @@ export default class UserHomeVue extends Vue {
           .then((res: any) => {
             this.user = res.user as User;
             this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`;
-            console.log(this.userDescription)
             this.friendShipStatus = res.friendshipStatus;
           });
       return;
@@ -74,7 +73,6 @@ export default class UserHomeVue extends Vue {
   private onRequestFriendship(){
     FriendshipController.requestFriendship(this.userUuid)
         .then((res) => {
-          // console.log(res);
         })
         .catch(error => console.error(error))
   }
