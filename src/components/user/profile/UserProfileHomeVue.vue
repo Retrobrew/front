@@ -20,7 +20,16 @@
       </MDBCardBody>
     </MDBCard>
   <div class="d-flex justify-content-center">
-    <FriendListVue class="mt-3 me-2"/>
+    <div class="flex-column">
+      <FriendRequestListVue
+          v-on:accepted="reload = !reload"
+          class="mt-3 me-2"
+      />
+      <FriendListVue
+          :key="reload"
+          class="mt-3 me-2"
+      />
+    </div>
     <GroupListVue class="mt-3 ms-2"/>
   </div>
   </div>
@@ -41,10 +50,12 @@ import {
   MDBCardHeader,
   MDBCardBody
 } from 'mdb-vue-ui-kit'
+import FriendRequestListVue from "@/components/friend/list-request/FriendRequestListVue.vue";
 
 @Options({
   name: "UserProfileHomeVue",
   components: {
+    FriendRequestListVue,
     GroupListVue,
     FriendListVue,
     UserProfileBody,
@@ -75,6 +86,7 @@ export default class UserProfileHomeVue extends Vue {
     "Sweden",
     "United Kingdom"
   ];
+  private reload = false;
 }
 
 </script>

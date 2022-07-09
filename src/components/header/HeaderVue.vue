@@ -3,6 +3,12 @@
     <router-link to="/">
       <img src="../../assets/placeholder_logo.png" alt="" loading="lazy" />
     </router-link>
+    <MDBNavbarItem>
+      <a href="https://retrobrew.fr/android/retrobrew.apk" target="_blank" class="btn btn-rounded btn-primary">
+        <i class="fab fa-android" />
+        Get the app!
+      </a>
+    </MDBNavbarItem>
     <MDBNavbarToggler target="#navbarLeftAlignExample" @click="collapse4 = !collapse4" />
     <MDBCollapse v-model="collapse4" id="navbarLeftAlignExample">
       <MDBNavbarNav center>
@@ -13,12 +19,6 @@
         <!-- Left links -->
       </MDBNavbarNav>
       <MDBNavbarNav v-if="!user" right class="mt-1 me-2 w-25" style="justify-content: flex-end">
-        <MDBNavbarItem>
-          <a href="https://retrobrew.fr/android/retrobrew.apk" target="_blank" class="btn btn-rounded btn-primary">
-            <i class="fab fa-android" />
-            Get the app!
-          </a>
-        </MDBNavbarItem>
         <router-link to="/login" class="nav-link">
           <MDBNavbarItem class="ps-2">
             Login
@@ -32,10 +32,6 @@
       </MDBNavbarNav>
       <MDBNavbarNav right v-else class="mt-1 me-2 w-25"  style="justify-content: flex-end">
         <router-link to="/find-friends" class="nav-link">
-          <button class="btn btn-rounded btn-primary">
-            <i class="fab fa-android" />
-            Get the app!
-          </button>
           <MDBNavbarItem class="ps-2">
             Friends
           </MDBNavbarItem>
@@ -50,7 +46,7 @@
             Profile
           </MDBNavbarItem>
         </router-link>
-        <a v-on:click="logout" class="nav-link">
+        <a v-on:click="logout" class="nav-link link">
           <MDBNavbarItem class="ps-1">
             Logout
           </MDBNavbarItem>
