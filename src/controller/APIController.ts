@@ -91,7 +91,7 @@ class APIController {
             .catch(err => console.error(err));
     }
 
-    static getUserProfile(userUuid: string): Promise<User> {
+    static getUser(userUuid: string): Promise<User> {
         const token = sessionStorage.getItem('access_token');
         return fetch(
             `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}`,
@@ -117,36 +117,35 @@ class APIController {
         })
     }
 
-    static getMyFriends(): Promise<Array<Friend>> {
+    static getUserProfile(userUuid: string): Promise<Object> {
         const token = sessionStorage.getItem('access_token');
-        const friends: Array<Friend> = [];
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}/profile`,
+            {
+                headers: { Authorization: "Bearer " + token }
+            }
+        ).then(response => {
+            return response.json()
+        }).then(json => {
+            let picture =  '/assets/avatar-placeholder.png';
+            if(json.picture){
+                picture = json.picture;
+            }
+            const user  = new User(
+                json.uuid,
+                json.mail,
+                json.username,
+                json.dateOfBirth,
+                json.country,
+                json.sexe,
+                picture
+            );
 
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/my/friends`, {
-            headers: { Authorization: "Bearer " + token }
+            return {
+                user: user,
+                friendshipStatus: json.friendshipStatus
+            }
         })
-            .then(response => {
-                if(response.status !== 200) {
-                    throw new Error("Error while trying to fetch posts");
-                }
-
-                return response.json();
-            })
-            .then(json => {
-                json.forEach((item: any) => {
-                    let picture =  '/assets/avatar-placeholder.png';
-                    if(json.picture){
-                        picture = json.picture;
-                    }
-                    const friend = new Friend(
-                        item.username,
-                        item.country,
-                        picture,
-                        item.userUuid
-                    );
-                    friends.push(friend);
-                })
-                return friends
-            })
     }
 
     static getAllUsers(): Promise<Array<Friend>> {
@@ -179,14 +178,6 @@ class APIController {
                 })
                 return friends
             })
-    }
-
-    static unfriend(friendUuid: string): Promise<any> {
-        const token = sessionStorage.getItem('access_token');
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/friends/${friendUuid}/unfriend`, {
-            method: "POST",
-            headers: { Authorization: "Bearer " + token }
-        });
     }
 }
 

@@ -22,7 +22,7 @@ const routes = [
     { path: '/profile', component: UserProfileHomeVue },
     { path: '/find-friends', component: FindFriendsVue },
     { path: '/find-groups', component: FindGroupsVue },
-    { path: '/user/:uuid', component: UserHomeVue },
+    { path: '/user/:uuid', component: UserHomeVue, name: 'friend', params: true },
     { path: '/login', component: UserLogin },
     { path: '/register', component: UserRegister },
     { path: '/group/creation', component: GroupCreationVue },
