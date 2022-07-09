@@ -156,10 +156,7 @@ class APIController {
             headers: { Authorization: "Bearer " + token }
         })
             .then(response => {
-                if(response.status !== 200) {
-                    throw new Error("Error while trying to fetch posts");
-                }
-
+                console.log(response.status)
                 return response.json();
             })
             .then(json => {
