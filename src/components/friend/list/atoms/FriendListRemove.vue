@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import APIController from "@/controller/APIController";
+import {FriendshipController} from "@/controller/FriendshipController";
 
 @Options({
   name: "FriendListRemove",
@@ -14,7 +14,7 @@ import APIController from "@/controller/APIController";
 })
 export default class FriendListRemove extends Vue {
   unfriend(friendUuid: string): void {
-    APIController
+    FriendshipController
         .unfriend(friendUuid)
         .then(res => {
           if(res.status === 200) {

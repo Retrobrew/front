@@ -1,5 +1,12 @@
 <template>
-  <button class="btn btn-outline-success user-profile-button">{{label}}</button>
+  <div class="text-center mb-3">
+    <button
+        v-on:click="$emit('')"
+        class="btn btn-sm btn-success">
+      {{label}}
+    </button>
+  </div>
+
 </template>
 
 <script lang="ts">
@@ -14,11 +21,3 @@ import {Options, Vue} from "vue-class-component";
 export default class UserProfileButton extends Vue {
 }
 </script>
-
-<style scoped>
-.user-profile-button {
-  margin: 12px auto;
-  text-align: center;
-  display: flex;
-}
-</style>

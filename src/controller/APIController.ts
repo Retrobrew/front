@@ -91,7 +91,7 @@ class APIController {
             .catch(err => console.error(err));
     }
 
-    static getUserProfile(userUuid: string): Promise<User> {
+    static getUser(userUuid: string): Promise<User> {
         const token = sessionStorage.getItem('access_token');
         return fetch(
             `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}`,
@@ -114,6 +114,37 @@ class APIController {
                 json.sexe,
                 picture
             );
+        })
+    }
+
+    static getUserProfile(userUuid: string): Promise<Object> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}/profile`,
+            {
+                headers: { Authorization: "Bearer " + token }
+            }
+        ).then(response => {
+            return response.json()
+        }).then(json => {
+            let picture =  '/assets/avatar-placeholder.png';
+            if(json.picture){
+                picture = json.picture;
+            }
+            const user  = new User(
+                json.uuid,
+                json.mail,
+                json.username,
+                json.dateOfBirth,
+                json.country,
+                json.sexe,
+                picture
+            );
+
+            return {
+                user: user,
+                friendshipStatus: json.friendshipStatus
+            }
         })
     }
 
@@ -179,14 +210,6 @@ class APIController {
                 })
                 return friends
             })
-    }
-
-    static unfriend(friendUuid: string): Promise<any> {
-        const token = sessionStorage.getItem('access_token');
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/friends/${friendUuid}/unfriend`, {
-            method: "POST",
-            headers: { Authorization: "Bearer " + token }
-        });
     }
 }
 

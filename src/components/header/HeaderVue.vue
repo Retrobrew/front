@@ -34,7 +34,7 @@
         <router-link to="/profile" class="nav-link">
           <MDBNavbarItem class="ps-1">Profile</MDBNavbarItem>
         </router-link>
-        <a v-on:click="logout" class="nav-link">
+        <a v-on:click="logout" class="nav-link link">
           <MDBNavbarItem class="ps-1">Logout</MDBNavbarItem>
         </a>
       </MDBNavbarNav>

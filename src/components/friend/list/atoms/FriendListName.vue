@@ -19,7 +19,7 @@ export default class FriendListName extends Vue {
 
   private visitFriend(friendUuid: string) {
     APIController
-        .getUserProfile(friendUuid)
+        .getUser(friendUuid)
         .then((res) => {
           this.$router.push(`/user/${friendUuid}`)
         }).catch(reason => {

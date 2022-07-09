@@ -1,24 +1,50 @@
 <template>
   <div class="user-profile-body">
     <UserProfilePicture :link="userPicture" />
-    <UserProfileButton :label="addFriendButton" />
+    <div class="text-center mb-3">
+      <button
+          :class="{ 'disabled': friendshipStatus !== null}"
+          v-on:click="onAddFriend"
+          class="btn btn-sm btn-success">
+        {{addFriendButton}}
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import UserProfilePicture from "@/components/user/common/atoms/UserProfilePicture.vue";
-import UserProfileButton from "@/components/user/common/atoms/UserProfileButton.vue";
 
 @Options({
   name: "UserBody",
-  components: {UserProfileButton, UserProfilePicture},
+  components: { UserProfilePicture },
   props: {
-    userPicture: String
+    userPicture: String,
+    friendshipStatus: {
+      type: String,
+      required: true,
+      default: null
+    }
   }
 })
 export default class UserBody extends Vue {
-  private addFriendButton = "Add friend";
+  private addFriendButton = "";
+
+  friendshipStatus!: string;
+
+  mounted() {
+    if (!this.friendshipStatus){
+      this.addFriendButton = "Add friend";
+    } else {
+      this.addFriendButton = this.friendshipStatus
+    }
+  }
+
+  private onAddFriend(): void {
+    this.addFriendButton = "Request sent"
+    this.$emit('request-friendship');
+  }
 }
 </script>
 
