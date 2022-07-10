@@ -80,6 +80,8 @@ export default class VersionBody extends Vue {
   }
 
   private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement) {
+    console.log(this.files);
+    console.log("display files")
     files.forEach((item:TreeNode) => {
       const link = document.createElement('a');
       link.href = '#';

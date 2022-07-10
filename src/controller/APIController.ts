@@ -143,7 +143,8 @@ class APIController {
 
             return {
                 user: user,
-                friendshipStatus: json.friendshipStatus
+                friendshipStatus: json.friendshipStatus,
+                requestId: json.friendRequestId
             }
         })
     }
@@ -156,10 +157,6 @@ class APIController {
             headers: { Authorization: "Bearer " + token }
         })
             .then(response => {
-                if(response.status !== 200) {
-                    throw new Error("Error while trying to fetch posts");
-                }
-
                 return response.json();
             })
             .then(json => {
