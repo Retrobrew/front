@@ -10,9 +10,19 @@ export class FriendshipController {
         });
     }
 
-    static requestFriendship(friendUuid: string): Promise<any> {
+    static requestFriendship(friendUuid: string): Promise<string> {
         const token = sessionStorage.getItem('access_token');
         return fetch(`${process.env.VUE_APP_AUTH_API_URL}/users/${friendUuid}/friendRequest`, {
+            method: "POST",
+            headers: { Authorization: "Bearer " + token }
+        }).then(response => {
+            return response.text()
+        })
+    }
+
+    static cancelRequest(friendRequest: string): Promise<any> {
+        const token = sessionStorage.getItem('access_token');
+        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/friendRequests/sent/${friendRequest}/cancel`, {
             method: "POST",
             headers: { Authorization: "Bearer " + token }
         });

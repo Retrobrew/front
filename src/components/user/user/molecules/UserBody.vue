@@ -1,12 +1,25 @@
 <template>
   <div class="user-profile-body">
     <UserProfilePicture :link="userPicture" />
-    <div class="text-center mb-3">
+    <div class="text-center mb-3" v-if="friendshipStatus===null">
       <button
-          :class="{ 'disabled': friendshipStatus !== null}"
           v-on:click="onAddFriend"
           class="btn btn-sm btn-success">
         {{addFriendButton}}
+      </button>
+    </div>
+    <div class="text-center mb-3" v-else-if="friendshipStatus==='accepted'">
+      <button
+          v-on:click="onUnfriend"
+          class="btn btn-sm btn-light">
+        Unfriend
+      </button>
+    </div>
+    <div class="text-center mb-3" v-else-if="friendshipStatus==='pending'">
+      <button
+          v-on:click="onCancelRequest"
+          class="btn btn-sm btn-danger">
+        Cancel request
       </button>
     </div>
   </div>
@@ -29,21 +42,23 @@ import UserProfilePicture from "@/components/user/common/atoms/UserProfilePictur
   }
 })
 export default class UserBody extends Vue {
-  private addFriendButton = "";
+  private addFriendButton = "Add as friend";
 
   friendshipStatus!: string;
-
-  mounted() {
-    if (!this.friendshipStatus){
-      this.addFriendButton = "Add friend";
-    } else {
-      this.addFriendButton = this.friendshipStatus
-    }
-  }
 
   private onAddFriend(): void {
     this.addFriendButton = "Request sent"
     this.$emit('request-friendship');
+  }
+
+  private onUnfriend(): void {
+    this.addFriendButton = "Add as friend"
+    this.$emit('unfriend');
+  }
+
+  private onCancelRequest(): void {
+    this.addFriendButton = "Add as friend"
+    this.$emit('cancel-request');
   }
 }
 </script>

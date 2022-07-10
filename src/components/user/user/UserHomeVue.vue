@@ -7,7 +7,10 @@
       </MDBCardHeader>
       <MDBCardBody class="pb-1">
         <UserBody
+            :key="friendShipStatus"
             v-on:request-friendship="onRequestFriendship"
+            v-on:unfriend="onUnfriend"
+            v-on:cancel-request="onCancelRequest"
             :user-picture="user.picture"
             :friendship-status="friendShipStatus"
         />
@@ -48,6 +51,7 @@ export default class UserHomeVue extends Vue {
   private user: User | null = null;
   private userDescription = "";
   private friendShipStatus: string|null = null;
+  private requestId: string|null = null
 
   mounted() {
     this.userUuid = this.$route.params['uuid'] as string;
@@ -58,6 +62,7 @@ export default class UserHomeVue extends Vue {
             this.user = res.user as User;
             this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`;
             this.friendShipStatus = res.friendshipStatus;
+            this.requestId = res.requestId;
           });
       return;
     }
@@ -71,7 +76,29 @@ export default class UserHomeVue extends Vue {
   }
 
   private onRequestFriendship(){
+    this.friendShipStatus =  'pending';
     FriendshipController.requestFriendship(this.userUuid)
+      .then((requestId: any) => {
+        this.requestId = requestId
+      })
+      .catch(error => console.error(error))
+  }
+
+  private onCancelRequest(){
+    this.friendShipStatus = null;
+    if(!this.requestId) {
+      alert('could not cancel request. You can try and reload the page.')
+      return;
+    }
+
+    FriendshipController.cancelRequest(this.requestId)
+      .then(() => this.requestId = null)
+      .catch(error => console.error(error))
+  }
+
+  private onUnfriend(){
+    this.friendShipStatus = null;
+    FriendshipController.unfriend(this.userUuid)
         .then((res) => {
         })
         .catch(error => console.error(error))

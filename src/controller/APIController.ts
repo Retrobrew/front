@@ -143,7 +143,8 @@ class APIController {
 
             return {
                 user: user,
-                friendshipStatus: json.friendshipStatus
+                friendshipStatus: json.friendshipStatus,
+                requestId: json.friendRequestId
             }
         })
     }
@@ -156,7 +157,6 @@ class APIController {
             headers: { Authorization: "Bearer " + token }
         })
             .then(response => {
-                console.log(response.status)
                 return response.json();
             })
             .then(json => {
