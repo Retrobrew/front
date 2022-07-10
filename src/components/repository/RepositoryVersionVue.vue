@@ -5,7 +5,7 @@
       :version-language="repositoryLanguage"
       :version-number="version"
       :project-id="group.uuid"
-      v-on:browse-version="onBrowseVersion($event); selectedFile=''"
+      v-on:browse-version="onBrowseVersion($event)"
       v-on:select-file="selectedFile = $event; showNewFileForm = false"
       v-on:new-file="showNewFileForm = true;  showCreateVersionForm = false"
       v-on:new-version="showNewFileForm = false; showCreateVersionForm = true"
@@ -77,8 +77,9 @@ export default class RepositoryVersionVue extends Vue {
   }
 
   private onBrowseVersion(versionNumber: string): void {
-    this.version = versionNumber;
     this.reload = !this.reload;
+    this.selectedFile = '';
+    this.version = versionNumber;
   }
 
 }

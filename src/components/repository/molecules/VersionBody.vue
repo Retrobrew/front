@@ -1,13 +1,12 @@
 <template>
   <div class="">
-
     <div class="card-header h3">Versions</div>
     <div class="version-card-body" v-for="(version, index) in versions" :key="index">
       <VersionNumber v-on:browse-version="$emit('browse-version', $event)" :version="version"/>
     </div>
     <div class="card m-3">
       <div class="card-header">
-        <div class="mb-0 font-weight-bold text-center h4">Edit Files</div>
+        <div class="mb-0 fw-bold text-center h4">Edit Files</div>
       </div>
         <div id="tree" class="list-group list-group-root well shadow-sm"></div>
     </div>
@@ -59,9 +58,12 @@ export default class VersionBody extends Vue {
   versionNumber!: string;
 
   mounted() {
+    console.log("mounted")
     this.files = [];
+    console.log(this.files)
     ProjectController.getProjectTree(this.projectId, this.versionNumber)
       .then(res => {
+        console.log(res);
         this.files = res;
         const div = document.getElementById("tree");
         if(!div){
@@ -77,7 +79,6 @@ export default class VersionBody extends Vue {
           this.versions.splice(this.versions.indexOf("latest"),1);
           this.versions.unshift("latest");
         })
-
   }
 
   private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement) {
@@ -125,7 +126,7 @@ export default class VersionBody extends Vue {
 
     const a: HTMLElement = event.target as HTMLElement;
     this.selectedFile = a.innerHTML;
-    a.classList.add('font-weight-bold');
+    a.classList.add('fw-bold');
     this.$emit('select-file', a.innerHTML)
   }
 }
