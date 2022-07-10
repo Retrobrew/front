@@ -58,17 +58,17 @@ export default class VersionBody extends Vue {
   versionNumber!: string;
 
   mounted() {
-    console.log("mounted")
     this.files = [];
-    console.log(this.files)
     ProjectController.getProjectTree(this.projectId, this.versionNumber)
       .then(res => {
-        console.log(res);
         this.files = res;
         const div = document.getElementById("tree");
+
         if(!div){
           return;
         }
+
+        this.cleanTree(div);
 
         this.displayFiles(this.files, div);
       });
@@ -82,7 +82,6 @@ export default class VersionBody extends Vue {
   }
 
   private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement) {
-    console.log(this.files);
     files.forEach((item:TreeNode) => {
       const link = document.createElement('a');
       link.href = '#';
@@ -104,6 +103,12 @@ export default class VersionBody extends Vue {
     })
   }
 
+  private cleanTree(parent: HTMLElement): void {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  }
+
   private selectFile(event: Event) {
     event.preventDefault()
     if(!event.target){
@@ -121,7 +126,7 @@ export default class VersionBody extends Vue {
     ).singleNodeValue as HTMLElement;
 
     if(previousA){
-      previousA.classList.remove("font-weight-bold");
+      previousA.classList.remove("fw-bold");
     }
 
     const a: HTMLElement = event.target as HTMLElement;
