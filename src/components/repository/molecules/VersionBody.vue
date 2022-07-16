@@ -1,13 +1,12 @@
 <template>
   <div class="">
-
     <div class="card-header h3">Versions</div>
     <div class="version-card-body" v-for="(version, index) in versions" :key="index">
       <VersionNumber v-on:browse-version="$emit('browse-version', $event)" :version="version"/>
     </div>
     <div class="card m-3">
       <div class="card-header">
-        <div class="mb-0 font-weight-bold text-center h4">Edit Files</div>
+        <div class="mb-0 fw-bold text-center h4">Edit Files</div>
       </div>
         <div id="tree" class="list-group list-group-root well shadow-sm"></div>
     </div>
@@ -59,13 +58,17 @@ export default class VersionBody extends Vue {
   versionNumber!: string;
 
   mounted() {
+    this.files = [];
     ProjectController.getProjectTree(this.projectId, this.versionNumber)
       .then(res => {
         this.files = res;
         const div = document.getElementById("tree");
+
         if(!div){
           return;
         }
+
+        this.cleanTree(div);
 
         this.displayFiles(this.files, div);
       });
@@ -76,7 +79,6 @@ export default class VersionBody extends Vue {
           this.versions.splice(this.versions.indexOf("latest"),1);
           this.versions.unshift("latest");
         })
-
   }
 
   private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement) {
@@ -101,6 +103,12 @@ export default class VersionBody extends Vue {
     })
   }
 
+  private cleanTree(parent: HTMLElement): void {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  }
+
   private selectFile(event: Event) {
     event.preventDefault()
     if(!event.target){
@@ -118,12 +126,12 @@ export default class VersionBody extends Vue {
     ).singleNodeValue as HTMLElement;
 
     if(previousA){
-      previousA.classList.remove("font-weight-bold");
+      previousA.classList.remove("fw-bold");
     }
 
     const a: HTMLElement = event.target as HTMLElement;
     this.selectedFile = a.innerHTML;
-    a.classList.add('font-weight-bold');
+    a.classList.add('fw-bold');
     this.$emit('select-file', a.innerHTML)
   }
 }

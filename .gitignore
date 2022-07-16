@@ -24,6 +24,5 @@ pnpm-debug.log*
 *.snap
 
 .env
-
 yarn.lock
 package-lock.json

@@ -5,7 +5,10 @@
         v-bind:username="friend.username + ' ' + friend.country"
         v-bind:uuid="friend.uuid"
     />
-    <FriendListRemove v-bind:friend-uuid="friend.uuid"/>
+    <FriendListRemove
+        v-on:delete-friend="$emit('delete-friend', $event)"
+        v-bind:friend-uuid="friend.uuid"
+    />
   </div>
 </template>
 
