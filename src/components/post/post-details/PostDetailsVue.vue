@@ -33,8 +33,8 @@ export default class PostDetailsVue extends Vue {
     this.postUuid = this.route.params.uuid as string
     PostController.getPost(this.postUuid)
         .then((res) => {
+          console.log(res);
           this.post = res;
-          this.loading = false;
         })
         .catch((err) => {
           console.error(err);
@@ -44,6 +44,7 @@ export default class PostDetailsVue extends Vue {
         .then((res) => {
           this.comments.push(...res);
           this.post.comments = this.comments.length;
+          this.loading = false;
         })
         .catch((err) => {
           console.error(err);

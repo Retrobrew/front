@@ -5,7 +5,6 @@ import {Comment} from "@/object/Comment";
 export class PostController {
     static getPost(uuid: string): Promise<Post> {
         const token = sessionStorage.getItem('access_token');
-
         return fetch(`${process.env.VUE_APP_AUTH_API_URL}/posts/${uuid}`,
     {
             headers: { Authorization: "Bearer " + token }
@@ -21,10 +20,10 @@ export class PostController {
             return new Post(
                 json.uuid,
                 json.title,
-                await this.getAuthor(json.author).then(author => author),
+                json.author,
                 json.content,
                 json.media,
-                0,
+                json.commentsNb,
                 json.createdAt,
                 json.lastUpdatedAt,
                 json.postedIn,
@@ -51,12 +50,12 @@ export class PostController {
         .then(json => {
             return new User(
                 json.uuid,
-                json.username,
                 json.email,
-                json.password,
-                json.createdAt,
-                json.lastUpdatedAt,
-                json.role
+                json.username,
+                json.dateOfBirth,
+                json.country,
+                json.sexe,
+                json.picture
             );
         });
     }
