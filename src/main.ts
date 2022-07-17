@@ -1,4 +1,5 @@
-import 'mdb-vue-ui-kit/css/mdb.min.css'
+import 'mdb-vue-ui-kit/css/mdb.min.css';
+import Vue3MobileDetection from "vue3-mobile-detection";
 import { createApp } from 'vue'
 import App from './App.vue'
 import {User} from "@/object/User";
@@ -16,20 +17,22 @@ import GroupCreationVue from "@/components/group/creation/GroupCreationVue.vue";
 import FindFriendsVue from "@/components/user/list/FindFriendsVue.vue";
 import PostDetailsVue from "@/components/post/post-details/PostDetailsVue.vue";
 import FindGroupsVue from "@/components/group/list/FindGroupsVue.vue";
+import MobileHomeVue from "@/components/home/MobileHomeVue.vue";
 
 const app = createApp(App)
 const routes = [
     { path: '/', component: Home },
-    { path: '/profile', component: UserProfileHomeVue },
     { path: '/find-friends', component: FindFriendsVue },
     { path: '/find-groups', component: FindGroupsVue },
-    { path: '/user/:uuid', component: UserHomeVue, name: 'friend', params: true },
-    { path: '/login', component: UserLogin },
-    { path: '/register', component: UserRegister },
     { path: '/group/creation', component: GroupCreationVue },
     { path: '/group/:uuid', component: GroupHomeVue, name: 'group', params: true },
+    { path: '/login', component: UserLogin },
+    { path: '/mobile', component: MobileHomeVue },
     { path: '/post/:uuid', component: PostDetailsVue, name: 'post', params: true },
+    { path: '/profile', component: UserProfileHomeVue },
     { path: '/project/:projectId/edit/:file', component: IDEVue, params: true },
+    { path: '/register', component: UserRegister },
+    { path: '/user/:uuid', component: UserHomeVue, name: 'friend', params: true },
     { path: '/:pathMatch(.*)*', component: Error404 },
 ];
 
@@ -40,6 +43,7 @@ const router = createRouter({
 
 app.provide('user', undefined);
 app.use(router);
+app.use(Vue3MobileDetection);
 
 if(APIController.isLogged()){
     APIController.getCurrentUser()
