@@ -24,6 +24,7 @@
     "vue-class-component": "^8.0.0-0",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^4.0.16",
+    "vue3-mobile-detection": "^1.0.5",
     "vue3-treeview": "^0.3.8"
   },
   "devDependencies": {

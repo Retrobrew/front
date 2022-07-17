@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import {useMobileDetection} from "vue3-mobile-detection";
 import HeaderVue from "@/components/header/HeaderVue.vue";
 import FeedVue from "@/components/feed/FeedVue.vue";
 import PostCreationVue from "@/components/post/post-creation/PostCreationVue.vue";
@@ -19,11 +20,17 @@ import {Group} from "@/object/Group";
   components: {
     FeedVue,
     HeaderVue,
-    PostCreationVue
+    PostCreationVue,
   }
 })
 export default class Home extends Vue {
   private group: Group = Group.homeGroup();
 
+  created() {
+    const { isMobile } = useMobileDetection();
+    if (isMobile()) {
+      this.$router.push("/mobile");
+    }
+  }
 }
 </script>
