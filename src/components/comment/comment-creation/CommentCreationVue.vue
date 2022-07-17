@@ -27,6 +27,9 @@ import {
   MDBCardBody,
   MDBCard
 } from 'mdb-vue-ui-kit';
+import {User} from "@/object/User";
+import {inject} from "vue";
+import {Comment} from "@/object/Comment";
 
 @Options({
   name: "CommentCreationVue",
@@ -37,15 +40,27 @@ import {
   },
 })
 export default class CommentCreationVue extends Vue {
+  private user: User | undefined = inject('user');
   private comment = "";
   private route = useRoute();
   private postUuid = "";
 
   private createComment = () => {
+    if(!this.user){
+      console.error("You can't comment if you are not logged");
+      return;
+    }
     this.postUuid = this.route.params.uuid as string
     PostController.commentPost(this.postUuid, this.comment)
-      .then((_) => {
-        window.location.reload()
+      .then((uuid: string) => {
+
+        const commentObject = new Comment(
+            uuid,
+            this.comment,
+            this.user as User
+        );
+
+        this.$emit('new-comment', commentObject);
       })
       .catch((err) => {
         console.error(err);

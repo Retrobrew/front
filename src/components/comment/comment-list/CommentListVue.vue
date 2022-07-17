@@ -1,6 +1,8 @@
 <template>
   <div class="main-vue comment-list">
-    <CommentVue v-for="comment in comments" :comment="comment" v-bind:key="comment" />
+    <CommentVue
+        v-on:delete-comment="$emit('delete-comment', $event)"
+        v-for="comment in comments" :comment="comment" v-bind:key="comment" />
   </div>
 </template>
 

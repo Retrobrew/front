@@ -85,7 +85,7 @@ export class PostController {
         })
     }
 
-    static commentPost(postUuid: string, content: string): Promise<boolean> {
+    static commentPost(postUuid: string, content: string): Promise<string> {
         const token = sessionStorage.getItem('access_token');
         return fetch(
             `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/comment`,
@@ -101,7 +101,7 @@ export class PostController {
                 })
             }
         ).then(res => {
-            return res.status === 200;
+            return res.text();
         })
     }
 
@@ -120,6 +120,7 @@ export class PostController {
             return res.status === 200;
         })
     }
+
     static unlikePost(postUuid: string): Promise<boolean> {
         const token = sessionStorage.getItem('access_token');
 
@@ -127,6 +128,22 @@ export class PostController {
             `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/unlike`,
             {
                 method: 'PUT',
+                headers: {
+                    Authorization: "Bearer " + token,
+                }
+            }
+        ).then(res => {
+            return res.status === 200;
+        })
+    }
+
+    static deleteComment(postUuid: string, commentUuid: string): Promise<boolean> {
+        const token = sessionStorage.getItem('access_token');
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/posts/${postUuid}/comment/${commentUuid}`,
+            {
+                method: 'DELETE',
                 headers: {
                     Authorization: "Bearer " + token,
                 }
