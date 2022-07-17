@@ -24,6 +24,10 @@ export default class PostComment extends Vue {
 .post-foot-comment {
   display: flex;
   margin: 0 8px 8px 8px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: black;
+  color: black;
 }
 .post-foot-comment svg {
   margin: auto 4px;

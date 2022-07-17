@@ -23,6 +23,7 @@
           :likes="postLikes"
           :dislikes="postDislikes"
           :comments="post.comments"
+          :post-uuid="post.uuid"
         />
       </MDBCardFooter>
     </MDBCard>

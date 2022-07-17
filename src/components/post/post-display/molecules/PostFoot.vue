@@ -6,7 +6,9 @@
         :likes="likes"
         :dislikes="dislikes"
     />
-    <PostComment :number="comments" />
+    <router-link v-bind:to="'/post/' + postUuid">
+      <PostComment :number="comments" />
+    </router-link>
   </div>
 </template>
 
@@ -25,6 +27,7 @@ import PostComment from "@/components/post/post-display/atoms/PostComment.vue";
     likes: Number,
     dislikes: Number,
     comments: Number,
+    postUuid: String,
     liked: Boolean
   }
 })
