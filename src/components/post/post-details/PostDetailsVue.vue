@@ -2,8 +2,14 @@
   <HeaderVue />
   <div class="main-vue">
     <PostVue v-bind:post="post" v-if="!loading"/>
-    <CommentCreationVue class="post-details-comment-creation"/>
-    <CommentListVue v-bind:comments="comments" v-if="!loading"/>
+    <CommentCreationVue
+        v-on:new-comment="addComment($event)"
+        class="post-details-comment-creation"/>
+    <CommentListVue
+        :key="comments"
+        v-on:delete-comment="deleteComment($event)"
+        v-bind:comments="comments" v-if="!loading"
+    />
   </div>
 </template>
 
@@ -33,7 +39,6 @@ export default class PostDetailsVue extends Vue {
     this.postUuid = this.route.params.uuid as string
     PostController.getPost(this.postUuid)
         .then((res) => {
-          console.log(res);
           this.post = res;
         })
         .catch((err) => {
@@ -49,6 +54,27 @@ export default class PostDetailsVue extends Vue {
         .catch((err) => {
           console.error(err);
         })
+  }
+
+  deleteComment(commentUuid: string){
+    PostController.deleteComment(this.postUuid, commentUuid)
+        .then(success => {
+          if(success) {
+            const comment = this.comments.find(comment => comment.uuid === commentUuid);
+            if(comment){
+              this.comments.splice(this.comments.indexOf(comment), 1)
+            }
+          }
+          else {
+            alert("Error while trying to delete comment. Please try again later.")
+          }
+        }).catch(error => {
+          console.error(error);
+    })
+  }
+
+  addComment(comment: Comment) {
+    this.comments.unshift(comment)
   }
 }
 </script>
