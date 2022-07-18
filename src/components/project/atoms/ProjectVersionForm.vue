@@ -9,8 +9,14 @@
         placeholder="version number"
         v-model="versionName"
     />
+    <MDBCheckbox
+      label="Release as a lib ?"
+      class="lib-checkbox"
+      v-model="isLib"
+    />
     <MDBBtn
       type="submit"
+      class="button-version-create"
     >
       CREATE
     </MDBBtn>
@@ -20,7 +26,7 @@
 
 <script setup lang="ts">
 import {defineEmits, defineProps, ref} from "vue";
-import { MDBInput, MDBBtn } from "mdb-vue-ui-kit";
+import { MDBInput, MDBBtn, MDBCheckbox } from "mdb-vue-ui-kit";
 import ProjectController from "@/controller/ProjectController";
 
 const props = defineProps({
@@ -31,10 +37,11 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'created-version', version: string): void
+  (e: 'created-version', version: string, isLibrary: boolean): void
 }>()
 
 const versionName = ref<string>('')
+const isLib = ref<boolean>(false)
 
 // eslint-disable-next-line no-undef
 const createNewVersion = (event: SubmitEvent) => {
@@ -57,7 +64,7 @@ const createNewVersion = (event: SubmitEvent) => {
 
   ProjectController.createArchive(props.projectId, cleanedVersionName)
     .then(res => {
-      emit('created-version', cleanedVersionName )
+      emit('created-version', cleanedVersionName, isLib.value )
     })
     .catch(error => {
       alert("Error while trying to create version " + cleanedVersionName)
@@ -67,5 +74,10 @@ const createNewVersion = (event: SubmitEvent) => {
 </script>
 
 <style scoped>
-
+.lib-checkbox {
+  margin: 8px;
+}
+.button-version-create {
+  margin: 8px;
+}
 </style>
