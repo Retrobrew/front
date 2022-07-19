@@ -24,6 +24,9 @@
       v-if="this.groupVue === 'repository'"
       :group="group"
   />
+  <LibListVue
+      v-if="this.groupVue === 'library'"
+      :group="group"/>
 </template>
 
 <script lang="ts">
@@ -40,10 +43,12 @@ import {GroupController} from "@/controller/GroupController";
 import {User} from "@/object/User";
 import {inject} from "vue";
 import APIController from "@/controller/APIController";
+import LibListVue from "@/components/library/lib-list/LibListVue.vue";
 
 @Options({
   name: "GroupHomeVue",
   components: {
+    LibListVue,
     RepositoryHomeVue,
     ProjectHomeVue,
     GroupVueSelection,
@@ -62,7 +67,6 @@ export default class GroupHomeVue extends Vue {
   private groupUuid: string = "";
   private isCreator = false;
   private isMember = false;
-
 
   mounted() {
     this.groupUuid = this.$route.params['uuid'] as string

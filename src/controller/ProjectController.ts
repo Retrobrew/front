@@ -133,8 +133,31 @@ class ProjectController {
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/version?id=${projectId}`
        ).then(res => {
-           return res.text()
+           return res.json()
        });
+   }
+
+   static getLibs(): Promise<string> {
+       return fetch(
+           `${process.env.VUE_APP_PROJECT_API_URL}/libs`
+       ).then(res => {
+           return res.json()
+       });
+   }
+
+   static importLibrary(projectId: string, libId: string): Promise<string> {
+        const formData: FormData = new FormData();
+        formData.append('to', projectId);
+        formData.append('from', libId);
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/import-lib`,
+            {
+                method: 'POST',
+                body: formData,
+            }
+        ).then(res => {
+            return res.text()
+        })
    }
 }
 
