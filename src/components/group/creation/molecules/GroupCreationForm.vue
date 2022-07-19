@@ -29,7 +29,7 @@ import {Options, Vue} from "vue-class-component";
 import {
   MDBTextarea,
   MDBInput,
-  MDBCheckbox
+  MDBCheckbox,
 } from 'mdb-vue-ui-kit';
 import {Group} from "@/object/Group";
 import {GroupController} from "@/controller/GroupController";
