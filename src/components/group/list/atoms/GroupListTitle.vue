@@ -1,12 +1,15 @@
 <template>
-  <p class="group-list-title">Group list</p>
+  <p class="group-list-title">{{title}}</p>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 
 @Options({
-  name: "GroupListTitle"
+  name: "GroupListTitle",
+  props: {
+    title: String,
+  }
 })
 export default class GroupListTitle extends Vue {
 }
