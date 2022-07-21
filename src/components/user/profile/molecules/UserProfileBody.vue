@@ -5,7 +5,7 @@
       <UserProfileField :field-name="passwordName" :value="passwordValue" :field-type="passwordType"/>
       <UserProfileField :field-name="passwordConfirmName" :value="passwordValue" :field-type="passwordType"/>
       <UserProfileField :field-name="mailName" :value="mailValue" :field-type="mailType"/>
-      <UserProfileSelector :field-name="countriesName" :list="countries" :value="countryValue" />
+      <UserProfileSelector :field-name="countriesName" :value="countryValue" />
     </div>
   </div>
   <UserProfileButton :label="saveButton" />
@@ -36,7 +36,6 @@ import UserProfileChangePicture from "@/components/user/profile/molecules/UserPr
     mailName: String,
     mailValue: String,
     countriesName: String,
-    countries: Array,
     countryValue: String,
   }
 })

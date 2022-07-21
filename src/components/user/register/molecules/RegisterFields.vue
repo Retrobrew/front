@@ -21,9 +21,22 @@
     <RegisterSelectorView
         @input-value="(value) => this.user.gender = value"
         :list="this.genders"/>
-    <RegisterInputView
-        @input-value="(value) => this.picture = value"
-        :input-place-holder="this.picturePlaceHolder"/>
+    <div  class="col-sm-auto">
+      <a
+          v-on:click="uploadFile"
+          class="link small col-sm-3"
+      >
+        Upload a picture
+      </a>
+      <input
+          v-on:change="displayPicture($event)"
+          ref="uploadField" style="display: none"
+          type="file" class="hidden"
+      />
+    </div>
+<!--    <RegisterInputView-->
+<!--        @input-value="(value) => this.picture = value"-->
+<!--        :input-place-holder="this.picturePlaceHolder"/>-->
     <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
 </template>
@@ -35,6 +48,8 @@ import RegisterSelectorView from "@/components/user/register/atoms/RegisterSelec
 import RegisterButtonView from "@/components/user/register/atoms/RegisterButtonView.vue";
 import APIController from "@/controller/APIController";
 import {User} from "@/object/User";
+import countryList from "@/utils/countries.json";
+import gendersList from "@/utils/genders.json";
 
 @Options({
   name: "RegisterFields",
@@ -45,24 +60,21 @@ import {User} from "@/object/User";
   }
 })
 export default class RegisterFields extends Vue {
-  private countries = [
-    "Belgium",
-    "Denmark",
-    "Finland",
-    "France",
-    "Germany",
-    "Poland",
-    "Netherlands",
-    "Norway",
-    "Sweden",
-    "United Kingdom"
-  ];
+  private countries = countryList;
+  private genders = gendersList;
 
-  private genders = [
-    "Male",
-    "Female",
-    "Non-binary"
-  ];
+  declare $refs: {
+    uploadField: HTMLInputElement
+  }
+
+  uploadFile() {
+    this.$refs.uploadField.click();
+  }
+
+  displayPicture(event: any){
+    this.$emit('uploadPicture', event.target.files[0]);
+  }
+
   private user: User = User.newUser();
 
   private registerButtonLabel = "Register";

@@ -14,7 +14,6 @@
             :mail-name="mailName"
             :mail-value="user.mail"
             :countries-name="countriesName"
-            :countries="countries"
             :country-value="countryValue"
         />
       </MDBCardBody>
@@ -74,18 +73,6 @@ export default class UserProfileHomeVue extends Vue {
   private mailName = "Email address";
   private countriesName = "Country";
   private countryValue = "France";
-  private countries = [
-    "Belgium",
-    "Denmark",
-    "Finland",
-    "France",
-    "Germany",
-    "Poland",
-    "Netherlands",
-    "Norway",
-    "Sweden",
-    "United Kingdom"
-  ];
   private reload = false;
   private userDescription = "";
 

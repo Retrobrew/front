@@ -8,7 +8,7 @@ const emits = defineEmits(['inputValue']);
 <template>
   <select class="form-select user-register-fields-input" @change='emits("inputValue", $event.target.value)'>
     <option v-for="(item, index) in props.list" v-bind:key="index">
-      {{item}}
+      {{item.name}}
     </option>
   </select>
 </template>
