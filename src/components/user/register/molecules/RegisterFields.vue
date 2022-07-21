@@ -1,12 +1,29 @@
 <template>
   <div class="user-register-fields">
-    <RegisterInputView @input-value="(value) => this.username = value" :input-place-holder="this.usernamePlaceHolder"/>
-    <RegisterInputView @input-value="(value) => this.password = value" :input-place-holder="this.passwordPlaceHolder" :input-type="passwordInputType"/>
-    <RegisterInputView @input-value="(value) => this.mail = value" :input-place-holder="this.mailPlaceHolder" :input-type="mailInputType"/>
-    <RegisterInputView @input-value="(value) => this.birthdate = value" :input-place-holder="this.birthdatePlaceHolder" type="date"/>
-    <RegisterSelectorView @input-value="(value) => this.country = value" :list="this.countries"/>
-    <RegisterSelectorView @input-value="(value) => this.sexe = value" :list="this.sexes"/>
-    <RegisterInputView @input-value="(value) => this.picture = value" :input-place-holder="this.picturePlaceHolder"/>
+    <RegisterInputView
+        @input-value="(value) => this.user.username = value"
+        :input-place-holder="this.usernamePlaceHolder"/>
+    <RegisterInputView
+        @input-value="(value) => this.password = value"
+        :input-place-holder="this.passwordPlaceHolder"
+        :input-type="passwordInputType"/>
+    <RegisterInputView
+        @input-value="(value) => this.user.mail = value"
+        :input-place-holder="this.mailPlaceHolder"
+        :input-type="mailInputType"/>
+    <RegisterInputView
+        @input-value="(value) => this.user.birthday = value"
+        :input-place-holder="this.birthdatePlaceHolder"
+        type="date"/>
+    <RegisterSelectorView
+        @input-value="(value) => this.user.country = value"
+        :list="this.countries"/>
+    <RegisterSelectorView
+        @input-value="(value) => this.user.gender = value"
+        :list="this.genders"/>
+    <RegisterInputView
+        @input-value="(value) => this.picture = value"
+        :input-place-holder="this.picturePlaceHolder"/>
     <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
 </template>
@@ -17,6 +34,7 @@ import RegisterInputView from "@/components/user/register/atoms/RegisterInputVie
 import RegisterSelectorView from "@/components/user/register/atoms/RegisterSelectorView.vue";
 import RegisterButtonView from "@/components/user/register/atoms/RegisterButtonView.vue";
 import APIController from "@/controller/APIController";
+import {User} from "@/object/User";
 
 @Options({
   name: "RegisterFields",
@@ -40,29 +58,35 @@ export default class RegisterFields extends Vue {
     "United Kingdom"
   ];
 
-  private sexes = [
+  private genders = [
     "Male",
-    "Female"
+    "Female",
+    "Non-binary"
   ];
+  private user: User = User.newUser();
 
-  private registerButtonLabel = "Register"
-  private username = ""
-  private usernamePlaceHolder = "Username"
-  private mail = ""
-  private mailPlaceHolder = "Email address"
-  private mailInputType = "email"
-  private password = ""
-  private passwordPlaceHolder = "Password"
-  private passwordInputType = "password"
-  private birthdate = "";
-  private birthdatePlaceHolder = "Birthdate"
-  private country = this.countries[0]
-  private sexe = this.sexes[0]
-  private picture = ""
-  private picturePlaceHolder = "URL to profile picture"
+  private registerButtonLabel = "Register";
+  private usernamePlaceHolder = "Username";
+  private mailPlaceHolder = "Email address";
+  private mailInputType = "email";
+  private password = "";
+  private passwordPlaceHolder = "Password";
+  private passwordInputType = "password";
+  private birthdatePlaceHolder = "Birthdate";
+  private picture: File |null = null;
+  private picturePlaceHolder = "URL to profile picture";
 
   private async register() {
-    await APIController.register(this.mail, this.username, this.birthdate, this.sexe, this.country, this.password, this.picture);
+    if(!this.picture){
+      return;
+    }
+    await APIController.register(
+        this.user,
+        this.password,
+        this.picture
+    ).then(() => {
+      this.$router.push('/')
+    });
   }
 }
 </script>

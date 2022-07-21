@@ -7,24 +7,17 @@ class APIController {
     }
 
     static register = async (
-        email: String,
-        username: String,
-        birthdate: String,
-        sexe: String,
-        country: String,
-        password: String,
-        picture: String
+        user: User,
+        password: string,
+        picture: File
     ) => {
+        const formData = user.generateRegisterFormData();
+        formData.append('password', password);
+        formData.append('avatar', picture);
+
         await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
             method: "POST",
-            body: JSON.stringify({
-                email: email,
-                username: username,
-                dateOfBirth: birthdate.split("-").reverse().join("/"),
-                sexe: sexe,
-                country: country,
-                password: password,
-            }),
+            body: formData,
             headers: { "Content-type": "application/json" }
         })
             .then(response => {
@@ -35,7 +28,6 @@ class APIController {
             })
             .then(json => {
                 sessionStorage.setItem('access_token', json.access_token);
-                window.location.pathname = '/';
             })
             .catch(err => {
                 alert(err);

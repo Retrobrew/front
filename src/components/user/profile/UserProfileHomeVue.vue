@@ -3,7 +3,7 @@
   <div class="container mt-3 shadow-0">
     <MDBCard v-if="user">
       <MDBCardHeader class="mb-2 pb-2">
-        <UserProfileHead :user-name="user.username" :description="user.sex + ' - 78'"/>
+        <UserProfileHead :user-name="user.username" :description="userDescription"/>
       </MDBCardHeader>
       <MDBCardBody class="pb-1">
         <UserProfileBody
@@ -87,6 +87,14 @@ export default class UserProfileHomeVue extends Vue {
     "United Kingdom"
   ];
   private reload = false;
+  private userDescription = "";
+
+  mounted() {
+    if(!this.user) {
+      return;
+    }
+    this.userDescription = `${ this.user.gender } - ${ this.user.getAge() }`;
+  }
 }
 
 </script>

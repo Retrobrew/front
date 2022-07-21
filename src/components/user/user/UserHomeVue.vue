@@ -60,7 +60,7 @@ export default class UserHomeVue extends Vue {
           .getUserProfile(this.userUuid)
           .then((res: any) => {
             this.user = res.user as User;
-            this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`;
+            this.userDescription = `${ this.user.gender } - ${ this.user.getAge() }`;
             this.friendShipStatus = res.friendshipStatus;
             this.requestId = res.requestId;
           });
@@ -71,7 +71,7 @@ export default class UserHomeVue extends Vue {
         .getUser(this.userUuid)
         .then((res) => {
           this.user = res;
-          this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`
+          this.userDescription = `${ this.user.gender } - ${ this.user.getAge() }`
         })
   }
 
