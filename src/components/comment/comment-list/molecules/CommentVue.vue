@@ -1,11 +1,13 @@
 <template>
   <div class="comment">
-    <CommentAuthor v-bind:author="comment.author.username" />
-    <CommentText v-bind:content="comment.content" />
+    <div class="comment-content">
+      <CommentAuthor v-bind:author="comment.author.username" v-bind:author-picture="comment.author.picture"/>
+      <CommentText v-bind:content="comment.content" />
+    </div>
     <button
         v-if="userIsAuthor"
         v-on:click="$emit('delete-comment', comment.uuid)"
-        class="btn btn-close btn-sm btn-danger btn-rounded float-sm-end mt-1 me-3 ms-3"></button>
+        class="btn btn-close btn-sm btn-danger btn-rounded"></button>
   </div>
 </template>
 
@@ -34,6 +36,10 @@ export default class CommentVue extends Vue {
       return;
     }
 
+    if (this.comment.author.picture == null) {
+      this.comment.author.picture = "https://cdn-icons-png.flaticon.com/512/1077/1077063.png";
+    }
+
     if(this.user.uuid === this.comment.author.uuid){
       this.userIsAuthor = true;
     }
@@ -46,5 +52,8 @@ export default class CommentVue extends Vue {
 .comment {
   display: flex;
   margin-bottom: 12px;
+}
+.comment-content {
+  width: 90%;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div id="group-list" class="main-vue">
-    <GroupListTitle class="m-0"/>
+  <div class="main-vue group-list">
+    <GroupListTitle class="m-0" :title="groupsTitle"/>
     <div class="d-flex justify-content-center">
       <router-link to="/group/creation">
         <button
@@ -22,6 +22,14 @@
       <p class="text-center mt-3">You're not part of a group yet :/</p>
     </div>
   </div>
+  <div v-if="publicGroups.length > 0" class="main-vue group-list">
+    <GroupListTitle class="m-0" :title="publicGroupsTitle"/>
+    <div v-for="group in publicGroups" v-bind:key="group.uuid">
+      <GroupListCard
+          v-bind:group="group"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -41,29 +49,35 @@ import {UserProfileGroup} from "@/object/UserProfileGroup";
   }
 })
 export default class GroupListVue extends Vue {
+  private groupsTitle: string = 'Group list';
   private groups: Array<UserProfileGroup> = [];
+  private publicGroupsTitle: string = 'Public groups';
+  private publicGroups: Array<UserProfileGroup> = [];
 
   mounted() {
     const routePath = this.$route.path;
 
-    if(routePath === '/profile') {
-      GroupController
-        .getUserGroups()
-        .then(res => {
-          this.groups = res;
-        })
-        .catch(reason => {
-          console.error(reason)
-        })
-      return;
-    }
-    GroupController.getAllGroups()
+    GroupController
+      .getUserGroups()
       .then(res => {
-
+        this.groups = res;
       })
       .catch(reason => {
         console.error(reason)
       })
+
+    if(routePath !== '/profile') {
+      GroupController.getAllGroups()
+          .then(res => {
+            this.publicGroups = res;
+            this.publicGroups = this.publicGroups.filter(group => {
+              return !this.groups.some(g => g.uuid === group.uuid);
+            });
+          })
+          .catch(reason => {
+            console.error(reason)
+          })
+    }
   }
 
 
@@ -82,8 +96,9 @@ export default class GroupListVue extends Vue {
 </script>
 
 <style scoped>
-#group-list {
+.group-list {
   box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
   border-radius: 8px;
+  margin-top: 1rem;
 }
 </style>
