@@ -1,7 +1,12 @@
 <template>
   <div>
-    <div v-if="label" class="post-tag tag link" :class="'post-tag-' + label.charAt(0).toLowerCase()">
-      <p>{{label}}</p>
+    <div v-if="label">
+      <div v-if="label === homeGroupLabel || onGroupPage" :class="'tag post-tag-' + label.charAt(0).toLowerCase()">
+        <p>{{label}}</p>
+      </div>
+      <div v-else class="post-tag tag post-tag-group" :class="'post-tag-' + label.charAt(0).toLowerCase()">
+        <a v-on:click="visitGroup(groupUuid)" class="link-light link">{{label}}</a>
+      </div>
     </div>
     <div v-else class="disabled-tag tag">
       <p>
@@ -18,11 +23,26 @@ import {Options, Vue} from "vue-class-component";
   props: {
     label: {
       type: String
+    },
+    groupUuid: {
+      type: String
     }
   }
 })
 export default class PostLabel extends Vue{
-  private groupDeleted = "This group was deleted"
+  private groupDeleted = "This group was deleted";
+  private homeGroupLabel = "My feed";
+  private onGroupPage = false;
+
+  mounted() {
+    if(this.$route.name == 'group'){
+      this.onGroupPage = true;
+    }
+  }
+
+  private visitGroup(groupUuid: string) {
+    this.$router.push(`/group/${groupUuid}`);
+  }
 }
 </script>
 
@@ -134,7 +154,7 @@ export default class PostLabel extends Vue{
   background-color: rgb(173, 214, 125);
 }
 
-.post-tag:hover {
+.post-tag-group:hover {
   box-shadow: 0 4px 10px 0 rgba(0,0,0,.2),0 4px 20px 0 rgba(0,0,0,.1);
 }
 

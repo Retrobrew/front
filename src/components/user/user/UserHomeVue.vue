@@ -11,7 +11,7 @@
             v-on:request-friendship="onRequestFriendship"
             v-on:unfriend="onUnfriend"
             v-on:cancel-request="onCancelRequest"
-            :user-picture="user.picture"
+            :user-uuid="user.uuid"
             :friendship-status="friendShipStatus"
         />
       </MDBCardBody>

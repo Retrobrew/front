@@ -1,6 +1,6 @@
 <template>
   <div class="user-profile-body">
-    <UserProfilePicture :link="userPicture" />
+    <UserProfilePicture :user-uuid="userUuid" />
     <div class="text-center mb-3" v-if="friendshipStatus===null">
       <button
           v-on:click="onAddFriend"
@@ -33,7 +33,7 @@ import UserProfilePicture from "@/components/user/common/atoms/UserProfilePictur
   name: "UserBody",
   components: { UserProfilePicture },
   props: {
-    userPicture: String,
+    userUuid: String,
     friendshipStatus: {
       type: String,
       required: true,

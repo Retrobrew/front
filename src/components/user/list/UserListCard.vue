@@ -1,6 +1,6 @@
 <template>
   <div class="friend-list-card">
-    <FriendListPicture :link="friend.picture" />
+    <FriendListPicture :user-uuid="friend.uuid" />
     <FriendListName
         v-bind:username="friend.username + ' ' + friend.country"
         v-bind:uuid="friend.uuid"

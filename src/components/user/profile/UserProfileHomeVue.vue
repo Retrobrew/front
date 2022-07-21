@@ -7,7 +7,7 @@
       </MDBCardHeader>
       <MDBCardBody class="pb-1">
         <UserProfileBody
-            :user-picture="user.picture"
+            :user-uuid="user.uuid"
             :password-name="passwordName"
             :password-value="passwordValue"
             :password-confirm-name="passwordConfirmName"

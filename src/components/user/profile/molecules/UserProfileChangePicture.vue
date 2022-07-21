@@ -1,6 +1,6 @@
 <template>
   <div class="user-profile-change-picture">
-    <UserProfilePicture :link="link" />
+    <UserProfilePicture :user-uuid="userUuid" />
     <UserProfileButton :label="uploadButton" />
   </div>
 </template>
@@ -17,7 +17,7 @@ import UserProfileButton from "@/components/user/common/atoms/UserProfileButton.
     UserProfileButton,
   },
   props: {
-    link: String
+    userUuid: String
   }
 })
 export default class UserProfileChangePicture extends Vue {

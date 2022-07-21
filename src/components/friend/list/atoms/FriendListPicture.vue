@@ -1,5 +1,5 @@
 <template>
-  <img :src="link" class="card"/>
+  <img :src="url" class="card"/>
 </template>
 
 <script lang="ts">
@@ -8,11 +8,16 @@ import {Options, Vue} from "vue-class-component";
 @Options({
   name: "FriendListPicture",
   props: {
-    link: String
+    userUuid: String
   }
 })
 export default class FriendListPicture extends Vue {
+  private userUuid!: string;
+  private url: string  = "";
 
+  mounted() {
+    this.url = `${process.env.VUE_APP_AUTH_API_URL}/users/${this.userUuid}/avatar`
+  }
 }
 </script>
 
