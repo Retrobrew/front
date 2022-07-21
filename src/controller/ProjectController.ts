@@ -102,7 +102,26 @@ class ProjectController {
 
    }
 
-   static createArchive(projectId: string, versionNb: string): Promise<string> {
+   static createArchive(projectId: string, projectName: string, versionNb: string, isLib: boolean, description: string): Promise<string> {
+       if (isLib) {
+           console.log(projectName);
+           const formData: FormData = new FormData();
+           formData.append('id', projectId);
+           formData.append('name', projectName);
+           formData.append('description', description);
+           formData
+           fetch(
+                `${process.env.VUE_APP_PROJECT_API_URL}/create-lib`,
+               {
+                     method: 'POST',
+                   body: formData
+               }
+           ).then(_ => {
+               // console.log(res.text())
+           }).catch(err => {
+               alert("Failed to export as a lib, the following error occurred : " + err)
+           })
+       }
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/archive?id=${projectId}&version=${versionNb}`
        ).then(res => {
@@ -114,8 +133,31 @@ class ProjectController {
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/version?id=${projectId}`
        ).then(res => {
-           return res.text()
+           return res.json()
        });
+   }
+
+   static getLibs(): Promise<string> {
+       return fetch(
+           `${process.env.VUE_APP_PROJECT_API_URL}/libs`
+       ).then(res => {
+           return res.json()
+       });
+   }
+
+   static importLibrary(projectId: string, libId: string): Promise<string> {
+        const formData: FormData = new FormData();
+        formData.append('to', projectId);
+        formData.append('from', libId);
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/import-lib`,
+            {
+                method: 'POST',
+                body: formData,
+            }
+        ).then(res => {
+            return res.text()
+        })
    }
 }
 

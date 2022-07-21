@@ -9,8 +9,23 @@
         placeholder="version number"
         v-model="versionName"
     />
+    <MDBCheckbox
+      label="Release as a lib ?"
+      class="lib-checkbox"
+      v-model="isLib"
+    />
+    <MDBTextarea
+      :disabled="!isLib.valueOf()"
+      type="text"
+      class="lib-textarea"
+      rows="2"
+      label="Library description"
+      placeholder="A description is required for your library, describe what the lib does and why people should use it."
+      v-model="description"
+    />
     <MDBBtn
       type="submit"
+      class="button-version-create"
     >
       CREATE
     </MDBBtn>
@@ -20,21 +35,27 @@
 
 <script setup lang="ts">
 import {defineEmits, defineProps, ref} from "vue";
-import { MDBInput, MDBBtn } from "mdb-vue-ui-kit";
+import { MDBInput, MDBBtn, MDBCheckbox, MDBTextarea } from "mdb-vue-ui-kit";
 import ProjectController from "@/controller/ProjectController";
 
 const props = defineProps({
   projectId: {
     type: String,
     required: true
-  }
+  },
+  projectName: {
+    type: String,
+    required: true
+  },
 })
 
 const emit = defineEmits<{
-  (e: 'created-version', version: string): void
+  (e: 'created-version', version: string, isLibrary: boolean, description: string): void
 }>()
 
 const versionName = ref<string>('')
+const isLib = ref<boolean>(false)
+const description = ref<string>('')
 
 // eslint-disable-next-line no-undef
 const createNewVersion = (event: SubmitEvent) => {
@@ -55,11 +76,11 @@ const createNewVersion = (event: SubmitEvent) => {
     return;
   }
 
-  ProjectController.createArchive(props.projectId, cleanedVersionName)
-    .then(res => {
-      emit('created-version', cleanedVersionName )
+  ProjectController.createArchive(props.projectId, props.projectName, cleanedVersionName, isLib.value, description.value)
+    .then(_ => {
+      emit('created-version', cleanedVersionName, isLib.value, description.value )
     })
-    .catch(error => {
+    .catch(_ => {
       alert("Error while trying to create version " + cleanedVersionName)
     })
 
@@ -67,5 +88,13 @@ const createNewVersion = (event: SubmitEvent) => {
 </script>
 
 <style scoped>
-
+.lib-checkbox {
+  margin: 8px;
+}
+.lib-textarea {
+  margin: 16px;
+}
+.button-version-create {
+  margin: 8px;
+}
 </style>
