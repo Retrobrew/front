@@ -27,6 +27,7 @@
   />
   <ProjectVersionForm
       :project-id="group.uuid"
+      :project-name="group.name"
       v-if="showCreateVersionForm"
       v-on:created-version="onNewVersion($event)"
   />

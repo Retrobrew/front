@@ -3,6 +3,7 @@
     <button class="btn btn-primary" @click="this.setAndEmitGroupVue('feed')">Feed</button>
     <button v-if="isProject" class="btn btn-primary" @click="this.setAndEmitGroupVue('project')">Project</button>
     <button v-if="isProject" class="btn btn-primary" @click="this.setAndEmitGroupVue('repository')">Repository</button>
+    <button v-if="isProject" class="btn btn-primary" @click="this.setAndEmitGroupVue('library')">Import Library</button>
   </div>
 </template>
 
