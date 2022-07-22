@@ -67,15 +67,14 @@ export default class VersionBody extends Vue {
         if(!div){
           return;
         }
-
         this.cleanTree(div);
-
         this.displayFiles(this.files, div, 0);
       });
 
     ProjectController.getVersions(this.projectId)
         .then((res: string) => {
-          this.versions = JSON.parse(res).sort();
+          console.log(res);
+          this.versions = (res as unknown as string[]).sort();
           this.versions.splice(this.versions.indexOf("latest"),1);
           this.versions.unshift("latest");
         })
@@ -91,7 +90,7 @@ export default class VersionBody extends Vue {
       link.addEventListener('click', this.selectFile.bind(this))
       parentNode.appendChild(link);
 
-      if(item.children.length > 0) {
+      if(item.type === "directory") {
         link.classList.add('disabled')
 
         //Création du parent
@@ -116,7 +115,6 @@ export default class VersionBody extends Vue {
     }
 
     let filePath = this.getFilePath((event.target as HTMLElement).parentElement!) + '/' + (event.target as HTMLElement).innerText;
-    console.log(filePath);
 
     //retrouve l'ancien a selectionné
     const xpath = `//a[text()='${this.selectedFile}']`;
