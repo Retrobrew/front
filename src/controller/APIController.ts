@@ -18,7 +18,6 @@ class APIController {
         await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
             method: "POST",
             body: formData,
-            headers: { "Content-type": "application/json" }
         })
             .then(response => {
                 if (response.status !== 201) {
@@ -28,6 +27,7 @@ class APIController {
             })
             .then(json => {
                 sessionStorage.setItem('access_token', json.access_token);
+                window.location.pathname = '/';
             })
             .catch(err => {
                 alert(err);
