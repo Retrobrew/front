@@ -10,8 +10,10 @@
   />
   <GroupHead
       v-bind:groupName="group.name"
-      v-bind:groupIcon="group.picture" />
+      v-bind:groupIcon="group.picture"
+  />
   <GroupVueSelection
+      v-if="group.isProject"
       v-bind:is-project="group.isProject"
       @groupVue="(value) => this.groupVue = value"
   />
@@ -19,14 +21,19 @@
       v-bind:group="group"
       v-if="this.groupVue === 'feed' && !loading"
   />
-  <ProjectHomeVue v-if="this.groupVue === 'project'" />
+  <ProjectHomeVue
+      v-if="this.groupVue === 'project'"
+      :group="group"
+      :group-owner="groupOwner"
+  />
   <RepositoryHomeVue
       v-if="this.groupVue === 'repository'"
       :group="group"
   />
   <LibListVue
       v-if="this.groupVue === 'library'"
-      :group="group"/>
+      :group="group"
+  />
 </template>
 
 <script lang="ts">
@@ -44,6 +51,7 @@ import {User} from "@/object/User";
 import {inject} from "vue";
 import APIController from "@/controller/APIController";
 import LibListVue from "@/components/library/lib-list/LibListVue.vue";
+import countries from "@/utils/countries.json";
 
 @Options({
   name: "GroupHomeVue",
@@ -67,6 +75,7 @@ export default class GroupHomeVue extends Vue {
   private groupUuid: string = "";
   private isCreator = false;
   private isMember = false;
+  private groupOwner: User = User.newUser();
 
   mounted() {
     this.groupUuid = this.$route.params['uuid'] as string
@@ -79,6 +88,11 @@ export default class GroupHomeVue extends Vue {
             console.error("Missing group's creator");
             return;
           }
+
+          APIController.getUser(this.group.creator).then((res) => {
+            this.groupOwner = res;
+            this.groupOwner.country = countries.find(country => country.name === this.groupOwner.country)!.image ?? "";
+          });
 
           if(!this.user){
             APIController.logout();

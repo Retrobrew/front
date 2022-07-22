@@ -1,7 +1,10 @@
 <template>
   <div class="project-home-body-owner">
     <p style="font-weight: 500">Owner</p>
-    <p>{{owner}}</p>
+    <div>
+      <p>{{owner}}</p>
+      <img :src="ownerFlag" />
+    </div>
   </div>
 </template>
 
@@ -12,6 +15,7 @@ import {Options, Vue} from "vue-class-component";
   name: "ProjectHomeOwner",
   props: {
     owner: String,
+    ownerFlag: String,
   }
 })
 export default class ProjectHomeOwner extends Vue{
@@ -25,5 +29,14 @@ export default class ProjectHomeOwner extends Vue{
 .project-home-body-owner p {
   margin: 2px 0;
   padding: 0;
+}
+.project-home-body-owner div {
+  display: flex;
+  flex-direction: row;
+}
+.project-home-body-owner div img {
+  height: 24px;
+  width: 24px;
+  margin: 0 4px;
 }
 </style>
