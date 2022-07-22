@@ -53,7 +53,7 @@ export default class GroupBanner extends Vue {
 
 <style scoped>
 .group-banner-box {
-  min-height: 150px;
+  min-height: 200px;
   height: 20%;
   max-height: 400px;
   overflow: hidden;

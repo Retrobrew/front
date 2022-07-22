@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-else>
-      <p class="text-center p-2">Ce thread est vide :( <br> Soit le premier à dire quelques chose!</p>
+      <p class="text-center p-2">This thread is empty :( <br> Be the first to tell something!</p>
     </div>
   </div>
 </template>

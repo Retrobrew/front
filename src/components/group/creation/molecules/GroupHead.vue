@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import GroupIcon from "@/components/group/home/atoms/GroupIcon.vue";
+import GroupIcon from "@/components/group/creation/atoms/GroupIcon.vue";
 
 @Options({
   name: "GroupHead",

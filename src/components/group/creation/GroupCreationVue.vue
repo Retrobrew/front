@@ -8,7 +8,7 @@
       v-on:editName="editName($event)"
       v-on:uploadPicture="addPicture($event)"
       v-bind:groupName="group.name"
-      v-bind:groupIcon="group.picture?group.picture:picturePlaceholder" />
+      v-bind:groupIcon="picturePlaceholder" />
   <div class="container mt-4">
     <GroupCreationForm
       :group="group"
@@ -56,15 +56,6 @@ export default class GroupCreationVue extends Vue {
   }
 
   private createGroup(): void {
-    if(!this.groupIcon) {
-      alert("Please select a picture for your group, you can change it later");
-      return;
-    }
-    if(!this.groupBanner) {
-      alert("Please select a banner for your group, you can change it later");
-      return;
-    }
-
     GroupController
         .createGroup(this.group, this.groupIcon, this.groupBanner)
         .then((res: any) => {
