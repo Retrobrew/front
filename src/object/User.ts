@@ -38,12 +38,18 @@ export class User {
     }
 
     generateRegisterFormData(): FormData {
+
         const formData = new FormData();
-        const birthday  = this.birthday.toUTCString();
-        formData.append('username', this.username);
-        formData.append('sexe', this.gender);
+        let birthday: string;
+        if(typeof this.birthday === 'string'){
+            birthday = this.birthday
+        } else {
+            birthday = this.birthday.toUTCString();
+        }
         formData.append('email', this.mail);
-        formData.append('dateOfBirth', birthday);
+        formData.append('username', this.username);
+        formData.append('dateOfBirth', birthday );
+        formData.append('sexe', this.gender);
         formData.append('country', this.country);
 
         return formData;

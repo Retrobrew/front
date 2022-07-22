@@ -21,6 +21,7 @@
     <RegisterSelectorView
         @input-value="(value) => this.user.gender = value"
         :list="this.genders"/>
+    <img class="card-img w-75 mt-2" v-bind:src="picture" v-if="showPicture"/>
     <div  class="col-sm-auto">
       <a
           v-on:click="uploadFile"
@@ -34,9 +35,6 @@
           type="file" class="hidden"
       />
     </div>
-<!--    <RegisterInputView-->
-<!--        @input-value="(value) => this.picture = value"-->
-<!--        :input-place-holder="this.picturePlaceHolder"/>-->
     <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
 </template>
@@ -62,6 +60,9 @@ import gendersList from "@/utils/genders.json";
 export default class RegisterFields extends Vue {
   private countries = countryList;
   private genders = gendersList;
+  private showPicture = false;
+  private picture: string = "";
+  private pictureBlob: File | undefined = undefined;
 
   declare $refs: {
     uploadField: HTMLInputElement
@@ -72,7 +73,10 @@ export default class RegisterFields extends Vue {
   }
 
   displayPicture(event: any){
-    this.$emit('uploadPicture', event.target.files[0]);
+    this.showPicture = true;
+    const uploadedFile = event.target.files[0];
+    this.picture = URL.createObjectURL(uploadedFile);
+    this.pictureBlob = uploadedFile;
   }
 
   private user: User = User.newUser();
@@ -85,20 +89,16 @@ export default class RegisterFields extends Vue {
   private passwordPlaceHolder = "Password";
   private passwordInputType = "password";
   private birthdatePlaceHolder = "Birthdate";
-  private picture: File |null = null;
-  private picturePlaceHolder = "URL to profile picture";
 
   private async register() {
-    if(!this.picture){
+    if(!this.pictureBlob){
       return;
     }
     await APIController.register(
         this.user,
         this.password,
-        this.picture
-    ).then(() => {
-      this.$router.push('/')
-    });
+        this.pictureBlob
+    );
   }
 }
 </script>
