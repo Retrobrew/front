@@ -3,8 +3,11 @@ import {HTTPStatus} from "@/utils/HTTPStatus";
 import {UserProfileGroup} from "@/object/UserProfileGroup";
 
 export class GroupController {
-    static createGroup(group: Group): Promise<string> {
+    static createGroup(group: Group, icon: File, banner: File): Promise<string> {
         const token = sessionStorage.getItem('access_token');
+        const formData = group.generateFormData();
+        formData.append('icon', icon);
+        formData.append('banner', banner);
 
         return fetch(
             `${process.env.VUE_APP_AUTH_API_URL}/groups`,
@@ -12,9 +15,8 @@ export class GroupController {
                 method: 'POST',
                 headers: {
                     Authorization: "Bearer " + token,
-                    "Content-type": "application/json"
                 },
-                body: JSON.stringify(group)
+                body: formData
             }
         ).then(response => {
             return response.json()

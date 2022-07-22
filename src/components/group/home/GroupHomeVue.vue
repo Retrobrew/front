@@ -1,16 +1,18 @@
 <template>
   <HeaderVue />
   <GroupBanner
+      v-if="group.uuid"
       v-on:delete-group="deleteGroup"
       v-on:join-group="joinGroup"
       v-on:quit-group="quitGroup"
       :user-is-creator="isCreator"
       :is-member="isMember"
-      :link="group.banner ? group.banner : defaultBanner"
+      :group-uuid="group.uuid"
   />
   <GroupHead
+      v-if="group.uuid"
       v-bind:groupName="group.name"
-      v-bind:groupIcon="group.picture"
+      v-bind:group-uuid="group.uuid"
   />
   <GroupVueSelection
       v-if="group.isProject"

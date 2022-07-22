@@ -15,6 +15,7 @@
         <GroupListCard
             v-bind:group="group"
             v-on:leave-group="quitGroup($event)"
+            v-on:remove-group="removeGroup($event)"
         />
       </div>
     </div>
@@ -82,6 +83,19 @@ export default class GroupListVue extends Vue {
 
 
   private quitGroup(groupUuid: string): void{
+    const group = this.groups.find((item) => {
+      return item.uuid === groupUuid
+    })
+    if(!group) {
+      alert("group not found");
+      return;
+    }
+
+    this.groups.splice(this.groups.indexOf(group), 1)
+  }
+
+
+  private removeGroup(groupUuid: string): void{
     const group = this.groups.find((item) => {
       return item.uuid === groupUuid
     })

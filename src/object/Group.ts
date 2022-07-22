@@ -74,6 +74,15 @@ export class Group {
         );
     }
 
+    generateFormData(): FormData {
+        const formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('description', this.description);
+        formData.append('isProject', this.isProject? 'true' : 'false');
+
+        return formData;
+    }
+
     public hasMember(userUuid: string): boolean {
         return this.members.find((item) => {
             return item.user === userUuid;

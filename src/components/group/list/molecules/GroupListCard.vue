@@ -8,7 +8,7 @@
     />
     <div v-if="group.userIsGroupCreator" class="group-delete">
       <GroupListRemove
-          v-on:remove-group="$emit('leave-group',$event)"
+          v-on:remove-group="$emit('remove-group',$event)"
           v-bind:group-uuid="group.uuid"/>
     </div>
     <div v-else class="group-leave">

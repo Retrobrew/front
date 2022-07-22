@@ -1,6 +1,6 @@
 <template>
   <div class="main-vue group-head">
-    <GroupIcon :link="groupIcon" />
+    <GroupIcon :group-uuid="groupUuid" />
     <GroupName :name="groupName" />
 <!--    <GroupFollow />-->
   </div>
@@ -20,7 +20,7 @@ import GroupFollow from "@/components/group/home/atoms/GroupFollow.vue";
     GroupIcon
   },
   props: {
-    groupIcon: String,
+    groupUuid: String,
     groupName: String
   }
 })
