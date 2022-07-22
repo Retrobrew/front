@@ -67,7 +67,7 @@ export default class PostCreationForm extends Vue {
       .then((res: any) => {
         if(group.isProject){
           ProjectController
-            .createProject(res.uuid)
+            .createProject(res.uuid, group.langage)
             .catch(error => {
               console.error(error);
               console.log("Could not initiate project repo")

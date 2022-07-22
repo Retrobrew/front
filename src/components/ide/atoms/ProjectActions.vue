@@ -56,6 +56,14 @@ const props = defineProps({
   readonly: {
     type: Boolean,
     required: true
+  },
+  groupLangage: {
+    type: String,
+    required: true
+  },
+  versionNumber: {
+    type: String,
+    required: true
   }
 })
 
@@ -83,7 +91,7 @@ const compileCode = () => {
   emit('projectCompilation', true)
 
   ProjectController
-    .compileProject(props.projectId, props.currentFile)
+    .compileProject(props.projectId, props.groupLangage, props.versionNumber)
     .then(res => {
       res = cleanLogs(res);
       emit('compilationSuccess', {
