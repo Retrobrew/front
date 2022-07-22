@@ -70,7 +70,7 @@ export default class VersionBody extends Vue {
 
         this.cleanTree(div);
 
-        this.displayFiles(this.files, div);
+        this.displayFiles(this.files, div, 0);
       });
 
     ProjectController.getVersions(this.projectId)
@@ -81,11 +81,12 @@ export default class VersionBody extends Vue {
         })
   }
 
-  private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement) {
+  private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement, index: number) {
     files.forEach((item:TreeNode) => {
       const link = document.createElement('a');
       link.href = '#';
       link.classList.add('list-group-item');
+      link.style.paddingLeft = `${index * 15}px`;
       link.innerHTML = item.name;
       link.addEventListener('click', this.selectFile.bind(this))
       parentNode.appendChild(link);
@@ -96,10 +97,9 @@ export default class VersionBody extends Vue {
         //Création du parent
         const div = document.createElement('div');
         div.classList.add('list-group')
-        this.displayFiles(item.children, div);
+        this.displayFiles(item.children, div, index + 1);
         parentNode.appendChild(div);
       }
-
     })
   }
 
@@ -114,6 +114,9 @@ export default class VersionBody extends Vue {
     if(!event.target){
       return
     }
+
+    let filePath = this.getFilePath((event.target as HTMLElement).parentElement!) + '/' + (event.target as HTMLElement).innerText;
+    console.log(filePath);
 
     //retrouve l'ancien a selectionné
     const xpath = `//a[text()='${this.selectedFile}']`;
@@ -132,7 +135,14 @@ export default class VersionBody extends Vue {
     const a: HTMLElement = event.target as HTMLElement;
     this.selectedFile = a.innerHTML;
     a.classList.add('fw-bold');
-    this.$emit('select-file', a.innerHTML)
+    this.$emit('select-file', filePath);
+  }
+
+  private getFilePath(rootNode: HTMLElement): string {
+    if (rootNode.parentElement!.id !== 'tree') {
+      return this.getFilePath(rootNode.parentElement!) + "/" + rootNode.parentElement!.children[0].textContent;
+    }
+    return "";
   }
 }
 </script>
@@ -162,12 +172,7 @@ export default class VersionBody extends Vue {
 .list-group.list-group-root > .list-group-item:first-child {
   border-top-width: 0;
 }
-
-.list-group.list-group-root > .list-group > .list-group-item {
-  padding-left: 30px;
-}
-
-.list-group.list-group-root > .list-group > .list-group > .list-group-item {
-  padding-left: 45px;
+#tree {
+  padding-left: 15px;
 }
 </style>
