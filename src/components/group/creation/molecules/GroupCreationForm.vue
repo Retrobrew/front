@@ -17,7 +17,7 @@
 
     <div class="d-flex justify-content-end mt-3">
       <button
-          v-on:click="createGroup(group)"
+          v-on:click="$emit('submit')"
           class="btn btn-success btn-sm">Create</button>
     </div>
   </div>
@@ -32,8 +32,6 @@ import {
   MDBCheckbox,
 } from 'mdb-vue-ui-kit';
 import {Group} from "@/object/Group";
-import {GroupController} from "@/controller/GroupController";
-import ProjectController from "@/controller/ProjectController";
 
 @Options({
   name: "PostCreationForm",
@@ -51,27 +49,5 @@ import ProjectController from "@/controller/ProjectController";
   }
 })
 export default class PostCreationForm extends Vue {
-
-  private createGroup(group: Group): void {
-    GroupController
-      .createGroup(group)
-      .then((res: any) => {
-        if(group.isProject){
-          ProjectController
-            .createProject(res.uuid)
-            .catch(error => {
-              console.error(error);
-              console.log("Could not initiate project repo")
-            })
-        }
-
-        return res;
-      })
-      .then((res) => {
-        this.$router.push(`/group/${res.uuid}`)
-      }).catch((error) =>{
-        console.error(error);
-      })
-  }
 }
 </script>

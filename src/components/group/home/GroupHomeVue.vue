@@ -1,16 +1,18 @@
 <template>
   <HeaderVue />
   <GroupBanner
+      v-if="group.uuid"
       v-on:delete-group="deleteGroup"
       v-on:join-group="joinGroup"
       v-on:quit-group="quitGroup"
       :user-is-creator="isCreator"
       :is-member="isMember"
-      :link="group.banner ? group.banner : defaultBanner"
+      :group-uuid="group.uuid"
   />
   <GroupHead
+      v-if="group.uuid"
       v-bind:groupName="group.name"
-      v-bind:groupIcon="group.picture" />
+      v-bind:group-uuid="group.uuid" />
   <GroupVueSelection
       v-bind:is-project="group.isProject"
       @groupVue="(value) => this.groupVue = value"
@@ -61,7 +63,6 @@ import LibListVue from "@/components/library/lib-list/LibListVue.vue";
 export default class GroupHomeVue extends Vue {
   private user: User | undefined = inject('user');
   private loading = true;
-  private defaultBanner = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgamefabrique.com%2Fstorage%2Fscreenshots%2Fgba%2Fpokemon-emerald-09.png&f=1&nofb=1"
   private groupVue = "feed";
   private group: Group = Group.emptyGroup();
   private groupUuid: string = "";

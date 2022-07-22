@@ -1,5 +1,5 @@
 <template>
-  <a v-on:click="quitGroup(groupUuid)" class="btn-close btn-rounded btn-sm btn"></a>
+  <a v-on:click="removeGroup(groupUuid)" class="btn-close btn-rounded btn-sm btn"></a>
 </template>
 
 <script lang="ts">
@@ -16,9 +16,9 @@ import {GroupController} from "@/controller/GroupController";
   }
 })
 export default class GroupListRemove extends Vue {
-  quitGroup(groupUuid: string): void {
+  removeGroup(groupUuid: string): void {
     GroupController
-        .quitGroup(groupUuid)
+        .deleteGroup(groupUuid)
         .then(() => {
           this.$emit('remove-group', groupUuid);
         })
