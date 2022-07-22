@@ -7,6 +7,7 @@ export class Group {
     public banner: any;
     public isProject: boolean;
     public members: Array<any>;
+    public langage: string;
 
 
     constructor(
@@ -16,7 +17,8 @@ export class Group {
         description: string,
         picture: string,
         isProject: boolean,
-        members: Array<any>
+        members: Array<any>,
+        langage: string,
     ) {
         this.creator = creator;
         this.uuid = uuid;
@@ -25,6 +27,7 @@ export class Group {
         this.picture = picture;
         this.isProject = isProject;
         this.members = members;
+        this.langage = langage;
     }
 
     static emptyGroup() : Group {
@@ -35,7 +38,8 @@ export class Group {
             "",
             "",
             false,
-            []
+            [],
+            ""
         )
     }
 
@@ -47,7 +51,8 @@ export class Group {
             "",
             "",
             false,
-            []
+            [],
+            ""
         )
     }
 
@@ -64,7 +69,8 @@ export class Group {
             json.description,
             picture,
             json.isProject,
-            json.members
+            json.members,
+            json.langage,
         );
     }
 

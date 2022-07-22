@@ -18,7 +18,7 @@
 
     <div>
       Choose your language:
-      <select class="form-control-sm select-language" :disabled="!group.isProject">
+      <select class="form-control-sm select-language" :value="null" :disabled="!group.isProject" @change="v => group.langage = v.target.value.toLowerCase()">
         <option>C</option>
         <option>Rust</option>
       </select>
