@@ -3,7 +3,7 @@
     <PostLabel :label="postedIn.name" :group-uuid="postedIn.uuid" />
     <PostTitle :title="postTitle" class="m-1"/>
     <a v-on:click="showProfile(postAuthor.uuid)" class="link float-end m-1">
-      <PostUsername :username="postAuthor.username" />
+      <PostUsername :username="postAuthor.username" :user-flag="postAuthor.country" />
     </a>
   </div>
 </template>
