@@ -23,7 +23,7 @@ export default class FriendListName extends Vue {
         .then((res) => {
           this.$router.push(`/user/${friendUuid}`)
         }).catch(reason => {
-          console.error(reason);
+          // console.error(reason);
         })
   }
 }

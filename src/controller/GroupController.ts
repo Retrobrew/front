@@ -117,9 +117,11 @@ export class GroupController {
             }
         ).then(response => {
             if(response.status !== HTTPStatus.ACCEPTED){
-                console.error("Could not quit group")
+                // console.error("Could not quit group")
             }
-        }).catch(error => console.error(error.message))
+        }).catch(error => {
+            // console.error(error.message)
+        })
 
     }
 
@@ -134,7 +136,7 @@ export class GroupController {
             }
         ).then(response => {
             if(response.status !== HTTPStatus.ACCEPTED){
-                console.error("Could not join group")
+                // console.error("Could not join group")
                 return false;
             }
             return true;
@@ -151,7 +153,7 @@ export class GroupController {
             }
         ).then(response => {
             if(response.status !== HTTPStatus.ACCEPTED){
-                console.error("Could not delete group")
+                // console.error("Could not delete group")
                 return false;
             }
             return true;

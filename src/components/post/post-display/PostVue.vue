@@ -8,7 +8,7 @@
             :post-uuid="post.uuid"
         />
       </MDBCardHeader>
-      <MDBCardBody class="p-2">
+      <MDBCardBody class="p-2 post-body-content">
         <img v-if="post.media" :src="getPicture(post.uuid)" class="card-img"/>
         <PostContent :content="post.content" />
       </MDBCardBody>
@@ -90,5 +90,16 @@ const likePost = () => {
 <style scoped>
 .post {
   background: #F0F0F0;
+}
+.post-body-content{
+  display: flex;
+  flex-direction: column;
+}
+.post-body-content img {
+  height: auto;
+  width: auto;
+  max-height: 50vh;
+  max-width: 90%;
+  margin: auto;
 }
 </style>

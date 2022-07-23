@@ -64,7 +64,7 @@ export default class GroupListVue extends Vue {
         this.groups = res;
       })
       .catch(reason => {
-        console.error(reason)
+        // console.error(reason)
       })
 
     if(routePath !== '/profile') {
@@ -76,7 +76,7 @@ export default class GroupListVue extends Vue {
             });
           })
           .catch(reason => {
-            console.error(reason)
+            // console.error(reason)
           })
     }
   }

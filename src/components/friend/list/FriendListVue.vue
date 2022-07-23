@@ -44,7 +44,7 @@ export default class FriendListVue extends Vue {
       })
       .catch((reason) => {
         //TODO afficher un message d'erreur;
-        console.error(reason);
+        // console.error(reason);
       });
   }
 

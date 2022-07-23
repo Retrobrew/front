@@ -22,6 +22,18 @@ class ProjectController {
         })
     }
 
+    static createFolder(formData: FormData): Promise<string> {
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/new-directory`,
+            {
+                method: 'POST',
+                body: formData
+            }
+        ).then((res) => {
+            return res.text()
+        })
+    }
+
     static deleteFile(projectId: string, file: string): Promise<boolean> {
         return fetch(
             `${process.env.VUE_APP_PROJECT_API_URL}/delete?id=${projectId}&path=/${file}`
@@ -60,7 +72,9 @@ class ProjectController {
             `${process.env.VUE_APP_PROJECT_API_URL}/viewer?id=${projectId}&path=/${filename}&version=${version}`,
         ).then((res) => {
             return res.json()
-        }).catch(reason => console.error(reason));
+        }).catch(reason => {}
+            // console.error(reason)
+        );
     }
 
     static compileProject(projectId: string, compiler: string, version: string): Promise<string> {
@@ -93,7 +107,7 @@ class ProjectController {
            }
         ).then(res => {
            if (res.status != 200) {
-               console.error(res.text())
+               // console.error(res.text())
 
                return false;
            }
@@ -104,7 +118,7 @@ class ProjectController {
 
    static createArchive(projectId: string, projectName: string, versionNb: string, isLib: boolean, description: string): Promise<string> {
        if (isLib) {
-           console.log(projectName);
+           // console.log(projectName);
            const formData: FormData = new FormData();
            formData.append('id', projectId);
            formData.append('name', projectName);
@@ -125,7 +139,7 @@ class ProjectController {
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/archive?id=${projectId}&version=${versionNb}`
        ).then(res => {
-           return res.json()
+           return res.toString();
        });
    }
 

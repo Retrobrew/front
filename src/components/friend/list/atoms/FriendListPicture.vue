@@ -28,10 +28,10 @@ export default class FriendListPicture extends Vue {
 <style scoped>
 .friend-list-card img {
   min-height: 24px;
-  height: 10%;
+  height: auto;
   max-height: 72px;
   min-width: 24px;
-  width: 10%;
+  width: auto;
   max-width: 72px;
 }
 </style>

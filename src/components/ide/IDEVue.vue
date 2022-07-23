@@ -131,9 +131,9 @@ const handleCompileResult = (compileResult: {
 const saveFile = (file: string) =>  {
   ProjectController.saveFile(props.projectId, file ,fileContent)
       .then(res => {
-        console.log(res)
+        // console.log(res)
       }).catch(error => {
-        console.error("Nope")
+        // console.error("Nope")
   })
 }
 

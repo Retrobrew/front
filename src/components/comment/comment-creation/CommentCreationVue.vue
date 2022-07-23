@@ -47,7 +47,7 @@ export default class CommentCreationVue extends Vue {
 
   private createComment = () => {
     if(!this.user){
-      console.error("You can't comment if you are not logged");
+      alert("You can't comment if you are not logged");
       return;
     }
     this.postUuid = this.route.params.uuid as string
@@ -62,8 +62,8 @@ export default class CommentCreationVue extends Vue {
 
         this.$emit('new-comment', commentObject);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        // console.error(err);
       })
   }
 }
