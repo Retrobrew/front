@@ -1,6 +1,6 @@
 <template>
   <div class="group-list-card">
-    <GroupListPicture :link="group.picture" />
+    <GroupListPicture v-if="group.uuid" :link="group.picture" :group-uuid="group.uuid"/>
     <GroupListName
         class="pt-2 mt-2"
         :group-name="group.name"

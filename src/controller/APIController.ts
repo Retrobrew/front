@@ -103,7 +103,7 @@ class APIController {
                 json.username,
                 json.dateOfBirth,
                 json.country,
-                json.sexe,
+                json.sex,
                 picture
             );
         })

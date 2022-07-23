@@ -1,7 +1,7 @@
 <template>
   <HeaderVue />
   <div class="container mt-3 shadow-0">
-    <MDBCard v-if="user">
+    <MDBCard v-if="user.uuid">
       <MDBCardHeader class="mb-2 pb-2">
         <UserProfileHead :user-name="user.username" :description="userDescription"/>
       </MDBCardHeader>
