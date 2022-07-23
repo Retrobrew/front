@@ -15,9 +15,9 @@
     <MDBCollapse v-model="collapse4" id="navbarLeftAlignExample">
       <MDBNavbarNav center>
         <!-- Left links -->
-        <form class="d-flex input-group w-50">
-          <input type="search" class="form-control" placeholder="Search a game..." aria-label="Search" />
-        </form>
+<!--        <form class="d-flex input-group w-50">-->
+<!--          <input type="search" class="form-control" placeholder="Search a game..." aria-label="Search" />-->
+<!--        </form>-->
         <!-- Left links -->
       </MDBNavbarNav>
       <MDBNavbarNav v-if="!user" right class="mt-1 me-2 w-25" style="justify-content: flex-end">

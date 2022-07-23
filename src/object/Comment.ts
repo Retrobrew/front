@@ -1,5 +1,6 @@
 import {User} from "@/object/User";
 import {PostController} from "@/controller/PostController";
+import APIController from "@/controller/APIController";
 
 export class Comment {
     public uuid: String;
@@ -19,7 +20,7 @@ export class Comment {
         return new Comment(
             json.uuid,
             json.content,
-            await PostController.getAuthor(json.author.uuid).then(author => author),
+            await APIController.getUser(json.author.uuid).then(author => author),
         );
     }
 }

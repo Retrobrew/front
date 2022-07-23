@@ -38,5 +38,9 @@ export default class UserProfilePicture extends Vue {
 img {
   border: 1px solid #000000;
   margin: 8px;
+  height: auto;
+  width: auto;
+  max-height: 240px;
+  max-width: 240px;
 }
 </style>
