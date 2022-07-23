@@ -22,6 +22,18 @@ class ProjectController {
         })
     }
 
+    static createFolder(formData: FormData): Promise<string> {
+        return fetch(
+            `${process.env.VUE_APP_PROJECT_API_URL}/new-directory`,
+            {
+                method: 'POST',
+                body: formData
+            }
+        ).then((res) => {
+            return res.text()
+        })
+    }
+
     static deleteFile(projectId: string, file: string): Promise<boolean> {
         return fetch(
             `${process.env.VUE_APP_PROJECT_API_URL}/delete?id=${projectId}&path=/${file}`

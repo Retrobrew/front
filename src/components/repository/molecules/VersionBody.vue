@@ -20,6 +20,13 @@
       </div>
       <div>
         <button
+            v-on:click="$emit('new-folder')"
+            class="btn btn-primary m-1">
+          New folder
+        </button>
+      </div>
+      <div>
+        <button
             v-on:click="$emit('new-version')"
             class="btn btn-primary m-1">
           Create version
