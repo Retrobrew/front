@@ -21,6 +21,7 @@ import FriendListTitle from "@/components/friend/list/atoms/FriendListTitle.vue"
 import FriendListCard from "@/components/friend/list/molecules/FriendListCard.vue";
 import {Friend} from "@/object/Friend";
 import {FriendshipController} from "@/controller/FriendshipController";
+import countryList from "@/utils/countries.json";
 
 @Options({
   name: "FriendListVue",
@@ -31,11 +32,15 @@ import {FriendshipController} from "@/controller/FriendshipController";
 })
 export default class FriendListVue extends Vue {
   private friends: Array<Friend> = [];
+  private countries = countryList;
 
   mounted() {
     FriendshipController.getMyFriends()
       .then((friends) => {
         this.friends = friends;
+        this.friends.forEach((friend) => {
+          friend.country = this.countries.find((country) => country.name === friend.country)?.image ?? "";
+        });
       })
       .catch((reason) => {
         //TODO afficher un message d'erreur;

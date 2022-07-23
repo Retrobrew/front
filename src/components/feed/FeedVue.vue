@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-else>
-      <p class="text-center p-2">Ce thread est vide :( <br> Soit le premier à dire quelques chose!</p>
+      <p class="text-center p-2">This thread is empty :( <br> Be the first to tell something!</p>
     </div>
   </div>
 </template>
@@ -27,6 +27,7 @@ import {Post} from "@/object/Post";
 import {FeedController} from "@/controller/FeedController";
 import {useRoute} from "vue-router";
 import {Group} from "@/object/Group";
+import countries from "@/utils/countries.json";
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
@@ -47,6 +48,9 @@ onMounted(() => {
         .getGroupFeed(props.group.uuid)
         .then(res => {
           posts.value = res;
+          posts.value.forEach(post => {
+            post.author!.country = countries.find(country => country.name === post.author?.country)?.image ?? "";
+          });
         }).catch(reason => console.error(reason))
 
     return;
@@ -60,6 +64,9 @@ onMounted(() => {
     FeedController.getHomeFeed()
         .then((feed) => {
           posts.value = feed;
+          posts.value.forEach(post => {
+            post.author!.country = countries.find(country => country.name === post.author?.country)?.image ?? "";
+          });
         })
         .catch((reason) => {
           //TODO afficher un message d'erreur;
@@ -71,6 +78,9 @@ onMounted(() => {
   FeedController.getMyFeed()
       .then((feed) => {
         posts.value = feed;
+        posts.value.forEach(post => {
+          post.author!.country = countries.find(country => country.name === post.author?.country)?.image ?? "";
+        });
       })
       .catch((reason) => {
         //TODO afficher un message d'erreur;

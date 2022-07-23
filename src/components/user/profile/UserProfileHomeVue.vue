@@ -1,20 +1,19 @@
 <template>
   <HeaderVue />
   <div class="container mt-3 shadow-0">
-    <MDBCard v-if="user">
+    <MDBCard v-if="user.uuid">
       <MDBCardHeader class="mb-2 pb-2">
-        <UserProfileHead :user-name="user.username" :description="user.sex + ' - 78'"/>
+        <UserProfileHead :user-name="user.username" :age="userAge" :sex="userSex"/>
       </MDBCardHeader>
       <MDBCardBody class="pb-1">
         <UserProfileBody
-            :user-picture="user.picture"
+            :user-uuid="user.uuid"
             :password-name="passwordName"
             :password-value="passwordValue"
             :password-confirm-name="passwordConfirmName"
             :mail-name="mailName"
             :mail-value="user.mail"
             :countries-name="countriesName"
-            :countries="countries"
             :country-value="countryValue"
         />
       </MDBCardBody>
@@ -74,19 +73,23 @@ export default class UserProfileHomeVue extends Vue {
   private mailName = "Email address";
   private countriesName = "Country";
   private countryValue = "France";
-  private countries = [
-    "Belgium",
-    "Denmark",
-    "Finland",
-    "France",
-    "Germany",
-    "Poland",
-    "Netherlands",
-    "Norway",
-    "Sweden",
-    "United Kingdom"
-  ];
   private reload = false;
+  private userAge = "";
+  private userSex = "";
+
+  mounted() {
+    if(!this.user) {
+      return;
+    }
+
+    if (this.user.gender === "Male") {
+      this.userSex = "https://cdn-icons-png.flaticon.com/512/8016/8016421.png"
+    } else {
+      this.userSex = "https://cdn-icons-png.flaticon.com/512/949/949792.png"
+    }
+
+    this.userAge = this.user.getAge().toString();
+  }
 }
 
 </script>

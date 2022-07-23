@@ -4,10 +4,10 @@ import {Comment} from "@/object/Comment";
 
 export class PostController {
     static getPost(uuid: string): Promise<Post> {
-        const token = sessionStorage.getItem('access_token');
+        // const token = sessionStorage.getItem('access_token');
         return fetch(`${process.env.VUE_APP_AUTH_API_URL}/posts/${uuid}`,
     {
-            headers: { Authorization: "Bearer " + token }
+            // headers: { Authorization: "Bearer " + token }
         })
         .then(response => {
             if(response.status !== 200) {

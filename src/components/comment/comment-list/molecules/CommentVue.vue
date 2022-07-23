@@ -1,7 +1,7 @@
 <template>
   <div class="comment">
     <div class="comment-content">
-      <CommentAuthor v-bind:author="comment.author.username" v-bind:author-picture="comment.author.picture"/>
+      <CommentAuthor v-bind:author="comment.author.username" v-bind:author-picture="comment.author.picture" v-bind:author-flag="authorFlag"/>
       <CommentText v-bind:content="comment.content" />
     </div>
     <button
@@ -18,6 +18,7 @@ import CommentText from "@/components/comment/comment-list/atoms/CommentText.vue
 import {Comment} from "@/object/Comment";
 import {User} from "@/object/User";
 import {inject} from "vue";
+import countries from "@/utils/countries.json";
 
 @Options({
   name: "Comment",
@@ -30,6 +31,7 @@ export default class CommentVue extends Vue {
   private user: User | undefined = inject('user');
   private userIsAuthor = false;
   private comment!: Comment;
+  private authorFlag = "";
 
   mounted() {
     if(!this.user){
@@ -43,6 +45,8 @@ export default class CommentVue extends Vue {
     if(this.user.uuid === this.comment.author.uuid){
       this.userIsAuthor = true;
     }
+
+    this.authorFlag = countries.find(country => country.name === this.comment.author.country)?.image ?? "";
   }
 
 }

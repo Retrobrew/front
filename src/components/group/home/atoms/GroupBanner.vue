@@ -1,6 +1,6 @@
 <template>
   <div class="group-banner-box">
-    <img :src="link"/>
+    <img :src="url" @error="loadDefault"/>
     <div>
       <div v-if="userIsCreator" class="d-flex justify-content-end mb-2">
         <MDBBtn class="btn-light me-2" v-on:click="$emit('delete-group')">
@@ -35,18 +35,28 @@ import { MDBBtn, MDBIcon } from 'mdb-vue-ui-kit'
     MDBIcon
   },
   props:{
-    link: String,
+    groupUuid: String,
     userIsCreator: Boolean,
     isMember: Boolean
   }
 })
 export default class GroupBanner extends Vue {
+  private groupUuid!: string;
+  private url: string  = "";
+
+  mounted() {
+    this.url = `${process.env.VUE_APP_AUTH_API_URL}/groups/${this.groupUuid}/banner`
+  }
+
+  private loadDefault() {
+    this.url = "/assets/banner.jpg"
+  }
 }
 </script>
 
 <style scoped>
 .group-banner-box {
-  min-height: 150px;
+  min-height: 200px;
   height: 20%;
   max-height: 400px;
   overflow: hidden;

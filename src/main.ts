@@ -21,17 +21,17 @@ import MobileHomeVue from "@/components/home/MobileHomeVue.vue";
 
 const app = createApp(App)
 const routes = [
-    { path: '/', component: Home },
-    { path: '/find-friends', component: FindFriendsVue },
-    { path: '/find-groups', component: FindGroupsVue },
-    { path: '/group/creation', component: GroupCreationVue },
+    { path: '/', component: Home, name: 'home', meta: { requiresAuth: false } },
+    { path: '/find-friends', component: FindFriendsVue, meta: { requiresAuth: true } },
+    { path: '/find-groups', component: FindGroupsVue, meta: { requiresAuth: true } },
+    { path: '/group/creation', component: GroupCreationVue, meta: { requiresAuth: true } },
     { path: '/group/:uuid', component: GroupHomeVue, name: 'group', params: true },
-    { path: '/login', component: UserLogin },
+    { path: '/login', component: UserLogin, name: 'login' },
     { path: '/mobile', component: MobileHomeVue },
     { path: '/post/:uuid', component: PostDetailsVue, name: 'post', params: true },
-    { path: '/profile', component: UserProfileHomeVue },
-    { path: '/project/:projectId/edit/:file', component: IDEVue, params: true },
-    { path: '/register', component: UserRegister },
+    { path: '/profile', component: UserProfileHomeVue, meta: { requiresAuth: true } },
+    { path: '/project/:projectId/edit/:file', component: IDEVue, params: true, meta: { requiresAuth: true } },
+    { path: '/register', component: UserRegister, name: 'register' },
     { path: '/user/:uuid', component: UserHomeVue, name: 'friend', params: true },
     { path: '/:pathMatch(.*)*', component: Error404 },
 ];
@@ -40,15 +40,12 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
-
-app.provide('user', undefined);
-app.use(router);
-app.use(Vue3MobileDetection);
+let user: User | undefined = undefined;
 
 if(APIController.isLogged()){
-    APIController.getCurrentUser()
+    user = await APIController.getCurrentUser()
         .then(json => {
-            const user = new User(
+            return new User(
                 json.uuid,
                 json.email,
                 json.username,
@@ -56,11 +53,22 @@ if(APIController.isLogged()){
                 json.country,
                 json.sexe,
                 json.picture
-            )
-
-            app.provide('user', user);
-            app.mount("#app")
+            );
         })
-}else {
-    app.mount("#app")
 }
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth) && !user) {
+        next({ name: 'login' })
+    }else if ((to.name === 'login' || to.name === 'register') && user) {
+        next({ name: 'home' })
+    } else {
+        next()
+    }
+})
+
+app.provide('user', user);
+app.use(router);
+app.use(Vue3MobileDetection);
+app.mount("#app");
+

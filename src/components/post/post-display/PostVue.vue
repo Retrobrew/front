@@ -2,14 +2,14 @@
     <MDBCard class="mt-3 mb-3 post">
       <MDBCardHeader>
         <PostHead
-            :post-label="post.postedIn.name"
+            :posted-in="post.postedIn"
             :post-title="post.title"
             :post-author="post.author"
             :post-uuid="post.uuid"
         />
       </MDBCardHeader>
       <MDBCardBody class="p-2">
-        <img v-if="post.media" :src="getPicture(post.media)" class="card-img"/>
+        <img v-if="post.media" :src="getPicture(post.uuid)" class="card-img"/>
         <PostContent :content="post.content" />
       </MDBCardBody>
       <MDBCardFooter>
@@ -53,8 +53,8 @@ const props = defineProps( {
 
 const user: User | undefined = inject('user');
 const showDelete = user?.uuid == props.post?.author?.uuid;
-const getPicture = (media: any) => {
-  return URL.createObjectURL(new Blob(media.data))
+const getPicture = (uuid: string) => {
+  return `${process.env.VUE_APP_AUTH_API_URL}/posts/${uuid}/media`
 }
 let liked = ref<boolean>(props.post.likedByUser);
 let postLikes = ref<number>(props.post.likesNb);

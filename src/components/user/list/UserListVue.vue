@@ -27,6 +27,7 @@ import FriendListTitle from "@/components/friend/list/atoms/FriendListTitle.vue"
 import APIController from "@/controller/APIController";
 import {Friend} from "@/object/Friend";
 import UserListCard from "@/components/user/list/UserListCard.vue";
+import countryList from "@/utils/countries.json";
 
 @Options({
   name: "UserListVue",
@@ -37,11 +38,15 @@ import UserListCard from "@/components/user/list/UserListCard.vue";
 })
 export default class UserListVue extends Vue {
   private users: Array<Friend> = [];
+  private countries = countryList;
 
   mounted() {
     APIController.getAllUsers()
       .then((users) => {
         this.users = users;
+        this.users.forEach((user) => {
+          user.country = this.countries.find((country) => country.name === user.country)?.image ?? "";
+        });
       })
       .catch((reason) => {
         //TODO afficher un message d'erreur;

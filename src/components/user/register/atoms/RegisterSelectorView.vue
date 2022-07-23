@@ -7,8 +7,12 @@ const emits = defineEmits(['inputValue']);
 
 <template>
   <select class="form-select user-register-fields-input" @change='emits("inputValue", $event.target.value)'>
-    <option v-for="(item, index) in props.list" v-bind:key="index">
-      {{item}}
+    <option :value="null">Please select one</option>
+    <option
+        v-for="(item, index) in props.list"
+        v-bind:key="index"
+    >
+      {{item.name}}
     </option>
   </select>
 </template>

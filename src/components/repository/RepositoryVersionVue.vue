@@ -2,7 +2,7 @@
   <div class="container version-card p-2">
     <VersionBody
       :key="reload"
-      :version-language="repositoryLanguage"
+      :version-language="group.language"
       :version-number="version"
       :project-id="group.uuid"
       v-on:browse-version="onBrowseVersion($event)"
@@ -16,6 +16,8 @@
       :readonly="version !== 'latest'"
       :project-id="group.uuid"
       :current-file="selectedFile"
+      :group-language="group.language"
+      :version-number="version"
       :key="selectedFile"
       v-if="selectedFile && !showNewFileForm && !showCreateVersionForm"
       v-on:delete-file="selectedFile = ''; reload = !reload"
@@ -59,7 +61,6 @@ import ProjectVersionForm from "@/components/project/atoms/ProjectVersionForm.vu
   }
 })
 export default class RepositoryVersionVue extends Vue {
-  private repositoryLanguage = "Rust";
   private selectedFile = "";
   private showNewFileForm = false;
   private showCreateVersionForm = false;

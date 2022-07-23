@@ -3,12 +3,14 @@
     <router-link to="/">
       <img src="../../assets/placeholder_logo.png" alt="" loading="lazy" />
     </router-link>
-    <MDBNavbarItem>
-      <a href="https://retrobrew.fr/android/retrobrew.apk" target="_blank" class="btn btn-rounded btn-primary">
-        <i class="fab fa-android" />
-        Get the app!
-      </a>
-    </MDBNavbarItem>
+    <MDBNavbarNav class="ms-2">
+      <MDBNavbarItem>
+        <a href="https://retrobrew.fr/android/retrobrew.apk" target="_blank" class="btn btn-rounded btn-primary">
+          <i class="fab fa-android me-1" />
+          Get the app !
+        </a>
+      </MDBNavbarItem>
+    </MDBNavbarNav>
     <MDBNavbarToggler target="#navbarLeftAlignExample" @click="collapse4 = !collapse4" />
     <MDBCollapse v-model="collapse4" id="navbarLeftAlignExample">
       <MDBNavbarNav center>

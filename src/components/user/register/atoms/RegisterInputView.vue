@@ -6,7 +6,12 @@ const emits = defineEmits(['inputValue']);
 </script>
 
 <template>
-  <input class="form-control user-register-fields-input" @change='emits("inputValue", $event.target.value)' :placeholder="props.inputPlaceHolder" :type="props.inputType">
+  <input
+      class="form-control user-register-fields-input"
+      @change='emits("inputValue", $event.target.value)'
+      :placeholder="props.inputPlaceHolder"
+      :type="props.inputType"
+  >
 </template>
 
 <script lang="ts">

@@ -3,9 +3,10 @@
     <MDBCard>
       <MDBCardBody class="pb-2">
         <PostCreationForm v-bind:post="post"/>
-        <img class="card-img w-75 mt-2" v-bind:src="picture" v-if="showPicture"/>
+        <div class="card-img text-center">
+          <img class="card-img w-75 mt-2" v-bind:src="picture" v-if="showPicture"/>
+        </div>
         <PostCreationPicture v-on:uploadPicture="addPicture($event)" class="row"/>
-        <input :value="groupUuid" type="hidden"/>
         <div class="col-sm-1 float-end">
           <button class="mt-2 btn btn-sm btn-success float-end" v-on:click="createPost">Create</button>
         </div>

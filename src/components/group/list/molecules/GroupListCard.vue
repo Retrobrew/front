@@ -1,6 +1,6 @@
 <template>
   <div class="group-list-card">
-    <GroupListPicture :link="group.picture" />
+    <GroupListPicture v-if="group.uuid" :link="group.picture" :group-uuid="group.uuid"/>
     <GroupListName
         class="pt-2 mt-2"
         :group-name="group.name"
@@ -8,7 +8,7 @@
     />
     <div v-if="group.userIsGroupCreator" class="group-delete">
       <GroupListRemove
-          v-on:remove-group="$emit('leave-group',$event)"
+          v-on:remove-group="$emit('remove-group',$event)"
           v-bind:group-uuid="group.uuid"/>
     </div>
     <div v-else class="group-leave">

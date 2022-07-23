@@ -2,9 +2,9 @@
   <div>
     <ProjectHomeDescription :description="description" />
     <div class="project-home-body-user-list">
-      <ProjectHomeOwner :owner="owner" />
-      <ProjectHomeCollaborators :collaborators="collaborators" />
+      <ProjectHomeOwner :owner="owner" :owner-flag="ownerFlag"/>
     </div>
+    <div class="project-home-body-delimiter"/>
     <ProjectHomeButton />
   </div>
 </template>
@@ -22,7 +22,7 @@ import ProjectHomeButton from "@/components/project/atoms/ProjectHomeButton.vue"
   props: {
     description: String,
     owner: String,
-    collaborators: Array,
+    ownerFlag: String,
   }
 })
 export default class ProjectHomeBody extends Vue {
@@ -33,5 +33,8 @@ export default class ProjectHomeBody extends Vue {
 .project-home-body-user-list {
   display: flex;
   justify-content: space-evenly;
+}
+.project-home-body-delimiter {
+  height: 8px;
 }
 </style>

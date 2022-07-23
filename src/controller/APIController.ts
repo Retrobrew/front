@@ -7,25 +7,17 @@ class APIController {
     }
 
     static register = async (
-        email: String,
-        username: String,
-        birthdate: String,
-        sexe: String,
-        country: String,
-        password: String,
-        picture: String
+        user: User,
+        password: string,
+        picture: File
     ) => {
+        const formData = user.generateRegisterFormData();
+        formData.append('password', password);
+        formData.append('avatar', picture);
+
         await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
             method: "POST",
-            body: JSON.stringify({
-                email: email,
-                username: username,
-                dateOfBirth: birthdate.split("-").reverse().join("/"),
-                sexe: sexe,
-                country: country,
-                password: password,
-            }),
-            headers: { "Content-type": "application/json" }
+            body: formData,
         })
             .then(response => {
                 if (response.status !== 201) {
@@ -111,7 +103,7 @@ class APIController {
                 json.username,
                 json.dateOfBirth,
                 json.country,
-                json.sexe,
+                json.sex,
                 picture
             );
         })
@@ -137,7 +129,7 @@ class APIController {
                 json.username,
                 json.dateOfBirth,
                 json.country,
-                json.sexe,
+                json.sex,
                 picture
             );
 
@@ -175,6 +167,25 @@ class APIController {
                 })
                 return friends
             })
+    }
+
+    static changeAvatar(avatar: File): Promise<void> {
+        const token = sessionStorage.getItem('access_token');
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/my/avatar`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                body: formData
+            }
+        ).then(response => {
+
+        }).catch((error) => error.message);
     }
 }
 

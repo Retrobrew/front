@@ -10,14 +10,23 @@
         rows="2"
         label="Group description"
         placeholder="Please add a description to your group"
-        v-model="group.description"></MDBTextarea>
+        v-model="group.description" />
+
     <div class="mt-2">
       <MDBCheckbox v-model="group.isProject" label="Make it a project?"/>
     </div>
 
+    <div v-if="group.isProject" class="mt-1">
+      Choose your language:
+      <select class="form-control-sm select-language" :value="null" :disabled="!group.isProject" @change="v => group.language = v.target.value.toLowerCase()">
+        <option>C</option>
+        <option>Rust</option>
+      </select>
+    </div>
+
     <div class="d-flex justify-content-end mt-3">
       <button
-          v-on:click="createGroup(group)"
+          v-on:click="$emit('submit')"
           class="btn btn-success btn-sm">Create</button>
     </div>
   </div>
@@ -32,8 +41,6 @@ import {
   MDBCheckbox,
 } from 'mdb-vue-ui-kit';
 import {Group} from "@/object/Group";
-import {GroupController} from "@/controller/GroupController";
-import ProjectController from "@/controller/ProjectController";
 
 @Options({
   name: "PostCreationForm",
@@ -51,27 +58,19 @@ import ProjectController from "@/controller/ProjectController";
   }
 })
 export default class PostCreationForm extends Vue {
-
-  private createGroup(group: Group): void {
-    GroupController
-      .createGroup(group)
-      .then((res: any) => {
-        if(group.isProject){
-          ProjectController
-            .createProject(res.uuid)
-            .catch(error => {
-              console.error(error);
-              console.log("Could not initiate project repo")
-            })
-        }
-
-        return res;
-      })
-      .then((res) => {
-        this.$router.push(`/group/${res.uuid}`)
-      }).catch((error) =>{
-        console.error(error);
-      })
-  }
 }
 </script>
+
+<style>
+.select-language {
+  background-color: #FFFFFF;
+  border: thin solid #333553;
+  line-height: 1em;
+  height: 10px;
+  margin: 0;
+  padding: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+</style>

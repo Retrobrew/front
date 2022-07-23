@@ -2,8 +2,8 @@
   <div class="field">
     <p>{{fieldName}}</p>
     <select class="form-select user-register-fields-input" :value="value">
-      <option v-for="(item, index) in list" v-bind:key="index">
-        {{item}}
+      <option v-for="(item, index) in countries" v-bind:key="index">
+        {{item.name}}
       </option>
     </select>
   </div>
@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import countryList from "@/utils/countries.json";
 
 @Options({
   name: "UserProfileSelector",
@@ -21,6 +22,7 @@ import {Options, Vue} from "vue-class-component";
   }
 })
 export default class UserProfileSelector extends Vue {
+  private countries = countryList;
 }
 </script>
 
