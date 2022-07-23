@@ -54,7 +54,7 @@ class APIController {
                 window.location.pathname = '/';
             })
             .catch(err => {
-                console.error(err);
+                // console.error(err);
                 alert("Connexion failed");
             });
     }
@@ -80,7 +80,9 @@ class APIController {
                 }
                 return response.json();
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                // console.error(err)
+            });
     }
 
     static getUser(userUuid: string): Promise<User> {

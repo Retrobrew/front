@@ -44,7 +44,7 @@ export default class FriendRequestListCard extends Vue {
           }
         })
       .catch(error => {
-        console.error(error);
+        // console.error(error);
         alert("Could not handle this friend request")
       })
   }
@@ -57,7 +57,7 @@ export default class FriendRequestListCard extends Vue {
         }
       })
       .catch(error => {
-        console.error(error);
+        // console.error(error);
         alert("Could not handle this friend request")
       })
   }

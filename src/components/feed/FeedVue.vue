@@ -51,7 +51,9 @@ onMounted(() => {
           posts.value.forEach(post => {
             post.author!.country = countries.find(country => country.name === post.author?.country)?.image ?? "";
           });
-        }).catch(reason => console.error(reason))
+        }).catch(_ => {
+      // console.error(reason)
+    })
 
     return;
   }
@@ -70,7 +72,7 @@ onMounted(() => {
         })
         .catch((reason) => {
           //TODO afficher un message d'erreur;
-          console.error(reason);
+          // console.error(reason);
         });
     return
   }
@@ -84,7 +86,7 @@ onMounted(() => {
       })
       .catch((reason) => {
         //TODO afficher un message d'erreur;
-        console.error(reason);
+        // console.error(reason);
       });
 });
 

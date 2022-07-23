@@ -63,8 +63,8 @@ export default class GroupCreationVue extends Vue {
             ProjectController
                 .createProject(res.uuid, res.language)
                 .catch(error => {
-                  console.error(error);
-                  console.log("Could not initiate project repo")
+                  // console.error(error);
+                  // console.log("Could not initiate project repo")
                 })
           }
 
@@ -73,7 +73,7 @@ export default class GroupCreationVue extends Vue {
         .then((res) => {
           this.$router.push(`/group/${res.uuid}`)
         }).catch((error) =>{
-      console.error(error);
+      // console.error(error);
     })
   }
 }

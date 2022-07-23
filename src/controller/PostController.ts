@@ -33,33 +33,6 @@ export class PostController {
         });
     }
 
-    static getAuthor(uuid: string): Promise<User> {
-        const token = sessionStorage.getItem('access_token');
-
-        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/users/${uuid}`,
-    {
-            headers: { Authorization: "Bearer " + token }
-        })
-        .then(response => {
-            if(response.status !== 200) {
-                throw new Error("Error while trying to fetch author");
-            }
-
-            return response.json();
-        })
-        .then(json => {
-            return new User(
-                json.uuid,
-                json.email,
-                json.username,
-                json.dateOfBirth,
-                json.country,
-                json.sexe,
-                json.picture
-            );
-        });
-    }
-
     static getComments(postUuid: string): Promise<Array<Comment>> {
         const token = sessionStorage.getItem('access_token');
 

@@ -92,7 +92,9 @@ export default class UserHomeVue extends Vue {
       .then((requestId: any) => {
         this.requestId = requestId
       })
-      .catch(error => console.error(error))
+      .catch(error => {
+        // console.error(error)
+      })
   }
 
   private onCancelRequest(){
@@ -104,7 +106,9 @@ export default class UserHomeVue extends Vue {
 
     FriendshipController.cancelRequest(this.requestId)
       .then(() => this.requestId = null)
-      .catch(error => console.error(error))
+      .catch(error => {
+        // console.error(error)
+      })
   }
 
   private onUnfriend(){
@@ -112,7 +116,9 @@ export default class UserHomeVue extends Vue {
     FriendshipController.unfriend(this.userUuid)
         .then((res) => {
         })
-        .catch(error => console.error(error))
+        .catch(error => {
+          //console.error(error)
+        })
   }
 }
 </script>

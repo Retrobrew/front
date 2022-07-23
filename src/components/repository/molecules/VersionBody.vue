@@ -20,6 +20,13 @@
       </div>
       <div>
         <button
+            v-on:click="$emit('new-folder')"
+            class="btn btn-primary m-1">
+          New folder
+        </button>
+      </div>
+      <div>
+        <button
             v-on:click="$emit('new-version')"
             class="btn btn-primary m-1">
           Create version
@@ -73,7 +80,7 @@ export default class VersionBody extends Vue {
 
     ProjectController.getVersions(this.projectId)
         .then((res: string) => {
-          console.log(res);
+          // console.log(res);
           this.versions = (res as unknown as string[]).sort();
           this.versions.splice(this.versions.indexOf("latest"),1);
           this.versions.unshift("latest");

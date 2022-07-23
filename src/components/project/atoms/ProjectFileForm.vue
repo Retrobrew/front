@@ -58,10 +58,11 @@ const fileExtension = ref<string>('.rs')
 const createNewFile = (event: SubmitEvent) => {
   event.preventDefault()
   if(filename.value.trim() === ""){
-    console.error("filename should not be empty")
+    alert("file name should not be empty")
+    return;
   }
 
-  const regex = new RegExp(/[&/\\#,+()$~%.'":*?<>{}°=]/, 'g');
+  const regex = new RegExp(/[&\\#,+()$~%.'":*?<>{}°=]/, 'g');
 
   // C'est dégueu mais j'arrive pas a escape les brackets dans la regex de ces morts !!!!
   const cleanedFilename = filename.value.replace(regex, '')
@@ -77,11 +78,11 @@ const createNewFile = (event: SubmitEvent) => {
   formData.set('filename', cleanedFilename)
 
   ProjectController.createFile(formData)
-    .then(res => {
+    .then(_ => {
       emit('created-file', cleanedFilename + fileExtension.value)
     })
-    .catch(error => {
-      console.error("Error while trying to create file " + cleanedFilename)
+    .catch(_ => {
+      // console.error("Error while trying to create file " + cleanedFilename)
     })
 
 }
