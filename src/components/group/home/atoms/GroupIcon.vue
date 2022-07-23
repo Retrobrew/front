@@ -1,6 +1,6 @@
 <template>
   <div class="group-icon-box my-container">
-    <img :src="url">
+    <img :src="url" @error="loadDefault">
     <div
         class="icon-float" v-on:click="changePicture">
         <MDBIcon
@@ -49,6 +49,10 @@ export default class GroupIcon extends Vue {
   }
   declare $refs: {
     uploadField: HTMLInputElement
+  }
+
+  private loadDefault() {
+    this.url = "/assets/vector-gameboy.png"
   }
 
   changePicture() {

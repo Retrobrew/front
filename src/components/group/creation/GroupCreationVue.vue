@@ -37,8 +37,8 @@ import ProjectController from "@/controller/ProjectController";
   }
 })
 export default class GroupCreationVue extends Vue {
-  private picturePlaceholder = "/assets/gameboy.jpg"
-  private groupBannerPlaceHolder = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgamefabrique.com%2Fstorage%2Fscreenshots%2Fgba%2Fpokemon-emerald-09.png&f=1&nofb=1"
+  private picturePlaceholder =  "/assets/vector-gameboy.png"
+  private groupBannerPlaceHolder = "/assets/banner.jpg"
   private group: Group = Group.emptyGroup()
   private groupBanner: File | undefined = undefined;
   private groupIcon: File | undefined = undefined;

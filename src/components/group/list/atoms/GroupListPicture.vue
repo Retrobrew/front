@@ -1,5 +1,5 @@
 <template>
-  <img :src="url"  class="shadow btn-rounded "/>
+  <img :src="url" @error="loadDefault" class="shadow btn-rounded "/>
 </template>
 
 <script lang="ts">
@@ -18,6 +18,10 @@ export default class GroupListCard extends Vue {
 
   mounted() {
     this.url = `${process.env.VUE_APP_AUTH_API_URL}/groups/${this.groupUuid}/icon`
+  }
+
+  private loadDefault() {
+    this.url = "/assets/vector-gameboy.png"
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <img :src="url" class="card"/>
+  <img :src="url" @error="loadDefault" class="card"/>
 </template>
 
 <script lang="ts">
@@ -17,6 +17,10 @@ export default class FriendListPicture extends Vue {
 
   mounted() {
     this.url = `${process.env.VUE_APP_AUTH_API_URL}/users/${this.userUuid}/avatar`
+  }
+
+  private loadDefault() {
+    this.url = "/assets/avatar-placeholder.png"
   }
 }
 </script>

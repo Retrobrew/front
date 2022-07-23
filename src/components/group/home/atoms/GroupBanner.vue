@@ -1,6 +1,6 @@
 <template>
   <div class="group-banner-box">
-    <img :src="url"/>
+    <img :src="url" @error="loadDefault"/>
     <div>
       <div v-if="userIsCreator" class="d-flex justify-content-end mb-2">
         <MDBBtn class="btn-light me-2" v-on:click="$emit('delete-group')">
@@ -43,10 +43,13 @@ import { MDBBtn, MDBIcon } from 'mdb-vue-ui-kit'
 export default class GroupBanner extends Vue {
   private groupUuid!: string;
   private url: string  = "";
-  private defaultBanner = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgamefabrique.com%2Fstorage%2Fscreenshots%2Fgba%2Fpokemon-emerald-09.png&f=1&nofb=1"
 
   mounted() {
     this.url = `${process.env.VUE_APP_AUTH_API_URL}/groups/${this.groupUuid}/banner`
+  }
+
+  private loadDefault() {
+    this.url = "/assets/banner.jpg"
   }
 }
 </script>
