@@ -80,7 +80,7 @@ export default class VersionBody extends Vue {
 
     ProjectController.getVersions(this.projectId)
         .then((res: string) => {
-          console.log(res);
+          // console.log(res);
           this.versions = (res as unknown as string[]).sort();
           this.versions.splice(this.versions.indexOf("latest"),1);
           this.versions.unshift("latest");

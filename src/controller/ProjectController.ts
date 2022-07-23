@@ -72,7 +72,9 @@ class ProjectController {
             `${process.env.VUE_APP_PROJECT_API_URL}/viewer?id=${projectId}&path=/${filename}&version=${version}`,
         ).then((res) => {
             return res.json()
-        }).catch(reason => console.error(reason));
+        }).catch(reason => {}
+            // console.error(reason)
+        );
     }
 
     static compileProject(projectId: string, compiler: string, version: string): Promise<string> {
@@ -105,7 +107,7 @@ class ProjectController {
            }
         ).then(res => {
            if (res.status != 200) {
-               console.error(res.text())
+               // console.error(res.text())
 
                return false;
            }
@@ -116,7 +118,7 @@ class ProjectController {
 
    static createArchive(projectId: string, projectName: string, versionNb: string, isLib: boolean, description: string): Promise<string> {
        if (isLib) {
-           console.log(projectName);
+           // console.log(projectName);
            const formData: FormData = new FormData();
            formData.append('id', projectId);
            formData.append('name', projectName);

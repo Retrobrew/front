@@ -87,7 +87,7 @@ export default class GroupHomeVue extends Vue {
           this.group = res;
           this.loading = false;
           if(!this.group.creator){
-            console.error("Missing group's creator");
+            // console.error("Missing group's creator");
             return;
           }
 
@@ -105,7 +105,7 @@ export default class GroupHomeVue extends Vue {
           this.isMember = this.isCreator || this.group.hasMember(this.user.uuid);
         })
         .catch(reason => {
-          console.error(reason)
+          // console.error(reason)
         })
   }
 
@@ -133,7 +133,7 @@ export default class GroupHomeVue extends Vue {
 
       }).catch(reason => {
         alert("Error while trying to join group");
-        console.error(reason)
+        // console.error(reason)
     })
   }
 
@@ -143,7 +143,7 @@ export default class GroupHomeVue extends Vue {
           this.isMember = false;
         }).catch(reason => {
       alert("Error while trying to quit group");
-      console.error(reason)
+      // console.error(reason)
     })
   }
 }

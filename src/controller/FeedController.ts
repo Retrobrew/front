@@ -77,7 +77,9 @@ export class FeedController {
             if(res.status !== 200){
                 throw new Error('Not deleted')
             }
-        }).catch(reason => console.error(reason))
+        }).catch(reason => {
+            // console.error(reason)
+        })
     }
 
     static getGroupFeed(groupUuid: string): Promise<Array<Post>> {

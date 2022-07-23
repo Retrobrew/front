@@ -47,7 +47,7 @@ export default class PostDetailsVue extends Vue {
           this.post = res;
         })
         .catch((err) => {
-          console.error(err);
+          // console.error(err);
         })
 
     PostController.getComments(this.postUuid)
@@ -57,7 +57,7 @@ export default class PostDetailsVue extends Vue {
           this.loading = false;
         })
         .catch((err) => {
-          console.error(err);
+          // console.error(err);
         })
   }
 
@@ -74,7 +74,7 @@ export default class PostDetailsVue extends Vue {
             alert("Error while trying to delete comment. Please try again later.")
           }
         }).catch(error => {
-          console.error(error);
+          // console.error(error);
     })
   }
 

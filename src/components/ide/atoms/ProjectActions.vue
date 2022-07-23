@@ -81,7 +81,7 @@ const testProject = () => {
         window.open(testUrl, '_blank');
       }).catch(error => {
     emit('compilationError', compilationError)
-    console.error(error.message)
+    // console.error(error.message)
   }).finally(() => {
     emit('projectLoading', false)
   })
@@ -105,7 +105,7 @@ const compileCode = () => {
         logs: ""
       })
       // errorMsg.value = "Error while trying to compile project. Please try again.";
-      console.error(error.message);
+      // console.error(error.message);
 
   }).finally(() => {
     emit('projectCompilation', false)
@@ -124,7 +124,9 @@ const onDeleteFile = () => {
             emit('delete-file')
           }
         })
-        .catch(error => console.error(error.message))
+        .catch(error => {
+          // console.error(error.message)
+        })
   }
 }
 </script>

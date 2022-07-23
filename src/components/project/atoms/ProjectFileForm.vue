@@ -82,7 +82,7 @@ const createNewFile = (event: SubmitEvent) => {
       emit('created-file', cleanedFilename + fileExtension.value)
     })
     .catch(_ => {
-      console.error("Error while trying to create file " + cleanedFilename)
+      // console.error("Error while trying to create file " + cleanedFilename)
     })
 
 }
