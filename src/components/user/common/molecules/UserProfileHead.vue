@@ -1,7 +1,7 @@
 <template>
   <div class="user-profile-head">
     <UserProfileName :username="userName" />
-    <UserProfileDescription :description="description" />
+    <UserProfileDescription :age="age" :sex="sex"/>
   </div>
 </template>
 
@@ -18,7 +18,8 @@ import UserProfileDescription from "@/components/user/common/atoms/UserProfileDe
   },
   props: {
     userName: String,
-    description: String,
+    age: String,
+    sex: String,
   }
 })
 export default class UserProfileHead extends Vue {

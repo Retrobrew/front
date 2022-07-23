@@ -1,14 +1,16 @@
 <template>
   <HeaderVue />
   <div class="main-vue">
-    <PostVue v-bind:post="post" v-if="!loading"/>
+    <PostVue v-if="post.uuid" v-bind:post="post"/>
     <CommentCreationVue
+        v-if="user"
         v-on:new-comment="addComment($event)"
         class="post-details-comment-creation"/>
     <CommentListVue
+        v-if="comments.length > 0"
         :key="comments"
         v-on:delete-comment="deleteComment($event)"
-        v-bind:comments="comments" v-if="!loading"
+        v-bind:comments="comments"
     />
   </div>
 </template>
@@ -23,12 +25,15 @@ import HeaderVue from "@/components/header/HeaderVue.vue";
 import CommentListVue from "@/components/comment/comment-list/CommentListVue.vue";
 import CommentCreationVue from "@/components/comment/comment-creation/CommentCreationVue.vue";
 import {useRoute} from "vue-router";
+import {User} from "@/object/User";
+import {inject} from "vue";
 
 @Options({
   name: "PostDetailsVue",
   components: {CommentCreationVue, CommentListVue, HeaderVue, PostVue},
 })
 export default class PostDetailsVue extends Vue {
+  private user: User | undefined = inject('user');
   private postUuid: string = "";
   private loading = true;
   private post: Post = Post.emptyPost();

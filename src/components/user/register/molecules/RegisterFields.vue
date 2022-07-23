@@ -1,12 +1,40 @@
 <template>
   <div class="user-register-fields">
-    <RegisterInputView @input-value="(value) => this.username = value" :input-place-holder="this.usernamePlaceHolder"/>
-    <RegisterInputView @input-value="(value) => this.password = value" :input-place-holder="this.passwordPlaceHolder" :input-type="passwordInputType"/>
-    <RegisterInputView @input-value="(value) => this.mail = value" :input-place-holder="this.mailPlaceHolder" :input-type="mailInputType"/>
-    <RegisterInputView @input-value="(value) => this.birthdate = value" :input-place-holder="this.birthdatePlaceHolder" type="date"/>
-    <RegisterSelectorView @input-value="(value) => this.country = value" :list="this.countries"/>
-    <RegisterSelectorView @input-value="(value) => this.sexe = value" :list="this.sexes"/>
-    <RegisterInputView @input-value="(value) => this.picture = value" :input-place-holder="this.picturePlaceHolder"/>
+    <RegisterInputView
+        @input-value="(value) => this.user.username = value"
+        :input-place-holder="this.usernamePlaceHolder"/>
+    <RegisterInputView
+        @input-value="(value) => this.password = value"
+        :input-place-holder="this.passwordPlaceHolder"
+        :input-type="passwordInputType"/>
+    <RegisterInputView
+        @input-value="(value) => this.user.mail = value"
+        :input-place-holder="this.mailPlaceHolder"
+        :input-type="mailInputType"/>
+    <RegisterInputView
+        @input-value="(value) => this.user.birthday = value"
+        :input-place-holder="this.birthdatePlaceHolder"
+        type="date"/>
+    <RegisterSelectorView
+        @input-value="(value) => this.user.country = value"
+        :list="this.countries"/>
+    <RegisterSelectorView
+        @input-value="(value) => this.user.gender = value"
+        :list="this.genders"/>
+    <img class="card-img w-75 mt-2" v-bind:src="picture" v-if="showPicture"/>
+    <div  class="col-sm-auto">
+      <a
+          v-on:click="uploadFile"
+          class="link small col-sm-3"
+      >
+        Upload a picture
+      </a>
+      <input
+          v-on:change="displayPicture($event)"
+          ref="uploadField" style="display: none"
+          type="file" class="hidden"
+      />
+    </div>
     <RegisterButtonView :label="this.registerButtonLabel" :action="register"/>
   </div>
 </template>
@@ -17,6 +45,9 @@ import RegisterInputView from "@/components/user/register/atoms/RegisterInputVie
 import RegisterSelectorView from "@/components/user/register/atoms/RegisterSelectorView.vue";
 import RegisterButtonView from "@/components/user/register/atoms/RegisterButtonView.vue";
 import APIController from "@/controller/APIController";
+import {User} from "@/object/User";
+import countryList from "@/utils/countries.json";
+import gendersList from "@/utils/genders.json";
 
 @Options({
   name: "RegisterFields",
@@ -27,42 +58,47 @@ import APIController from "@/controller/APIController";
   }
 })
 export default class RegisterFields extends Vue {
-  private countries = [
-    "Belgium",
-    "Denmark",
-    "Finland",
-    "France",
-    "Germany",
-    "Poland",
-    "Netherlands",
-    "Norway",
-    "Sweden",
-    "United Kingdom"
-  ];
+  private countries = countryList;
+  private genders = gendersList;
+  private showPicture = false;
+  private picture: string = "";
+  private pictureBlob: File | undefined = undefined;
 
-  private sexes = [
-    "Male",
-    "Female"
-  ];
+  declare $refs: {
+    uploadField: HTMLInputElement
+  }
 
-  private registerButtonLabel = "Register"
-  private username = ""
-  private usernamePlaceHolder = "Username"
-  private mail = ""
-  private mailPlaceHolder = "Email address"
-  private mailInputType = "email"
-  private password = ""
-  private passwordPlaceHolder = "Password"
-  private passwordInputType = "password"
-  private birthdate = "";
-  private birthdatePlaceHolder = "Birthdate"
-  private country = this.countries[0]
-  private sexe = this.sexes[0]
-  private picture = ""
-  private picturePlaceHolder = "URL to profile picture"
+  uploadFile() {
+    this.$refs.uploadField.click();
+  }
+
+  displayPicture(event: any){
+    this.showPicture = true;
+    const uploadedFile = event.target.files[0];
+    this.picture = URL.createObjectURL(uploadedFile);
+    this.pictureBlob = uploadedFile;
+  }
+
+  private user: User = User.newUser();
+
+  private registerButtonLabel = "Register";
+  private usernamePlaceHolder = "Username";
+  private mailPlaceHolder = "Email address";
+  private mailInputType = "email";
+  private password = "";
+  private passwordPlaceHolder = "Password";
+  private passwordInputType = "password";
+  private birthdatePlaceHolder = "Birthdate";
 
   private async register() {
-    await APIController.register(this.mail, this.username, this.birthdate, this.sexe, this.country, this.password, this.picture);
+    if(!this.pictureBlob){
+      return;
+    }
+    await APIController.register(
+        this.user,
+        this.password,
+        this.pictureBlob
+    );
   }
 }
 </script>

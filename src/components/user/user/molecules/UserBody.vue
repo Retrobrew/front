@@ -1,39 +1,44 @@
 <template>
   <div class="user-profile-body">
-    <UserProfilePicture :link="userPicture" />
-    <div class="text-center mb-3" v-if="friendshipStatus===null">
-      <button
-          v-on:click="onAddFriend"
-          class="btn btn-sm btn-success">
-        {{addFriendButton}}
-      </button>
+    <UserProfilePicture :user-uuid="userUuid" />
+    <div v-if="connectedUser">
+      <div class="text-center mb-3" v-if="friendshipStatus===null">
+        <button
+            v-on:click="onAddFriend"
+            class="btn btn-sm btn-success">
+          {{addFriendButton}}
+        </button>
+      </div>
+      <div class="text-center mb-3" v-else-if="friendshipStatus==='accepted'">
+        <button
+            v-on:click="onUnfriend"
+            class="btn btn-sm btn-light">
+          Unfriend
+        </button>
+      </div>
+      <div class="text-center mb-3" v-else-if="friendshipStatus==='pending'">
+        <button
+            v-on:click="onCancelRequest"
+            class="btn btn-sm btn-danger">
+          Cancel request
+        </button>
+      </div>
     </div>
-    <div class="text-center mb-3" v-else-if="friendshipStatus==='accepted'">
-      <button
-          v-on:click="onUnfriend"
-          class="btn btn-sm btn-light">
-        Unfriend
-      </button>
-    </div>
-    <div class="text-center mb-3" v-else-if="friendshipStatus==='pending'">
-      <button
-          v-on:click="onCancelRequest"
-          class="btn btn-sm btn-danger">
-        Cancel request
-      </button>
-    </div>
+
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import UserProfilePicture from "@/components/user/common/atoms/UserProfilePicture.vue";
+import {User} from "@/object/User";
+import {inject} from "vue";
 
 @Options({
   name: "UserBody",
   components: { UserProfilePicture },
   props: {
-    userPicture: String,
+    userUuid: String,
     friendshipStatus: {
       type: String,
       required: true,
@@ -42,6 +47,7 @@ import UserProfilePicture from "@/components/user/common/atoms/UserProfilePictur
   }
 })
 export default class UserBody extends Vue {
+  private connectedUser: User | undefined = inject('user');
   private addFriendButton = "Add as friend";
 
   friendshipStatus!: string;

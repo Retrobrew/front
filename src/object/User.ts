@@ -4,7 +4,7 @@ export class User {
     public username: string;
     public birthday: Date;
     public country: string;
-    public sex: string;
+    public gender: string;
     public picture: string;
 
     constructor(
@@ -13,7 +13,7 @@ export class User {
         name: string,
         birthday: Date,
         country: string,
-        sex: string,
+        gender: string,
         picture: string
     ) {
         this.uuid = uuid;
@@ -21,8 +21,38 @@ export class User {
         this.username = name;
         this.birthday = birthday;
         this.country = country;
-        this.sex = sex;
+        this.gender = gender;
         this.picture = picture;
+    }
+
+    static newUser(): User {
+        return new User(
+            "",
+            "",
+            "",
+            new Date(),
+            "",
+            "",
+            ""
+        );
+    }
+
+    generateRegisterFormData(): FormData {
+
+        const formData = new FormData();
+        let birthday: string;
+        if(typeof this.birthday === 'string'){
+            birthday = this.birthday
+        } else {
+            birthday = this.birthday.toUTCString();
+        }
+        formData.append('email', this.mail);
+        formData.append('username', this.username);
+        formData.append('dateOfBirth', birthday );
+        formData.append('sexe', this.gender);
+        formData.append('country', this.country);
+
+        return formData;
     }
 
     getAge(): number {

@@ -15,6 +15,9 @@ module.exports = {
         features: ["coreCommands", "find"],
       }), // Place it here
     ],
+    experiments: {
+      topLevelAwait: true
+    }
   },
   chainWebpack: (config) => {
     config.resolve.alias.set(

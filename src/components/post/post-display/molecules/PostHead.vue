@@ -1,9 +1,9 @@
 <template>
   <div class="post-head">
-    <PostLabel :label="postLabel" />
+    <PostLabel :label="postedIn.name" :group-uuid="postedIn.uuid" />
     <PostTitle :title="postTitle" class="m-1"/>
     <a v-on:click="showProfile(postAuthor.uuid)" class="link float-end m-1">
-      <PostUsername :username="postAuthor.username" />
+      <PostUsername :username="postAuthor.username" :user-flag="postAuthor.country" />
     </a>
   </div>
 </template>
@@ -15,6 +15,7 @@ import PostTitle from "@/components/post/post-display/atoms/PostTitle.vue";
 import PostUsername from "@/components/post/post-display/atoms/PostUsername.vue";
 import {User} from "@/object/User";
 import {inject} from "vue";
+import {Group} from "@/object/Group";
 
 @Options({
   name: "PostHead",
@@ -24,7 +25,7 @@ import {inject} from "vue";
     PostUsername
   },
   props: {
-    postLabel: String,
+    postedIn: Group,
     postTitle: String,
     postUuid: String,
     postAuthor: User,
@@ -35,10 +36,10 @@ export default class PostHead extends Vue {
 
   showProfile(userUuid: string) {
     if(this.user?.uuid === userUuid){
-      window.location.pathname = '/profile'
+      this.$router.push('/profile');
       return;
     }
-    window.location.pathname = `/user/${userUuid}`;
+    this.$router.push(`/user/${userUuid}`);
   }
 }
 </script>

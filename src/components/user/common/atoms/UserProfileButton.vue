@@ -1,7 +1,7 @@
 <template>
   <div class="text-center mb-3">
     <button
-        v-on:click="$emit('')"
+        v-on:click="$emit('changePicture')"
         class="btn btn-sm btn-success">
       {{label}}
     </button>

@@ -1,7 +1,8 @@
 <template>
   <div class="main-vue project-home">
-    <ProjectHomeHead :title="projectTitle" :language="projectLanguage"/>
-    <ProjectHomeBody :description="projectDescription" :owner="projectOwner" :collaborators="projectCollaborators"/>
+    <ProjectHomeHead :title="group.name" :language="group.language.toLocaleUpperCase()"/>
+    <ProjectHomeBody :description="group.description" :owner="groupOwner.username" :owner-flag="groupOwner.country" />
+    <div class="project-home-delimiter"/>
   </div>
 </template>
 
@@ -9,17 +10,24 @@
 import {Options, Vue} from "vue-class-component";
 import ProjectHomeHead from "@/components/project/molecules/ProjectHomeHead.vue";
 import ProjectHomeBody from "@/components/project/molecules/ProjectHomeBody.vue";
+import {Group} from "@/object/Group";
+import {User} from "@/object/User";
 
 @Options({
   name: "ProjectHomeVue",
   components: {ProjectHomeBody, ProjectHomeHead},
+  props: {
+    group: {
+      type: Group,
+      required: true,
+    },
+    groupOwner: {
+      type: User,
+      required: true,
+    },
+  },
 })
 export default class ProjectHomeVue extends Vue {
-  private projectTitle = "Pokemon emerald";
-  private projectLanguage = "Rust";
-  private projectDescription = "Pokemon emerald but it's written in Rust :O";
-  private projectOwner = "@Quentin🇫🇷";
-  private projectCollaborators = ["@Cédric🇫🇷", "@Amélie🇫🇷"];
 }
 </script>
 
@@ -29,5 +37,8 @@ export default class ProjectHomeVue extends Vue {
   border-radius: 8px;
   padding: 8px;
   text-align: center;
+}
+.project-home-delimiter {
+  height: 8px;
 }
 </style>

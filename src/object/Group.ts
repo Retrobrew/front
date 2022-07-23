@@ -7,6 +7,7 @@ export class Group {
     public banner: any;
     public isProject: boolean;
     public members: Array<any>;
+    public language: string;
 
 
     constructor(
@@ -16,7 +17,8 @@ export class Group {
         description: string,
         picture: string,
         isProject: boolean,
-        members: Array<any>
+        members: Array<any>,
+        language: string,
     ) {
         this.creator = creator;
         this.uuid = uuid;
@@ -25,6 +27,7 @@ export class Group {
         this.picture = picture;
         this.isProject = isProject;
         this.members = members;
+        this.language = language;
     }
 
     static emptyGroup() : Group {
@@ -35,7 +38,8 @@ export class Group {
             "",
             "",
             false,
-            []
+            [],
+            ""
         )
     }
 
@@ -47,7 +51,8 @@ export class Group {
             "",
             "",
             false,
-            []
+            [],
+            ""
         )
     }
 
@@ -64,8 +69,18 @@ export class Group {
             json.description,
             picture,
             json.isProject,
-            json.members
+            json.members,
+            json.language,
         );
+    }
+
+    generateFormData(): FormData {
+        const formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('description', this.description);
+        formData.append('isProject', this.isProject? 'true' : 'false');
+
+        return formData;
     }
 
     public hasMember(userUuid: string): boolean {

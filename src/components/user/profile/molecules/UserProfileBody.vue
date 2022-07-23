@@ -1,11 +1,11 @@
 <template>
   <div class="user-profile-body">
-    <UserProfileChangePicture :link="userPicture" />
+    <UserProfileChangePicture :user-uuid="userUuid" />
     <div class="fields">
       <UserProfileField :field-name="passwordName" :value="passwordValue" :field-type="passwordType"/>
       <UserProfileField :field-name="passwordConfirmName" :value="passwordValue" :field-type="passwordType"/>
       <UserProfileField :field-name="mailName" :value="mailValue" :field-type="mailType"/>
-      <UserProfileSelector :field-name="countriesName" :list="countries" :value="countryValue" />
+      <UserProfileSelector :field-name="countriesName" :value="countryValue" />
     </div>
   </div>
   <UserProfileButton :label="saveButton" />
@@ -29,14 +29,13 @@ import UserProfileChangePicture from "@/components/user/profile/molecules/UserPr
     UserProfileSelector,
   },
   props : {
-    userPicture: String,
+    userUuid: String,
     passwordName: String,
     passwordValue: String,
     passwordConfirmName: String,
     mailName: String,
     mailValue: String,
     countriesName: String,
-    countries: Array,
     countryValue: String,
   }
 })

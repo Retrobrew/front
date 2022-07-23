@@ -3,7 +3,7 @@
   <div class="container mt-3 shadow-0">
     <MDBCard v-if="user">
       <MDBCardHeader class="mb-2 pb-2">
-        <UserProfileHead :user-name="user.username" :description="userDescription"/>
+        <UserProfileHead :user-name="user.username" :age="userAge" :sex="userSex"/>
       </MDBCardHeader>
       <MDBCardBody class="pb-1">
         <UserBody
@@ -11,7 +11,7 @@
             v-on:request-friendship="onRequestFriendship"
             v-on:unfriend="onUnfriend"
             v-on:cancel-request="onCancelRequest"
-            :user-picture="user.picture"
+            :user-uuid="user.uuid"
             :friendship-status="friendShipStatus"
         />
       </MDBCardBody>
@@ -49,7 +49,8 @@ export default class UserHomeVue extends Vue {
   private connectedUser: User | undefined = inject('user');
   private userUuid: string = "";
   private user: User | null = null;
-  private userDescription = "";
+  private userAge = "";
+  private userSex = "";
   private friendShipStatus: string|null = null;
   private requestId: string|null = null
 
@@ -60,7 +61,12 @@ export default class UserHomeVue extends Vue {
           .getUserProfile(this.userUuid)
           .then((res: any) => {
             this.user = res.user as User;
-            this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`;
+            this.userAge = this.user.getAge().toString();
+            if (this.user.gender === "Male") {
+              this.userSex = "https://cdn-icons-png.flaticon.com/512/8016/8016421.png"
+            } else {
+              this.userSex = "https://cdn-icons-png.flaticon.com/512/949/949792.png"
+            }
             this.friendShipStatus = res.friendshipStatus;
             this.requestId = res.requestId;
           });
@@ -71,7 +77,12 @@ export default class UserHomeVue extends Vue {
         .getUser(this.userUuid)
         .then((res) => {
           this.user = res;
-          this.userDescription = `${ this.user.sex } - ${ this.user.getAge() }`
+          this.userAge = this.user.getAge().toString();
+          if (this.user.gender === "Male") {
+            this.userSex = "https://cdn-icons-png.flaticon.com/512/8016/8016421.png"
+          } else {
+            this.userSex = "https://cdn-icons-png.flaticon.com/512/949/949792.png"
+          }
         })
   }
 

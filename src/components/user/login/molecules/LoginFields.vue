@@ -31,7 +31,6 @@ export default class LoginFields extends Vue {
 
   private async connect() {
     await APIController.login(this.mail, this.password);
-
   }
 }
 </script>

@@ -1,9 +1,10 @@
 <template>
   <div class="friend-list-card">
-    <FriendListPicture :link="friend.picture" />
+    <FriendListPicture :user-uuid="friend.uuid" />
     <FriendListName
-        v-bind:username="friend.username + ' ' + friend.country"
+        v-bind:username="friend.username"
         v-bind:uuid="friend.uuid"
+        v-bind:flag-url="friend.country"
     />
   </div>
 </template>
@@ -18,11 +19,10 @@ import {Friend} from "@/object/Friend";
   name:"UserListCard",
   components: { FriendListName, FriendListPicture},
   props: {
-    friend: Friend
+    friend: Friend,
   }
 })
 export default class UserListCard extends Vue {
-
 }
 </script>
 
