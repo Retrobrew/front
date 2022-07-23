@@ -3,7 +3,7 @@
   <div class="container mt-3 shadow-0">
     <MDBCard v-if="user.uuid">
       <MDBCardHeader class="mb-2 pb-2">
-        <UserProfileHead :user-name="user.username" :description="userDescription"/>
+        <UserProfileHead :user-name="user.username" :age="userAge" :sex="userSex"/>
       </MDBCardHeader>
       <MDBCardBody class="pb-1">
         <UserProfileBody
@@ -74,13 +74,21 @@ export default class UserProfileHomeVue extends Vue {
   private countriesName = "Country";
   private countryValue = "France";
   private reload = false;
-  private userDescription = "";
+  private userAge = "";
+  private userSex = "";
 
   mounted() {
     if(!this.user) {
       return;
     }
-    this.userDescription = `${ this.user.gender } - ${ this.user.getAge() }`;
+
+    if (this.user.gender === "Male") {
+      this.userSex = "https://cdn-icons-png.flaticon.com/512/8016/8016421.png"
+    } else {
+      this.userSex = "https://cdn-icons-png.flaticon.com/512/949/949792.png"
+    }
+
+    this.userAge = this.user.getAge().toString();
   }
 }
 

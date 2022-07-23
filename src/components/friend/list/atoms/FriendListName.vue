@@ -1,7 +1,10 @@
 <template>
-  <a v-on:click="visitFriend(uuid)" class="link">
-    <p>{{username}}</p>
-  </a>
+  <div>
+    <a v-on:click="visitFriend(uuid)" class="link">
+      <p>{{username}}</p>
+      <img :src="flagUrl">
+    </a>
+  </div>
 </template>
 
 <script lang="ts">
@@ -11,7 +14,8 @@ import {Options, Vue} from "vue-class-component";
   name: "FriendListName",
   props: {
     username: String,
-    uuid: String
+    uuid: String,
+    flagUrl: String,
   }
 })
 export default class FriendListName extends Vue {
@@ -23,10 +27,17 @@ export default class FriendListName extends Vue {
 </script>
 
 <style scoped>
-.friend-list-card a {
+.friend-list-card div a {
+  margin: auto 0;
+  display: flex;
+  flex-direction: row;
+}
+.friend-list-card div a p {
   margin: auto 0;
 }
-.friend-list-card p {
-  margin: auto 0;
+.friend-list-card div a img {
+  margin: 0 4px;
+  height: 32px;
+  width: 32px;
 }
 </style>
