@@ -1,6 +1,6 @@
 <template>
   <div class="comment-author">
-    <img :src="authorPicture">
+    <img :src="url" @error="loadDefault">
     <div>
       <p>{{author}}</p>
     </div>
@@ -18,6 +18,16 @@ import {Options, Vue} from "vue-class-component";
   }
 })
 export default class CommentAuthor extends Vue {
+  private authorPicture!:string;
+  private url = "";
+
+  mounted(){
+    this.url = this.authorPicture;
+  }
+
+  loadDefault(){
+    this.url = "/assets/avatar-placeholder.png"
+  }
 }
 </script>
 
