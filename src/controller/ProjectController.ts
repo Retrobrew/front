@@ -125,7 +125,7 @@ class ProjectController {
        return fetch(
            `${process.env.VUE_APP_PROJECT_API_URL}/archive?id=${projectId}&version=${versionNb}`
        ).then(res => {
-           return res.json()
+           return res.toString();
        });
    }
 
