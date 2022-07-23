@@ -62,7 +62,6 @@ export default class UserProfileChangePicture extends Vue {
     }
     APIController.changeAvatar(this.newPicture).then(() => {
       this.pictureSelected = false;
-      this.newPicture = null;
     })
   }
 

@@ -2,8 +2,9 @@
   <div class="friend-list-card">
     <FriendListPicture :link="friend.picture" :user-uuid="friend.uuid" />
     <FriendListName
-        v-bind:username="friend.username + ' ' + friend.country"
+        v-bind:username="friend.username"
         v-bind:uuid="friend.uuid"
+        :flag-url="friend.country"
     />
     <FriendListRemove
         v-on:delete-friend="$emit('delete-friend', $event)"
