@@ -61,7 +61,7 @@ export default class GroupCreationVue extends Vue {
         .then((res: any) => {
           if(this.group.isProject){
             ProjectController
-                .createProject(res.uuid)
+                .createProject(res.uuid, res.language)
                 .catch(error => {
                   console.error(error);
                   console.log("Could not initiate project repo")

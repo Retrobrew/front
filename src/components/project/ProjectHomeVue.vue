@@ -1,6 +1,6 @@
 <template>
   <div class="main-vue project-home">
-    <ProjectHomeHead :title="group.name" :language="group.langage.toLocaleUpperCase()"/>
+    <ProjectHomeHead :title="group.name" :language="group.language.toLocaleUpperCase()"/>
     <ProjectHomeBody :description="group.description" :owner="groupOwner.username" :owner-flag="groupOwner.country" />
     <div class="project-home-delimiter"/>
   </div>
@@ -12,7 +12,6 @@ import ProjectHomeHead from "@/components/project/molecules/ProjectHomeHead.vue"
 import ProjectHomeBody from "@/components/project/molecules/ProjectHomeBody.vue";
 import {Group} from "@/object/Group";
 import {User} from "@/object/User";
-import APIController from "@/controller/APIController";
 
 @Options({
   name: "ProjectHomeVue",

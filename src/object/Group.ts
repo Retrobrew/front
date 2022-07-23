@@ -70,7 +70,7 @@ export class Group {
             picture,
             json.isProject,
             json.members,
-            json.langage,
+            json.language,
         );
     }
 

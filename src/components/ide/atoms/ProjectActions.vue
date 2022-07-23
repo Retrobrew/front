@@ -57,7 +57,7 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  groupLangage: {
+  groupLanguage: {
     type: String,
     required: true
   },
@@ -91,7 +91,7 @@ const compileCode = () => {
   emit('projectCompilation', true)
 
   ProjectController
-    .compileProject(props.projectId, props.groupLangage, props.versionNumber)
+    .compileProject(props.projectId, props.groupLanguage, props.versionNumber)
     .then(res => {
       res = cleanLogs(res);
       emit('compilationSuccess', {

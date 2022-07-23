@@ -14,7 +14,7 @@
           :project-id="projectId"
           :current-file="currentFile"
           :was-compiled="wasCompiled"
-          :group-langage="groupLangage"
+          :group-language="groupLanguage"
           :version-number="versionNumber"
           v-on:delete-file="$emit('delete-file')"
           v-on:save-file="saveFile(currentFile)"
@@ -73,7 +73,7 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  groupLangage: {
+  groupLanguage: {
     type: String,
     required: true
   },

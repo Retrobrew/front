@@ -2,7 +2,7 @@
   <div class="container version-card p-2">
     <VersionBody
       :key="reload"
-      :version-language="group.langage"
+      :version-language="group.language"
       :version-number="version"
       :project-id="group.uuid"
       v-on:browse-version="onBrowseVersion($event)"
@@ -16,7 +16,7 @@
       :readonly="version !== 'latest'"
       :project-id="group.uuid"
       :current-file="selectedFile"
-      :group-langage="group.langage"
+      :group-language="group.language"
       :version-number="version"
       :key="selectedFile"
       v-if="selectedFile && !showNewFileForm && !showCreateVersionForm"
