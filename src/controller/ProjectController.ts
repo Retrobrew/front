@@ -2,7 +2,7 @@ import {TreeNode} from "@/object/TreeNode";
 
 class ProjectController {
 
-    static createProject(projectId: string, language: string = "rust"): Promise<string> {
+    static createProject(projectId: string, language: string): Promise<string> {
         return fetch(
             `${process.env.VUE_APP_PROJECT_API_URL}/create?id=${projectId}&template=${language}`
         ).then((res) => {
@@ -63,10 +63,10 @@ class ProjectController {
         }).catch(reason => console.error(reason));
     }
 
-    static compileProject(projectId: string, compiler: string): Promise<string> {
+    static compileProject(projectId: string, compiler: string, version: string): Promise<string> {
         //retourne les logs, compile le projet
         return fetch(
-            `${process.env.VUE_APP_PROJECT_API_URL}/compile?id=${projectId}&compiler=${compiler}`
+            `${process.env.VUE_APP_PROJECT_API_URL}/compile?id=${projectId}&compiler=${compiler}&version=${version}`
         ).then(res => res.text())
     }
 
