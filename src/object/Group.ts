@@ -79,6 +79,7 @@ export class Group {
         formData.append('name', this.name);
         formData.append('description', this.description);
         formData.append('isProject', this.isProject? 'true' : 'false');
+        formData.append('language', this.language);
 
         return formData;
     }
