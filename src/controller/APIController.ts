@@ -168,6 +168,25 @@ class APIController {
                 return friends
             })
     }
+
+    static changeAvatar(avatar: File): Promise<void> {
+        const token = sessionStorage.getItem('access_token');
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+
+        return fetch(
+            `${process.env.VUE_APP_AUTH_API_URL}/my/avatar`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                body: formData
+            }
+        ).then(response => {
+
+        }).catch((error) => error.message);
+    }
 }
 
 export default APIController;
