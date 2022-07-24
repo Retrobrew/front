@@ -5,7 +5,7 @@
       <ProjectHomeOwner :owner="owner" :owner-flag="ownerFlag"/>
     </div>
     <div class="project-home-body-delimiter"/>
-    <ProjectHomeButton />
+<!--    <ProjectHomeButton />-->
   </div>
 </template>
 
