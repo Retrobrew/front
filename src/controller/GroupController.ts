@@ -79,7 +79,7 @@ export class GroupController {
         const token = sessionStorage.getItem('access_token');
 
         return fetch(
-            `${process.env.VUE_APP_AUTH_API_URL}/my/groups`,
+            `${process.env.VUE_APP_AUTH_API_URL}/groups`,
             {
                 headers: {Authorization: "Bearer " + token}
             }
@@ -89,8 +89,8 @@ export class GroupController {
                 const groups: UserProfileGroup[] = [];
                 json.forEach((group: any) => {
                     const groupDto = new UserProfileGroup(
-                        group.groupUuid,
-                        group.groupName,
+                        group.uuid,
+                        group.name,
                         group.creator
                     );
 
