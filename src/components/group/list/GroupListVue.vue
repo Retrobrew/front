@@ -62,25 +62,26 @@ export default class GroupListVue extends Vue {
       .getUserGroups()
       .then(res => {
         this.groups = res;
+        if(routePath !== '/profile') {
+          GroupController.getAllGroups()
+              .then(res => {
+                this.publicGroups = [];
+                for(let group of res) {
+                  if(!this.groups.find(g => g.uuid === group.uuid)) {
+                    this.publicGroups.push(group);
+                  }
+                }
+                console.log(this.publicGroups);
+              })
+              .catch(reason => {
+                // console.error(reason)
+              })
+        }
       })
       .catch(reason => {
         // console.error(reason)
       })
-
-    if(routePath !== '/profile') {
-      GroupController.getAllGroups()
-          .then(res => {
-            this.publicGroups = res;
-            this.publicGroups = this.publicGroups.filter(group => {
-              return !this.groups.some(g => g.uuid === group.uuid);
-            });
-          })
-          .catch(reason => {
-            // console.error(reason)
-          })
-    }
   }
-
 
   private quitGroup(groupUuid: string): void{
     const group = this.groups.find((item) => {

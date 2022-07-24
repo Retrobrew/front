@@ -25,6 +25,7 @@
   />
   <ProjectFileForm
       :project-id="group.uuid"
+      :group-language="group.language"
       v-if="showNewFileForm"
       v-on:created-file="onFileCreated($event)"
   />

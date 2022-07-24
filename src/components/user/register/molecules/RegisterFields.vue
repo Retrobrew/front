@@ -91,9 +91,6 @@ export default class RegisterFields extends Vue {
   private birthdatePlaceHolder = "Birthdate";
 
   private async register() {
-    if(!this.pictureBlob){
-      return;
-    }
     await APIController.register(
         this.user,
         this.password,
