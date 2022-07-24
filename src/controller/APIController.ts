@@ -9,12 +9,13 @@ class APIController {
     static register = async (
         user: User,
         password: string,
-        picture: File
+        picture?: File
     ) => {
         const formData = user.generateRegisterFormData();
         formData.append('password', password);
-        formData.append('avatar', picture);
-
+        if (picture) {
+            formData.append('avatar', picture);
+        }
         await fetch(`${process.env.VUE_APP_AUTH_API_URL}/users`, {
             method: "POST",
             body: formData,
