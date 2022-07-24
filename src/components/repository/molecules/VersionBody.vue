@@ -75,7 +75,7 @@ export default class VersionBody extends Vue {
           return;
         }
         this.cleanTree(div);
-        this.displayFiles(this.files, div, 0);
+        this.displayFiles(this.files, div, 0, "");
       });
 
     ProjectController.getVersions(this.projectId)
@@ -87,9 +87,10 @@ export default class VersionBody extends Vue {
         })
   }
 
-  private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement, index: number) {
+  private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement, index: number, path: string) {
     files.forEach((item:TreeNode) => {
       const link = document.createElement('a');
+      let filePath = path;
       link.href = '#';
       link.classList.add('list-group-item');
       link.style.paddingLeft = `${index * 15}px`;
@@ -97,13 +98,21 @@ export default class VersionBody extends Vue {
       link.addEventListener('click', this.selectFile.bind(this))
       parentNode.appendChild(link);
 
+      if (index != 0) {
+        filePath += "/" + item.name;
+        const hiddenPath = document.createElement('p');
+        hiddenPath.style.display = "none";
+        hiddenPath.innerText = filePath;
+        link.appendChild(hiddenPath);
+      }
+
       if(item.type === "directory") {
         link.classList.add('disabled')
 
         //Création du parent
         const div = document.createElement('div');
         div.classList.add('list-group')
-        this.displayFiles(item.children, div, index + 1);
+        this.displayFiles(item.children, div, index + 1, filePath);
         parentNode.appendChild(div);
       }
     })
@@ -121,7 +130,7 @@ export default class VersionBody extends Vue {
       return
     }
 
-    let filePath = this.getFilePath((event.target as HTMLElement).parentElement!) + '/' + (event.target as HTMLElement).innerText;
+    let filePath = (event.target as HTMLElement).firstElementChild!.innerHTML;
 
     //retrouve l'ancien a selectionné
     const xpath = `//a[text()='${this.selectedFile}']`;
@@ -141,13 +150,6 @@ export default class VersionBody extends Vue {
     this.selectedFile = a.innerHTML;
     a.classList.add('fw-bold');
     this.$emit('select-file', filePath);
-  }
-
-  private getFilePath(rootNode: HTMLElement): string {
-    if (rootNode.parentElement!.id !== 'tree') {
-      return this.getFilePath(rootNode.parentElement!) + "/" + rootNode.parentElement!.children[0].textContent;
-    }
-    return "";
   }
 }
 </script>
