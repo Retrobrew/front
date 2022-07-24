@@ -73,7 +73,6 @@ export default class GroupListVue extends Vue {
                     this.publicGroups.push(group);
                   }
                 }
-                console.log(this.publicGroups);
               })
               .catch(reason => {
                 // console.error(reason)
