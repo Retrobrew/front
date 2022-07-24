@@ -88,13 +88,36 @@ export default class VersionBody extends Vue {
   }
 
   private displayFiles (files: Array<TreeNode>, parentNode: HTMLElement, index: number, path: string) {
+    //sort files by name
+    files.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    //sort type directory before type file
+    files.sort((a, b) => {
+      if (a.type === "directory" && b.type === "file") {
+        return -1;
+      }
+      if (a.type === "file" && b.type === "directory") {
+        return 1;
+      }
+      return 0;
+    });
     files.forEach((item:TreeNode) => {
       const link = document.createElement('a');
       let filePath = path;
       link.href = '#';
       link.classList.add('list-group-item');
       link.style.paddingLeft = `${index * 15}px`;
-      link.innerHTML = item.name;
+      if (item.type === "directory")
+        link.innerHTML = "- " + item.name;
+      else
+        link.innerHTML = item.name;
       link.addEventListener('click', this.selectFile.bind(this))
       parentNode.appendChild(link);
 
@@ -107,7 +130,7 @@ export default class VersionBody extends Vue {
       }
 
       if(item.type === "directory") {
-        link.classList.add('disabled')
+        link.classList.add('folder');
 
         //Création du parent
         const div = document.createElement('div');
@@ -130,8 +153,6 @@ export default class VersionBody extends Vue {
       return
     }
 
-    let filePath = (event.target as HTMLElement).firstElementChild!.innerHTML;
-
     //retrouve l'ancien a selectionné
     const xpath = `//a[text()='${this.selectedFile}']`;
     const previousA = document.evaluate(
@@ -149,7 +170,20 @@ export default class VersionBody extends Vue {
     const a: HTMLElement = event.target as HTMLElement;
     this.selectedFile = a.innerHTML;
     a.classList.add('fw-bold');
-    this.$emit('select-file', filePath);
+
+    const htmlElement = event.target as HTMLElement;
+    let filePath = htmlElement.firstElementChild!.innerHTML;
+
+    if (htmlElement.classList.contains('folder')) {
+      const folderContentElement = htmlElement.nextElementSibling as HTMLElement;
+      if (folderContentElement.style.display === "none") {
+        folderContentElement.style.display = "block";
+      } else {
+        folderContentElement.style.display = "none";
+      }
+    } else {
+      this.$emit('select-file', filePath);
+    }
   }
 }
 </script>
@@ -181,5 +215,8 @@ export default class VersionBody extends Vue {
 }
 #tree {
   padding-left: 15px;
+}
+.folder {
+  color: #909090;
 }
 </style>
