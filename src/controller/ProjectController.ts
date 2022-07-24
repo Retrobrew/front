@@ -84,10 +84,10 @@ class ProjectController {
         ).then(res => res.text())
     }
 
-   static testProject(projectId: string): Promise<string> {
+   static testProject(projectId: string, version: string): Promise<string> {
        //retourne l'adresse où le code peut être executé/testé : http://id_du_projet.retrobrew.fr/
         return fetch(
-            `${process.env.VUE_APP_PROJECT_API_URL}/execute?id=${projectId}`
+            `${process.env.VUE_APP_PROJECT_API_URL}/execute?id=${projectId}&version=${version}`
         ).then(res => {
             return res.text()
         });

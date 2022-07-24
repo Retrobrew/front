@@ -76,7 +76,7 @@ const testProject = () => {
   )
 
   ProjectController
-      .testProject(props.projectId)
+      .testProject(props.projectId, props.versionNumber)
       .then(testUrl => {
         window.open(testUrl, '_blank');
       }).catch(error => {
