@@ -40,7 +40,11 @@ const props = defineProps({
   projectId: {
     type: String,
     required: true
-  }
+  },
+  groupLanguage: {
+    type: String,
+    required: true
+  },
 })
 
 const emit = defineEmits<{
@@ -48,10 +52,15 @@ const emit = defineEmits<{
 }>()
 
 const filename = ref<string>('')
-const allowedExtensions = [
-    ".rs",
-    ".toml"
-];
+const allowedExtensions = [];
+
+if (props.groupLanguage === "c") {
+  allowedExtensions.push("c");
+  allowedExtensions.push("h");
+} else if (props.groupLanguage === "rust") {
+  allowedExtensions.push("rs");
+}
+
 const fileExtension = ref<string>('.rs')
 
 // eslint-disable-next-line no-undef
