@@ -14,6 +14,7 @@
       <div v-for="group in groups" v-bind:key="group.uuid">
         <GroupListCard
             v-bind:group="group"
+            v-bind:is-public="false"
             v-on:leave-group="quitGroup($event)"
             v-on:remove-group="removeGroup($event)"
         />
@@ -28,6 +29,7 @@
     <div v-for="group in publicGroups" v-bind:key="group.uuid">
       <GroupListCard
           v-bind:group="group"
+          v-bind:is-public="true"
       />
     </div>
   </div>

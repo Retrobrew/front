@@ -11,11 +11,12 @@
           v-on:remove-group="$emit('remove-group',$event)"
           v-bind:group-uuid="group.uuid"/>
     </div>
-    <div v-else class="group-leave">
+    <div v-else-if="!isPublic" class="group-leave">
       <GroupListLeave
           v-on:remove-group="$emit('leave-group',$event)"
           v-bind:group-uuid="group.uuid"/>
     </div>
+    <div v-else class="group-delimiter" />
   </div>
 </template>
 
@@ -36,6 +37,11 @@ import {UserProfileGroup} from "@/object/UserProfileGroup";
       type: UserProfileGroup,
       required: true,
       default: Group.emptyGroup()
+    },
+    isPublic: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   }
 })
@@ -54,5 +60,10 @@ export default class GroupListCard extends Vue {
 }
 .group-delete {
   margin: auto 0;
+}
+.group-delimiter {
+  margin: auto 0;
+  height: 4px;
+  width: 32px;
 }
 </style>
