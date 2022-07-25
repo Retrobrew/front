@@ -36,6 +36,8 @@ const routes = [
     { path: '/:pathMatch(.*)*', component: Error404 },
 ];
 
+document.title = "Retrobrew";
+
 const router = createRouter({
     history: createWebHistory(),
     routes,
