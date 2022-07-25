@@ -21,6 +21,7 @@ export default class PostContent extends Vue {
 .post-content {
   margin: 0;
   padding: 16px;
+  white-space: pre-wrap;
 }
 
 .post-content p {
