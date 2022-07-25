@@ -29,7 +29,7 @@ const routes = [
     { path: '/login', component: UserLogin, name: 'login' },
     { path: '/mobile', component: MobileHomeVue },
     { path: '/post/:uuid', component: PostDetailsVue, name: 'post', params: true },
-    { path: '/profile', component: UserProfileHomeVue, meta: { requiresAuth: true } },
+    { path: '/profile', component: UserProfileHomeVue, name:'profile', meta: { requiresAuth: true } },
     { path: '/project/:projectId/edit/:file', component: IDEVue, params: true, meta: { requiresAuth: true } },
     { path: '/register', component: UserRegister, name: 'register' },
     { path: '/user/:uuid', component: UserHomeVue, name: 'friend', params: true },

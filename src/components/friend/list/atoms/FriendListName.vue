@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <a v-on:click="visitFriend(uuid)" class="link">
+  <div class="mt-auto mb-auto">
+    <a
+        v-on:click="visitFriend(uuid)"
+        class="link position-relative "
+    >
       <p>{{username}}</p>
       <img :src="flagUrl">
     </a>

@@ -16,6 +16,16 @@
         />
       </MDBCardBody>
     </MDBCard>
+    <div class="d-flex justify-content-center">
+      <div class="flex-column">
+        <FriendListVue
+            :readonly="readonly"
+            class="mt-3 me-2"/>
+      </div>
+      <GroupListVue
+          :readonly="readonly"
+          class="mt-3 ms-2"/>
+    </div>
   </div>
 </template>
 
@@ -33,6 +43,8 @@ import {
 } from 'mdb-vue-ui-kit';
 import {inject} from "vue";
 import {FriendshipController} from "@/controller/FriendshipController";
+import GroupListVue from "@/components/group/list/GroupListVue.vue";
+import FriendListVue from "@/components/friend/list/FriendListVue.vue";
 
 @Options({
   name: "UserHomeVue",
@@ -42,7 +54,9 @@ import {FriendshipController} from "@/controller/FriendshipController";
     HeaderVue,
     MDBCard,
     MDBCardHeader,
-    MDBCardBody
+    MDBCardBody,
+    GroupListVue,
+    FriendListVue,
   }
 })
 export default class UserHomeVue extends Vue {
@@ -52,7 +66,9 @@ export default class UserHomeVue extends Vue {
   private userAge = "";
   private userSex = "";
   private friendShipStatus: string|null = null;
-  private requestId: string|null = null
+  private requestId: string|null = null;
+  private readonly = true;
+
 
   mounted() {
     this.userUuid = this.$route.params['uuid'] as string;

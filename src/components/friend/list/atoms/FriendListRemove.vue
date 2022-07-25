@@ -1,5 +1,8 @@
 <template>
-  <a v-on:click="unfriend(friendUuid)" class="btn-close btn-rounded btn-sm btn"></a>
+  <a
+      v-on:click="unfriend(friendUuid)"
+      class="btn-close btn-rounded btn-sm btn position-relative"
+  ></a>
 </template>
 
 <script lang="ts">

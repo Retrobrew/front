@@ -1,7 +1,7 @@
 <template>
   <div class="main-vue group-list">
     <GroupListTitle class="m-0" :title="groupsTitle"/>
-    <div class="d-flex justify-content-center">
+    <div v-if="!readonly" class="d-flex justify-content-center">
       <router-link to="/group/creation">
         <button
             class="btn btn-sm btn-success">
@@ -13,6 +13,7 @@
     <div v-if="groups.length > 0">
       <div v-for="group in groups" v-bind:key="group.uuid">
         <GroupListCard
+            :readonly="readonly"
             v-bind:group="group"
             v-bind:is-public="false"
             v-on:leave-group="quitGroup($event)"
@@ -21,7 +22,7 @@
       </div>
     </div>
     <div v-else>
-      <p class="text-center mt-3">You're not part of a group yet :/</p>
+      <p class="text-center mt-3">{{emptyList}}</p>
     </div>
   </div>
   <div v-if="publicGroups.length > 0" class="main-vue group-list">
@@ -49,9 +50,17 @@ import {UserProfileGroup} from "@/object/UserProfileGroup";
     GroupListCard,
     GroupListTitle,
     MDBInput
+  },
+  props: {
+    readonly: {
+      type: Boolean,
+      default: true
+    }
   }
 })
 export default class GroupListVue extends Vue {
+  private readonly!: boolean;
+  private emptyList = "You're not part of a group yet :/";
   private groupsTitle: string = 'Group list';
   private groups: Array<UserProfileGroup> = [];
   private publicGroupsTitle: string = 'Public groups';
@@ -59,6 +68,15 @@ export default class GroupListVue extends Vue {
 
   mounted() {
     const routePath = this.$route.path;
+    if(this.readonly){
+      const userUuid = this.$route.params['uuid'] as string;
+      this.emptyList = ""
+      GroupController.getUserGroups(userUuid)
+          .then(groups => {
+            this.groups = groups;
+          });
+      return;
+    }
 
     GroupController
       .getUserGroups()

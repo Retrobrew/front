@@ -37,7 +37,7 @@ export class FriendshipController {
         })
             .then(response => {
                 if(response.status !== 200) {
-                    throw new Error("Error while trying to fetch posts");
+                    throw new Error("Error while trying to fetch friends");
                 }
 
                 return response.json();
@@ -52,6 +52,33 @@ export class FriendshipController {
                         item.username,
                         item.country,
                         picture,
+                        item.uuid
+                    );
+                    friends.push(friend);
+                })
+                return friends
+            })
+    }
+
+    static getUserFriends(userUuid: string): Promise<Array<Friend>> {
+        const token = sessionStorage.getItem('access_token');
+        const friends: Array<Friend> = [];
+
+        return fetch(`${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}/friends`, {
+            headers: { Authorization: "Bearer " + token }
+        })
+            .then(response => {
+                if(response.status !== 200) {
+                    throw new Error("Error while trying to fetch friends");
+                }
+                return response.json();
+            })
+            .then(json => {
+                json.forEach((item: any) => {
+                    const friend = new Friend(
+                        item.username,
+                        item.country,
+                        item.picture,
                         item.uuid
                     );
                     friends.push(friend);

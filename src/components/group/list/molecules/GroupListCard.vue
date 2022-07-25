@@ -6,17 +6,19 @@
         :group-name="group.name"
         :group-uuid="group.uuid"
     />
-    <div v-if="group.userIsGroupCreator" class="group-delete">
-      <GroupListRemove
-          v-on:remove-group="$emit('remove-group',$event)"
-          v-bind:group-uuid="group.uuid"/>
+    <div v-if="!readonly">
+      <div v-if="group.userIsGroupCreator" class="group-delete">
+        <GroupListRemove
+            v-on:remove-group="$emit('remove-group',$event)"
+            v-bind:group-uuid="group.uuid"/>
+      </div>
+      <div v-else-if="!isPublic" class="group-leave">
+        <GroupListLeave
+            v-on:remove-group="$emit('leave-group',$event)"
+            v-bind:group-uuid="group.uuid"/>
+      </div>
+      <div v-else class="group-delimiter" />
     </div>
-    <div v-else-if="!isPublic" class="group-leave">
-      <GroupListLeave
-          v-on:remove-group="$emit('leave-group',$event)"
-          v-bind:group-uuid="group.uuid"/>
-    </div>
-    <div v-else class="group-delimiter" />
   </div>
 </template>
 
@@ -42,6 +44,10 @@ import {UserProfileGroup} from "@/object/UserProfileGroup";
       type: Boolean,
       required: true,
       default: false
+    },
+    readonly: {
+      type: Boolean,
+      default: true
     }
   }
 })
