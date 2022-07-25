@@ -69,8 +69,9 @@ export default class GroupListVue extends Vue {
   mounted() {
     const routePath = this.$route.path;
     if(this.readonly){
-      this.emptyList = "This user is not in any group."
-      GroupController.getUserGroups()
+      const userUuid = this.$route.params['uuid'] as string;
+      this.emptyList = ""
+      GroupController.getUserGroups(userUuid)
           .then(groups => {
             this.groups = groups;
           });
