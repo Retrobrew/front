@@ -52,7 +52,7 @@ export class FriendshipController {
                         item.username,
                         item.country,
                         picture,
-                        item.userUuid
+                        item.uuid
                     );
                     friends.push(friend);
                 })
