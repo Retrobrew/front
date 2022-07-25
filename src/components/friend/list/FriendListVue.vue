@@ -4,13 +4,14 @@
     <div v-if="friends.length > 0">
       <div v-for="friend in friends" v-bind:key="friend.uuid">
         <FriendListCard
+            :readonly="readonly"
             v-bind:friend="friend"
             v-on:delete-friend="deleteFriend($event)"
         />
       </div>
     </div>
     <div v-else>
-      <p class="text-center">You don't have any friends yet :/</p>
+      <p class="text-center">{{emptyList}}</p>
     </div>
   </div>
 </template>
@@ -28,24 +29,50 @@ import countryList from "@/utils/countries.json";
   components: {
     FriendListCard,
     FriendListTitle,
-  }
+  },
+  props: {
+    readonly: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
+  },
 })
 export default class FriendListVue extends Vue {
+  private readonly!: boolean;
   private friends: Array<Friend> = [];
   private countries = countryList;
+  private emptyList = "You don't have any friend yet";
 
   mounted() {
-    FriendshipController.getMyFriends()
-      .then((friends) => {
-        this.friends = friends;
-        this.friends.forEach((friend) => {
-          friend.country = this.countries.find((country) => country.name === friend.country)?.image ?? "";
+    // Cas où l'utilisateur connecté n'a pas le droit de modifier les éléments de la page
+    if(this.readonly) {
+      this.emptyList = "";
+      FriendshipController
+        .getUserFriends(this.$route.params['uuid'] as string)
+        .then(friends => {
+          this.friends = friends;
+          this.friends.forEach((friend) => {
+            friend.country = this.countries
+                .find((country) => country.name === friend.country)
+                ?.image ?? "";
+          });
         });
-      })
-      .catch((reason) => {
-        //TODO afficher un message d'erreur;
-        // console.error(reason);
-      });
+
+      return;
+    }
+    FriendshipController.getMyFriends()
+        .then((friends) => {
+          this.friends = friends;
+          this.friends.forEach((friend) => {
+            friend.country = this.countries.find((country) => country.name === friend.country)?.image ?? "";
+          });
+        })
+        .catch((reason) => {
+          //TODO afficher un message d'erreur;
+          // console.error(reason);
+        });
+
   }
 
   deleteFriend(friendUuid: string){

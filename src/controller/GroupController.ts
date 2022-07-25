@@ -44,11 +44,14 @@ export class GroupController {
 
     }
 
-    static getUserGroups(): Promise<Array<UserProfileGroup>> {
+    static getUserGroups(userUuid?: string): Promise<Array<UserProfileGroup>> {
         const token = sessionStorage.getItem('access_token');
-
-        return fetch(
-            `${process.env.VUE_APP_AUTH_API_URL}/my/groups`,
+        let url = `${process.env.VUE_APP_AUTH_API_URL}/my/groups`;
+        if(userUuid) {
+            url = `${process.env.VUE_APP_AUTH_API_URL}/users/${userUuid}/groups`;
+        }
+            return fetch(
+            url,
             {
                 headers: {Authorization: "Bearer " + token}
             }
@@ -135,11 +138,8 @@ export class GroupController {
                 method: 'POST'
             }
         ).then(response => {
-            if(response.status !== HTTPStatus.ACCEPTED){
-                // console.error("Could not join group")
-                return false;
-            }
-            return true;
+            return response.status === HTTPStatus.ACCEPTED;
+
         })
     }
 
@@ -152,11 +152,7 @@ export class GroupController {
                 method: 'DELETE'
             }
         ).then(response => {
-            if(response.status !== HTTPStatus.ACCEPTED){
-                // console.error("Could not delete group")
-                return false;
-            }
-            return true;
+            return response.status === HTTPStatus.ACCEPTED;
         })
 
     }
