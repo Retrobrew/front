@@ -1,7 +1,10 @@
 <template>
   <div class="comment">
     <div class="comment-content">
-      <CommentAuthor v-bind:author="comment.author.username" v-bind:author-picture="comment.author.picture" v-bind:author-flag="authorFlag"/>
+      <CommentAuthor
+          v-bind:author="comment.author.username"
+          v-bind:author-uuid="comment.author.uuid"
+          v-bind:author-flag="authorFlag"/>
       <CommentText v-bind:content="comment.content" />
     </div>
     <button
