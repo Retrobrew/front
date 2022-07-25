@@ -1,6 +1,8 @@
 <template>
   <HeaderVue/>
-  <GroupListVue/>
+  <GroupListVue
+      :readonly="false"
+  />
 </template>
 
 <script>

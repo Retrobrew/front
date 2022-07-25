@@ -7,6 +7,7 @@
         :flag-url="friend.country"
     />
     <FriendListRemove
+        v-if="!readonly"
         v-on:delete-friend="$emit('delete-friend', $event)"
         v-bind:friend-uuid="friend.uuid"
     />
@@ -24,7 +25,8 @@ import {Friend} from "@/object/Friend";
   name:"FriendListCard",
   components: {FriendListRemove, FriendListName, FriendListPicture},
   props: {
-    friend: Friend
+    friend: Friend,
+    readonly: Boolean
   }
 })
 export default class FriendListCard extends Vue {

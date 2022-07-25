@@ -25,11 +25,12 @@
           class="mt-3 me-2"
       />
       <FriendListVue
+          :readonly="readonly"
           :key="reload"
           class="mt-3 me-2"
       />
     </div>
-    <GroupListVue class="mt-3 ms-2"/>
+    <GroupListVue :readonly="readonly" class="mt-3 ms-2"/>
   </div>
   </div>
 
@@ -76,6 +77,7 @@ export default class UserProfileHomeVue extends Vue {
   private reload = false;
   private userAge = "";
   private userSex = "";
+  private readonly = false;
 
   mounted() {
     if(!this.user) {
