@@ -15,16 +15,16 @@ import {Options, Vue} from "vue-class-component";
   name: "CommentAuthor",
   props: {
     author: String,
-    authorPicture: String,
+    authorUuid: String,
     authorFlag: String,
   }
 })
 export default class CommentAuthor extends Vue {
-  private authorPicture!:string;
+  private authorUuid!:string;
   private url = "";
 
   mounted(){
-    this.url = this.authorPicture;
+    this.url = `${process.env.VUE_APP_AUTH_API_URL}/users/${this.authorUuid}/avatar`
   }
 
   loadDefault(){
