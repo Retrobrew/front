@@ -32,14 +32,26 @@
           </MDBNavbarItem>
         </router-link>
       </MDBNavbarNav>
-      <MDBNavbarNav right v-else class="mt-1 me-2 w-25"  style="justify-content: flex-end">
+      <MDBNavbarNav right v-else class="mt-1 me-2 w-75"  style="justify-content: flex-end">
+        <div v-if="onFeed" class="mt-auto mb-auto">
+          <div v-if="myFeed" class="mt-auto mb-auto">
+            <MDBNavbarItem class="ps-1 link" v-on:click="loadHomeFeed">
+              Home feed
+            </MDBNavbarItem>
+          </div>
+          <div v-else class="mt-auto mb-auto">
+            <MDBNavbarItem class="ps-1 link" v-on:click="loadMyFeed">
+              My feed
+            </MDBNavbarItem>
+          </div>
+        </div>
         <router-link to="/find-friends" class="nav-link">
-          <MDBNavbarItem class="ps-2">
+          <MDBNavbarItem class="ps-1">
             Friends
           </MDBNavbarItem>
         </router-link>
         <router-link to="/find-groups" class="nav-link">
-          <MDBNavbarItem class="ps-2">
+          <MDBNavbarItem class="ps-1">
             Groups
           </MDBNavbarItem>
         </router-link>
@@ -79,6 +91,7 @@ import {User} from "@/object/User";
 import APIController from "@/controller/APIController";
 
 @Options({
+  title:"Retrobrew",
   components: {
     MDBBtn,
     MDBNavbar,
@@ -97,9 +110,25 @@ import APIController from "@/controller/APIController";
 export default class HeaderVue extends Vue {
   private collapse4 = false;
   private user: User | undefined = inject('user');
+  private myFeed = false;
+  private onFeed = false;
+
+  mounted() {
+    this.onFeed = this.$route.name == 'home';
+  }
 
   logout(){
     APIController.logout();
+  }
+
+  loadHomeFeed(){
+    this.myFeed=false;
+    this.$emit('loadHomeFeed');
+  }
+
+  loadMyFeed(){
+    this.myFeed=true;
+    this.$emit('loadMyFeed');
   }
 
 }

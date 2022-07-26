@@ -34,7 +34,11 @@ const props = defineProps({
   group: {
     type: Group,
     required: true
+  },
+  loadHomeFeed: {
+    type: Boolean
   }
+
 });
 
 const route = useRoute();
@@ -62,7 +66,7 @@ onMounted(() => {
     return;
   }
 
-  if(!user){
+  if(!user || props.loadHomeFeed){
     FeedController.getHomeFeed()
         .then((feed) => {
           posts.value = feed;
