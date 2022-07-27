@@ -1,6 +1,11 @@
 <template>
-  <HeaderVue />
+  <HeaderVue
+      v-on:loadHomeFeed="changeValue(true)"
+      v-on:loadMyFeed="changeValue(false)"
+  />
   <FeedVue
+      :key="loadHomeFeed"
+      :load-home-feed="loadHomeFeed"
       v-bind:group-uuid="'home'"
       v-bind:group="group"
       class="mb-3"
@@ -25,12 +30,17 @@ import {Group} from "@/object/Group";
 })
 export default class Home extends Vue {
   private group: Group = Group.homeGroup();
+  private loadHomeFeed = true;
 
   created() {
     const { isMobile } = useMobileDetection();
     if (isMobile()) {
       this.$router.push("/mobile");
     }
+  }
+
+  changeValue(value: boolean) {
+    this.loadHomeFeed = value;
   }
 }
 </script>
