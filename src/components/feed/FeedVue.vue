@@ -2,7 +2,7 @@
   <div class="container">
     <PostCreationVue
         v-bind:group="group"
-        v-if="user"
+        v-if="user && isMember"
         v-on:postCreated="updateFeed($event)"
     />
     <div v-if="posts.length > 0">
@@ -34,6 +34,10 @@ const props = defineProps({
   group: {
     type: Group,
     required: true
+  },
+  isMember: {
+    type: Boolean,
+    default: true
   },
   loadHomeFeed: {
     type: Boolean
