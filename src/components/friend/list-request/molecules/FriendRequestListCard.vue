@@ -1,10 +1,10 @@
 <template>
   <div class="friend-list-card d-flex justify-content-between">
-    <FriendListPicture :link="request.requester.picture" />
+    <FriendListPicture :link="request.requester.picture" :user-uuid="request.requester.uuid"/>
     <router-link :to="{name: 'friend', params:{uuid: request.requester.uuid}}" class="pt-2">
       <p>{{request.requester.username}}</p>
     </router-link>
-    <div>
+    <div class="friend-list-card-action">
       <a v-on:click="decline(request.requestId)" class="decline btn-close btn-rounded btn-sm btn me-2"></a>
       <a v-on:click="accept(request.requestId)" class="btn-sm btn small-icon-link btn-rounded bg-success btn-success">
         <MDBIcon
@@ -84,5 +84,8 @@ export default class FriendRequestListCard extends Vue {
 }
 .decline {
   background-color: #e4e6eb
+}
+.friend-list-card-action {
+  margin: auto 0;
 }
 </style>
