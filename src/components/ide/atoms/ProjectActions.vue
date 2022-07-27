@@ -13,6 +13,7 @@
     </button>
     <div v-if="!readonly">
       <button
+          v-bind:disabled="saving"
           v-on:click="emit('save-file')"
           class="btn btn-success m-1">
         Save file
@@ -64,6 +65,11 @@ const props = defineProps({
   versionNumber: {
     type: String,
     required: true
+  },
+  saving: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 })
 

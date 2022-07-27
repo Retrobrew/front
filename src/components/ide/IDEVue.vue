@@ -10,6 +10,7 @@
           ref="monacoEditorDiv"
       ></div>
       <ProjectActions
+          :saving="savingFile"
           :readonly="readonly"
           :project-id="projectId"
           :current-file="currentFile"
@@ -90,6 +91,7 @@ let logs = ref("");
 let errorMsg = ref("");
 let wasCompiled = ref(false);
 let isCompiling = ref(false);
+let savingFile = ref(false);
 let isLoadingProject = ref(false);
 
 onMounted(() => {
@@ -129,11 +131,17 @@ const handleCompileResult = (compileResult: {
 }
 
 const saveFile = (file: string) =>  {
+  savingFile.value = true;
+
   ProjectController.saveFile(props.projectId, file ,fileContent)
       .then(res => {
-        // console.log(res)
+        if(res){
+          alert("File saved");
+        }
       }).catch(error => {
         // console.error("Nope")
+  }).finally(() => {
+    savingFile.value = false;
   })
 }
 
