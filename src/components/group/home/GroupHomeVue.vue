@@ -20,6 +20,7 @@
       @groupVue="(value) => this.groupVue = value"
   />
   <FeedVue
+      :is-member="isMember"
       v-bind:group="group"
       v-if="this.groupVue === 'feed' && !loading"
   />
@@ -71,7 +72,6 @@ import countries from "@/utils/countries.json";
 export default class GroupHomeVue extends Vue {
   private user: User | undefined = inject('user');
   private loading = true;
-  private defaultBanner = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgamefabrique.com%2Fstorage%2Fscreenshots%2Fgba%2Fpokemon-emerald-09.png&f=1&nofb=1"
   private groupVue = "feed";
   private group: Group = Group.emptyGroup();
   private groupUuid: string = "";
