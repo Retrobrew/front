@@ -61,8 +61,8 @@ export class GroupController {
                 const groups: UserProfileGroup[] = [];
                 json.forEach((group: any) => {
                     const groupDto = new UserProfileGroup(
-                        group.groupUuid,
-                        group.groupName,
+                        group.uuid,
+                        group.name,
                         group.creator
                     );
 
