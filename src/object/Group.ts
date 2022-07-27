@@ -86,7 +86,7 @@ export class Group {
 
     public hasMember(userUuid: string): boolean {
         return this.members.find((item) => {
-            return item.user === userUuid;
+            return item.uuid === userUuid;
         }) !== undefined;
     }
 }

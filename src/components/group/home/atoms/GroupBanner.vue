@@ -37,7 +37,10 @@ import { MDBBtn, MDBIcon } from 'mdb-vue-ui-kit'
   props:{
     groupUuid: String,
     userIsCreator: Boolean,
-    isMember: Boolean
+    isMember: {
+      type:Boolean,
+      required: true
+    }
   }
 })
 export default class GroupBanner extends Vue {
