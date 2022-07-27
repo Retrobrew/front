@@ -76,7 +76,7 @@ export default class GroupHomeVue extends Vue {
   private group: Group = Group.emptyGroup();
   private groupUuid: string = "";
   private isCreator = false;
-  private isMember = false;
+  private isMember: boolean |null = null;
   private groupOwner: User = User.newUser();
 
   mounted() {

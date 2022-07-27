@@ -5,7 +5,7 @@
       <div class="text-center m-3">
         <MDBSpinner v-if="isCompiling"/>
       </div>
-      <div v-if="logs" class="bg-light p-5">
+      <div v-if="logs" class="bg-light p-5 logs">
         {{logs}}
       </div>
     </div>
@@ -38,5 +38,8 @@ const props = defineProps( {
 </script>
 
 <style scoped>
+.logs {
+  white-space: pre-wrap;
+}
 
 </style>
