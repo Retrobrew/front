@@ -30,8 +30,8 @@
   "devDependencies": {
     "@babel/core": "7.18.6",
     "@babel/eslint-parser": "7.18.2",
-    "@typescript-eslint/eslint-plugin": "5.30.6",
-    "@typescript-eslint/parser": "5.30.6",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.62.0",
     "@vue/cli-plugin-babel": "5.0.8",
     "@vue/cli-plugin-eslint": "5.0.8",
     "@vue/cli-plugin-typescript": "5.0.8",
